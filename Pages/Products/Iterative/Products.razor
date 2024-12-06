@@ -1,0 +1,38 @@
+﻿@page "/Products"
+
+@inherits ProductsBase
+
+@if (Products == null)
+{
+    <DisplaySpinner />
+}
+else
+{
+    <h3 class="mb-5 text-white">Products</h3>
+
+    var productCount = Products.Count();
+
+     @if (productCount > 0)
+    {
+        var groupedProductsByCategory = from product in Products group product by product.CategoryId into productByCategoryGroup orderby productByCategoryGroup.Key select productByCategoryGroup;
+
+        const int itemsPerRow = 4;
+        var productRowList = new List<ProductDto>();
+
+        @foreach (var productGroup in groupedProductsByCategory)
+        {
+
+            <h5 class="text-white">@productGroup.FirstOrDefault(pg => pg.CategoryId == productGroup.Key).CategoryName</h5>
+
+            <div class="row mt-3">
+                
+            <ProductsCards Products="@productGroup.Take(itemsPerRow)"></ProductsCards>
+
+            </div>
+        }
+    }
+
+
+    <div class="row mt-3">
+    </div>
+}

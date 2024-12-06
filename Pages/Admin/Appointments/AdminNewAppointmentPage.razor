@@ -1,0 +1,514 @@
+﻿@inherits AdminNewAppointmentPageBase
+@page "/admin/NewAppointment"
+@using Blazorise;
+
+@if (Admin == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    <AdminToolbar></AdminToolbar>
+    
+@if (User == null)
+{
+    <h3>User Select</h3>
+    <div class="m-4">
+            <a @onclick="ChangeIsNewUserToFalse" class="btn btn-success jay-green-bg m-2">Existing User</a>
+            <a @onclick="ChangeIsNewUserToTrue" class="btn btn-success jay-green-bg m-2">New User</a>
+    </div>
+    @if (IsNewUser)
+    {
+        <h5>New User</h5>
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-5 col-12 @FieldMargins">
+                <div class="row">
+                    <div class="col-4 d-flex justify-content-end">
+                        <label  class="small">
+                            First Name:
+                        </label>
+                    </div>
+                    <div class="col-8">
+                        <input @bind-value="UserToAdd.FirstName" class="input-group" type="text" placeholder="FirstName" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-12 @FieldMargins">
+                <div class="row">
+                    <div class="col-4 d-flex justify-content-end">
+                        <lable class="small">
+                            Last Name:
+                        </lable>
+                    </div>
+                    <div class="col-8">
+                        <input @bind-value="UserToAdd.LastName" class="input-group" type="text" placeholder="Last Name">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-12 @FieldMargins">
+                <div class="row">
+                    <div class="col-4 d-flex justify-content-end">
+                        <lable class="small">
+                            Phone:
+                        </lable>
+                    </div>
+                    <div class="col-8">
+                        <input @bind-value="UserToAdd.Phone" class="input-group">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-12 @FieldMargins">
+                <div class="row">
+                    <div class="col-4 d-flex justify-content-end">
+                        <lable>
+                            Email:
+                        </lable class="small">
+                    </div>
+                    <div class="col-8">
+                        <input @bind-value="UserToAdd.Email" class="input-group">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-5 col-12 @FieldMargins">
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-end">
+                        <lable class="small">
+                            Waiver:
+                        </lable>
+                    </div>
+                    <div class="col-4 d-flex align-self-center">
+                        <input @bind="UserToAdd.IsWaiverAcknowledged" type="checkbox" class="input-group jays-checkbox">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-5 col-12 @FieldMargins">
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-end">
+                        <lable class="small">
+                            Allergies:
+                        </lable>
+                    </div>
+                    <div class="col-4 d-flex align-self-center">
+                        <input @bind-value="UserToAdd.HasAllergies" type="checkbox" class="input-group jays-checkbox">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-12 @FieldMargins">
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-end">
+                        <lable class="small">
+                            Sensitive Skin:
+                        </lable>
+                    </div>
+                    <div class="col-4 d-flex align-self-center">
+                        <input @bind-value="UserToAdd.HasSensitiveSkin" type="checkbox" class="input-group jays-checkbox">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-12 @FieldMargins">
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-end">
+                        <lable class="small">
+                            Date of birth:
+                        </lable>
+                    </div>
+                    <div class="col d-flex align-self-center">
+                        <input @bind-value="UserToAdd.DOB" type="date" class="input-group ">
+                    </div>
+                </div>
+            </div>
+        </div>
+        if (ValidationErrorMessage != string.Empty)
+        {
+            <div class="row mt-4 mb-4">
+                <div class="col d-flex justify-content-center">
+                    <h5 class="text-danger ">@ValidationErrorMessage</h5>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col d-flex justify-content-end m-4">
+                <a @onclick="() => CreateNewUser_Click()" class="btn btn-success jay-green-bg">Continue</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h5>Existing User</h5>
+
+        <div class="row justify-content-around d-flex m-4">
+            
+            <div class="row">
+                <div class="col">
+                    <lable class="col-4 my-2 text-end">
+                        Search:
+                    </lable>
+                    <input @onkeyup="Enter" @bind="SearchFilter" type="search" placeholder="Name/Email" class="w-75">
+                    <a  class="btn btn-success jay-green-bg" @onclick="() => SearchUsers_Click()">Search</a>
+                </div>
+            </div>
+        </div>
+
+        <table class="table border table-dark" Style="border-color:#444 !important">
+            <thead>
+                <tr>
+                    <th scope="col" class="small">Name</th>
+                    <th scope="col" class="small">Email</th>
+                    <th scope="col" class="small"> </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ExistingUsers == null)
+                {
+                    <tr>
+                        <td class="small">
+                            Users are null
+                        </td>
+                        <td class="small">
+                        </td>
+                        <td class="small">
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    if (ExistingUsers.Count() == 0)
+                    {
+                        <tr>
+                            <td class="small">
+                                No Users
+                            </td>
+                            <td class="small">
+                            </td>
+                            <td class="small">
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in ExistingUsers)
+                        {
+                            <tr   Style="border-color:#444 !important; ">
+
+                                <td class="small align-content-center">@item.FirstName @item.LastName</td>
+                                <td class="small align-content-center">@item.Email</td>
+                                <td><a @onclick="() => SelectUser_Click(item)" class="btn btn-success jay-green-bg align-content-center">Select</a></td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <h3 class="mt-3">Selected User</h3>
+    <div class="row border bg-dark jay-green-border rounded p-3">
+        <h2>User</h2>
+        <div class="col-2 d-flex align-items-center">
+            @User.FirstName @User.LastName
+        </div>
+        <div class="col d-flex align-items-center">
+            @User.Email
+        </div>
+        <div class="col-3 d-flex align-items-center">
+            @User.Phone
+        </div>
+        <div class="col-3 d-flex justify-content-end">
+                <a @onclick="() => ClearUser_Click()" class="btn btn-success jay-green-bg">Clear</a>
+        </div>
+    </div>
+
+    <hr />
+
+    <h3 class="mt-3">New Appointment</h3>
+    <div class="row">
+        <div class="col-lg-6 col-12 @FieldMargins">
+                <div class="">
+                    <h5>
+                        Services
+                    </h5>
+                </div>
+                <div class="row">
+                    <div class="col d-flex align-items-center">
+                        <InputSelect @bind-Value="@ServiceToAddId" class="w-100">
+                        <option value="@Guid.Empty"></option>
+                        @foreach (var item in Services)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                        </InputSelect>
+                    </div>
+                    <div class="col-3 d-flex align-items-center">
+                        <a @onclick="() => AddService_Click()" class="btn btn-success jay-green-bg">Add</a>
+                        
+                    </div>
+                </div>
+                
+                @if (AddServiceErrorMessage != null && AddServiceErrorMessage != string.Empty)
+                {
+                    <div class="text-danger fw-bold">
+                        @AddServiceErrorMessage
+                    </div>
+                }
+
+                <div class="mt-3 mb-5">
+
+                    @if (AppointmentToAdd.ServicesToAdd != null)
+                    {
+                        @if (AppointmentToAdd.ServicesToAdd.Count() <= 0)
+                        {
+                            <div>
+                                No Services Selected
+                            </div>
+                        }
+                        else
+                        {
+                            foreach (var item in AppointmentToAdd.ServicesToAdd)
+                            {
+                                <div class="row justify-content-around">
+                                    <div class="col col-lg-5 text-white text-nowrap overflow-hidden align-self-center">
+                                        <p style="font-size:14px">@item.ServiceName</p>
+                                    </div>
+                                    <div class="col align-self-center">
+                                        <p style="font-size:14px">@item.Duration.TotalMinutes.ToString() Min</p>
+                                    </div>
+                                    <div class="col-2 text-white align-self-center">
+                                        <p style="font-size:14px">@item.Price.ToString("C")</p>
+                                    </div>
+                                    <a style="height:40px; width:40px" class="p-0 col-2 d-flex justify-content-center align-items-center align-self-center btn" @onclick="() => DeleteAppointmentService_Click(item.ServiceId)">
+                                        <span class="material-symbols-outlined" style="color:red">
+                                            close
+                                        </span>
+                                    </a>
+                                </div>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <DisplaySpinner></DisplaySpinner>
+
+                    }
+                </div>
+                
+                 <div class="col-12 row mt-5">
+                    <h5>
+                        Products
+                    </h5>
+                </div>
+                @if (Products != null)
+                    { 
+                        
+                        <div class="row">
+                            <div class="col d-flex align-items-center" >
+                                    <InputSelect @bind-Value="@ProductToAddId" class="w-100" >
+                                    <option value="@Guid.Empty"> </option>
+                                    @foreach (var item in Products)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                    </InputSelect>
+                                
+                            </div>
+                            
+                             <div class="col-3 d-flex align-items-center">
+                                    <a @onclick="() => AddProduct_Click()" class="btn btn-success jay-green-bg">Add</a>
+                                
+                            </div>
+                        </div>
+                        @if (AddProductErrorMessage != null && AddProductErrorMessage != string.Empty)
+                        {
+                        <div class="text-danger fw-bold">
+                            @AddProductErrorMessage
+                        </div>
+                        }
+                        
+                   
+                    }
+                <div class="mt-3 mb-3">
+                    @if (AppointmentToAdd.ProductsToAdd != null)
+                    {
+                        @if (AppointmentToAdd.ProductsToAdd.Count() <= 0)
+                        {
+                            <div class="">
+                                No Products Selected
+                            </div>
+                        }
+                        @foreach (var item in AppointmentToAdd.ProductsToAdd)
+                        {
+                            <div class="row justify-content-around">
+                                <div class=" col-5 text-white align-self-center">
+                                    <p class=" mb-0 text-nowrap overflow-hidden" style="font-size:14px">@item.ProductName</p>
+                                </div>
+                                <div class="col text-white align-self-auto justify-content-center align-self-center">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            qty
+                                        </div>
+                                        <input type="number" @bind="item.Quantity" class="col bg-black text-white border-white">
+                                        
+                                        
+                                    </div>
+
+                                    
+                                </div>
+                                <div class="col-2 text-white justify-content-center align-self-center" style="font-size:14px">
+                                    @item.Price.ToString("C")
+                                </div>
+                                <a style="height:40px; width:40px" class="p-0 col-2 d-flex justify-content-center align-items-center align-self-center btn" @onclick="() => DeleteAppointmentProduct_Click(item.ProductId)">
+                                    <span class="material-symbols-outlined" style="color:red">close</span>
+                                </a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <DisplaySpinner></DisplaySpinner>
+
+                    }
+                </div>
+
+            </div>
+
+        @if (AppointmentToAdd.ServicesToAdd.Any())
+        {
+            
+            @if (Duration > TimeSpan.Zero && UnavailaleDatesDtos != null && BusinessHours != null)
+            {
+                <div class="col-lg-6 col-12 @FieldMargins">
+                        <div class="col-4">
+                            <h5 class="small">
+                                Start Time:
+                            </h5>
+                        </div>
+                        <div class="col-8">
+                            <DatePicker @ref="@DatePicker" Min=@DateTime.Now Max=DateTime.Now.AddDays(ScheduleRange) InputFormat="dd/MM/yyyy" DisplayFormat="dd/MM/yyyy" TValue="DateTime?" DisabledDates="@UnavailaleDatesDtos.Select(u => (DateTime?)u.UnavailableDate)" @bind-Date="@DatePickerDate" @oninput="() => GetAvailability_OnClick((DateTime)DatePickerDate)" Inline class="w-50" />
+                       
+                        </div>
+                         @if (AvailableTimes != null)
+                            {
+                                <div class=" flex-wrap d-flex mt-2">
+
+                                    @foreach (var item in AvailableTimes)
+                                    {
+                                        if (TimeOnly.FromDateTime(item.StartTime).Add(Duration) > BusinessHours.SingleOrDefault(b => b.Day == item.StartTime.DayOfWeek).CloseTime)
+                                        {
+                                            <div class="m-1">
+                                                <button class="btn btn-warning" @onclick="() => SetStartTime_OnClick(item.StartTime)">@item.StartTime.ToString("HH:mm")</button>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="m-1">
+                                                <button class="btn btn-success jay-green-bg" @onclick="() => SetStartTime_OnClick(item.StartTime)">@item.StartTime.ToString("HH:mm")</button>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            }
+                    @if (AppointmentToAdd.StartTime != null)
+                    {
+
+                        <h5 class="m-3">
+                            Start:  @AppointmentToAdd.StartTime.Value.DisplayTimeString()
+                        </h5>
+                    }
+                
+
+
+                </div>
+            }
+        }
+
+
+        <div class="col-lg-6 col-12 @FieldMargins">
+            <div>
+                <h4>Conditions</h4>
+            </div>
+
+            <div class="row m-2">
+                <div class="col d-flex align-self-center">
+                    <lable class="small">
+                        Contracted Conjunctivitis, Infection, Irritation or Stye in the past 4 weeks:
+                    </lable>
+                </div>
+                <div class="col-2 d-flex align-self-center">
+                    <input @bind-value="UserToAdd.HasHadEyeProblems4Weeks" type="checkbox" class="input-group jays-checkbox">
+                </div>
+            </div>
+            <div class="row m-2">
+                <div class="col d-flex align-self-center">
+                    <lable class="small">
+                        Wears contact lenses:
+                    </lable>
+                </div>
+                <div class="col-2 d-flex align-self-center">
+                    <input @bind-value="UserToAdd.WearsContactLenses" type="checkbox" class="input-group jays-checkbox">
+                </div>
+            </div>
+            <div class="row mt-2 mx-2 my-2">
+                <div class="col d-flex align-self-center">
+                    <lable class="small">
+                        Sample Set:
+                    </lable>
+                </div>
+                <div class="col-2 d-flex align-self-center">
+                    <input @bind-value="AppointmentToAdd.IsSampleSetComplete" type="checkbox" class="input-group jays-checkbox">
+                </div>
+            </div>
+            @if (AppointmentToAdd.IsSampleSetComplete)
+            {
+            <div class="row my-2 mx-5 mb-2">
+                <div class="col-3 d-flex align-self-center">
+                    <lable class="small">
+                        When:
+                    </lable>
+                </div>
+                <div class="col-9">
+                    <input @bind-value="AppointmentToAdd.SampleSetCompleted" type="datetime-local" class="w-100">
+                </div>
+            </div>
+            }
+
+            <div class="row m-2">
+                <div class="col d-flex align-self-center">
+                    <lable class="small">
+                        Deposit paid:
+                    </lable>
+                </div>
+                <div class="col-2 d-flex align-self-center">
+                    <input @bind-value="AppointmentToAdd.IsDepositPaid" type="checkbox" class="input-group jays-checkbox">
+                </div>
+            </div>
+        </div>
+
+        </div>
+        if (AppointmentValidationErrorMessages.Count() > 0)
+    {
+        foreach (var item in AppointmentValidationErrorMessages)
+        {
+            <div class="row d-flex justify-content-center">
+                <h3 class="text-danger">
+                    @item
+                </h3>
+            </div>
+        }
+
+    }
+
+    @if (AppointmentToAdd.ServicesToAdd.Any())
+    {
+        <div class="row d-flex justify-content-end">
+            <div class="">
+                <a @onclick="() => SubmitAppointment_Click()" class="btn btn-success jay-green-bg">Submit</a>
+            </div>
+        </div>
+        }
+}
+}
+
+

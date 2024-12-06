@@ -1,0 +1,42 @@
+﻿@page "/Appointment/Submitted/{id:guid}"
+@using JaysLashesWebApp.Models.enums
+@inherits AppointmentSubmissionBase
+
+@if (Appointment == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    if (Appointment.Status != AppointmentStatus.AwaitingApproval)
+    {
+        <h1>This appointment is not currently submitted for confirmation</h1>
+    }
+    else
+    {
+        <div class="d-flex justify-content-center">
+            <div class="container m-5">
+                <h2>Thank you,</h2>
+                
+                <h4>your appointment has been scheduled for @Appointment.StartTime.Value.ToLongDateString() at @Appointment.StartTime.Value.ToShortTimeString()
+                    </h4>
+
+                    <h4>
+                        We aim to make contact with you within the first 24 hours of you making your appointment. 
+                    </h4>
+                    <h4>If you have need to contact us to adjust your appointment or you can not make it please text or call us on 04 2245 3888. </h4>
+            </div>
+        </div>
+        <div class="d-flex justify-content-around">
+            <div>
+                <a @onclick="() => Back_OnClick()" class="btn btn-success jay-green-bg">Back</a>
+            </div>
+            <div>
+                <a @onclick="() => Home_OnClick()" class="btn btn-success jay-green-bg">Home</a>
+            </div>
+            <div>
+                <a @onclick="() => ContactUs_OnClick()" class="btn btn-success jay-green-bg">Contact us</a>
+            </div>
+        </div>
+    }
+}

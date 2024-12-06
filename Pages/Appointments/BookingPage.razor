@@ -1,0 +1,155 @@
+﻿@using JricaStudioApp.Pages.Products.Individual
+@inherits BookingPageBase
+@page "/Appointment/Schedule/{id:guid}"
+@using Blazorise;
+
+
+@if (Appointment == null)
+{
+    <h2>Booking</h2>
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <h2>Booking</h2>
+            <DatePicker @ref="@DatePicker" Min=@DateTime.Now Max=DateTime.Now.AddDays(ScheduleRange) InputFormat="dd/MM/yyyy" DisplayFormat="dd/MM/yyyy" TValue="DateTime?" DisabledDates="@UnavailaleDatesDtos.Select(u => (DateTime?)u.UnavailableDate)" @bind-Date="@DatePickerDate" @oninput="() => GetAvailability_OnClick((DateTime)DatePickerDate)" Inline class="w-50" />
+            @if (AvailableTimes != null)
+            {
+                <div class="d-flex flex-wrap mt-2 w-75">
+
+                    @foreach (var item in AvailableTimes)
+                    {
+                        if (TimeOnly.FromDateTime(item.StartTime).Add(Duration) > BusinessHours.SingleOrDefault(b => b.Day == item.StartTime.DayOfWeek).CloseTime)
+                        {
+                            <div class="m-1">
+                                <button class="btn btn-warning" @onclick="() => SetStartTime_OnClick(item.StartTime)">@item.StartTime.ToString("HH:mm")</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="m-1">
+                                <button class="btn btn-success jay-green-bg" @onclick="() => SetStartTime_OnClick(item.StartTime)">@item.StartTime.ToString("HH:mm")</button>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        </div>
+        <div class="col">
+            <div>
+                <h4 class="fw-bold">
+                    Services
+                </h4>
+                <hr class="text-white" />
+            </div>
+            
+            @foreach (var item in Appointment.Services)
+            {
+                <div class="row justify-content-between">
+                    <div class="col-2">
+                        <img class="m-2 img-fluid text-white align-self-center" style="font-size:14px" src="@item.ServiceImagePath" />
+                    </div>
+                    <div class="col text-white text-nowrap overflow-hidden align-self-center">
+                        <p style="font-size:14px">@item.ServiceName</p>
+                    </div>
+                    <div class="col-3 align-self-center">
+                        @if (item.Duration.Minutes > 0 )
+                        {
+                            <p style="font-size:14px">
+                                @item.Duration.Hours Hours & @item.Duration.Minutes Mins
+
+                            </p>
+                        }
+                        else
+                        {
+                            <p style="font-size:14px">
+                                @item.Duration.Hours Hours
+
+                            </p>
+                        }
+                        
+                    </div>
+                </div>
+
+            }
+            Total Duration: @Duration.TotalHours hours
+            
+            @if (Appointment.Products.Count() <= 0)
+            {
+                <div>
+                    <hr class="text-white" />
+                    <h4 class="fw-bold">
+                        Products
+                    </h4>
+                    
+                    <hr class="text-white" />
+                    No Products Selected
+                    <hr class="text-white" />
+                    <PopularProductUpsell AppointmentId="Appointment.Id"></PopularProductUpsell>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <hr class="text-white" />
+                    <h4 class="fw-bold">
+                        Products
+                    </h4>
+                    <hr class="text-white" />
+
+                </div>
+                @foreach (var item in Appointment.Products)
+                {
+                    <div class="row justify-content-around">
+                        <div class=" col-2">
+                            <img class="m-2 img-fluid text-white align-self-center" src="@item.ProductImagePath" />
+                        </div>
+                        <div class=" col-8 text-white align-self-center">
+                            <p class=" mb-0 text-nowrap overflow-hidden" style="font-size:14px">@item.ProductName</p>
+                        </div>
+                        <a style="height:40px; width:40px" class="p-0 col-2 d-flex justify-content-center align-items-center align-self-center btn" @onclick="() => DeleteAppointmentProduct_Click(item.Id)">
+                            <span class="material-symbols-outlined" style="color:red">close</span>
+                        </a>
+                    </div>
+                }
+            }
+            <hr class="text-white" />
+            @if (StartTime != null)
+            {
+                
+                <h6 class="fw-bold">
+                    Appointment Date
+                </h6>
+                <h6>
+                    @StartTime.Value.ToString("dd/MM/yyyy")
+                </h6>
+                <hr class="text-white" />
+                <h6 class="fw-bold">
+                    Appointment Times
+                </h6>
+                <h6>
+                    Start Time: @StartTime.Value.ToShortTimeString()
+                </h6>
+                <h6>
+                    End Time: @EndTime.Value.ToShortTimeString()
+                </h6>
+                if (TimeOnly.FromDateTime((DateTime)StartTime).Add(Duration) > BusinessHours.SingleOrDefault(b => b.Day == StartTime.Value.DayOfWeek).CloseTime)
+                {
+                    <div class="text-danger fw-bolder">
+                        After hours appointment: Additional charges will apply
+                    </div>
+                }
+            }
+            <div class="m-4 d-flex flex-row-reverse">
+                @if (StartTime != null)
+                {
+                    <a @onclick="() => ConfirmAppointmentBooking_Click()" class="btn btn-success jay-green-bg">Confirm</a>
+                }
+            </div>
+        </div>
+    </div>
+    
+            
+}

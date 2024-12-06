@@ -1,0 +1,26 @@
+﻿@using JricaStudioApp.Pages.Admin.Appointments.Components
+@page "/admin/home"
+@inherits AdminHomeBase
+
+@if (Admin == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    <AdminToolbar></AdminToolbar>
+    <div class="m-4">
+        <h2>
+            Welcome back @Admin.FirstName, this is your Home Page
+        </h2>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <AppointmentRequests></AppointmentRequests>
+        </div>
+        <div class="col-12 col-lg-6">
+            <AppointmentsUpcoming></AppointmentsUpcoming>
+        </div>
+    </div>
+}

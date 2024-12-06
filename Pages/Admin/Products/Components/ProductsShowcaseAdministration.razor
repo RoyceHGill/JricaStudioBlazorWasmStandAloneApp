@@ -1,0 +1,62 @@
+﻿@using JricaStudioApp.Pages.Products.Individual
+@inherits ProductShowcaseAdministrationBase
+
+@if (Admin == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    <h3>Update Product Showcase</h3>
+    @if (Products != default)
+    {
+        <div class="col d-flex justify-content-around m-3">
+            <div>
+                <InputSelect @bind-Value="UpdateDto.ProductId ">
+                    @foreach (var item in Products)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </InputSelect>
+            </div>
+
+            <a @onclick="() => UpdateProductShowcase_Click()" class="btn btn-success jay-green-bg"> Save Product Showcase</a>
+        </div>
+        if (!string.IsNullOrWhiteSpace(ErrorMessage))
+        {
+            <div class="text-danger">
+                @ErrorMessage
+            </div>
+        }
+        if (!string.IsNullOrWhiteSpace(ConfirmationMessage))
+        {
+            <div class="text-success fw-bold">
+                @ConfirmationMessage
+            </div>
+        }
+    }
+    else
+    {
+
+    }
+    <hr />
+
+        <h3>
+            Current Product Showcase Item
+        </h3>
+        if (ProductShowcase != null)
+        {
+            <PopularProductUpsell Product="ProductShowcase"></PopularProductUpsell>
+
+            <DisplayProduct PreviewProduct="ProductShowcase"></DisplayProduct>
+        }
+    else
+    {
+        <h3 class="text-center">
+            No Product Selected
+        </h3>
+    }
+
+        
+        
+}

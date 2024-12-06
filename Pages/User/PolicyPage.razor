@@ -1,0 +1,23 @@
+﻿@inherits PolicyPageBase
+@page "/policies"
+
+<h3>Policies</h3>
+
+@if(Policies.Any())
+{
+    <div class="row d-flex justify-content-center">
+
+    @foreach (var item in Policies)
+    {
+        <div class="mt-4 col-9">
+            <h2>@item.PolicyTitle</h2>
+            <div class="">
+                @item.PolicyArticle
+            </div>
+        </div>
+        <br/>
+        <hr />
+    }
+
+    </div>
+}

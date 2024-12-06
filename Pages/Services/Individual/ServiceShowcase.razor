@@ -1,0 +1,25 @@
+﻿@inherits ServiceShowcaseBase;
+
+
+@if (ServiceId == Guid.Empty)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    if (!IsReturningCustomer)
+    {
+        <h1 class="text-white">
+            Find Your Next style!
+        </h1>
+    }
+    else
+    {
+        <h1 class="text-white">
+            Enjoyed it? Order it again!
+        </h1>
+    }
+   <DisplayService Id="ServiceId"></DisplayService>
+
+}
+

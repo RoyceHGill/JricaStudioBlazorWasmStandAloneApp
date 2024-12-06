@@ -1,0 +1,99 @@
+﻿@page "/IndemnityForm/{id:guid}";
+@inherits AppointmentIndemnityFromBase;
+
+
+
+@if (Appointment == null || User == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+
+else
+{
+    <div class="container">
+        <h1>Indemnity Form</h1>
+        <h5 class="mt-5">Who are you and how can we contact you?</h5>
+        <div class="row justify-content-between">
+            <div class="col-lg-5 col-10 m-1">
+                <div class="col m-1">
+                    First name:
+                </div>
+                <input class="w-100" @bind="@User.FirstName">
+            </div>
+
+            <div class="col-lg-5 col-10 m-1">
+                <div class="col m-1">
+                    Last Name:
+                </div>
+                <input class="w-100" @bind="User.LastName" />
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-6 m-1">
+                <div class="col">
+                    Date of Birth:
+                </div>
+                <input class="" type="date" @bind-value="User.DOB" />
+            </div>
+            
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-lg-5 col-10 m-1">
+                <div class="col m-1">
+                    Phone:
+                </div>
+                <input class="w-100" @bind="@User.Phone" />
+            </div>
+            <div class="col-lg-5 col-10 m-1">
+                <div class="col m-1">
+                    Email:
+                </div>
+                <input class="w-100" @bind="User.Email" />
+            </div>
+        </div>
+        @if (ErrorMessage != null)
+        {
+            <div class="alert alert-danger row" role="alert">
+                @ErrorMessage
+            </div>
+        }
+
+
+        <h5 class="mt-5 mb-3">Tell us about you</h5>
+        <div class="row p-lg-3 pt-4" style="height:5rem;">
+            <div class="col-10 align-self-center" style="font-size:14px">
+                I have had Eyelash Extensions before
+            </div>
+            <InputCheckbox class="col-1" @bind-Value="@Appointment.HasHadEyelashExtentions" style="width:1.5rem" />
+        </div>
+        <div class="row p-lg-3 pt-4" style="height:5rem;">
+            <div class="col-10 align-self-center" style="font-size:14px">
+                I wear Contact lenses
+            </div>
+            <InputCheckbox class="col-1" @bind-Value="@User.WearsContanctLenses" style="width:1.5rem" />
+        </div>
+        <div class="row p-lg-3 pt-4" style="height:5rem;">
+            <div class="col-10 align-self-center" style="font-size:14px">
+                I have Allergies to one or more of the following: Pets, Adhesives or Soaps such as facial cleansers
+            </div>
+            <InputCheckbox class="col-1" @bind-Value="@User.HasAllergies" style="width:1.5rem" />
+        </div>
+        <div class="row p-lg-3 pt-4" style="height:5rem;">
+            <div class="col-10 align-self-center" style="font-size:14px">
+                I have had Eye Problems(Infection, Irritation, Stye, Conjunctivitis, ect) within the past 4 weeks
+            </div>
+            <InputCheckbox class="col-1" @bind-Value="@User.HasHadEyeProblems4Weeks" style="width:1.5rem" />
+        </div>
+        <div class="row p-lg-3 pt-4" style="height:5rem;">
+            <div class="col-10 align-self-center" style="font-size:14px">
+                I have skin that is prone to irritation
+            </div>
+            <InputCheckbox class="col-1" @bind-Value="@User.HasSensitiveSkin" style="width:1.5rem" />
+        </div>
+
+        <div class="w-100 d-flex justify-content-around">
+            <a class="btn btn-success jay-green-bg m-5" href="/Appointment/Edit/@Id" style="font-size:20px">Back</a>
+            <button class="btn btn-success jay-green-bg m-5" @onclick="() => SubmitIndemityForm_Click()" style="font-size:20px">Next</button>
+        </div>
+    </div>
+}

@@ -1,0 +1,34 @@
+﻿@inherits ServiceCardBase
+
+<div class="col-lg-3 col-12 scrolling-snapping" style="">
+    <div class="card d-flex bg-transparent">
+        <a @onclick="() => NavigateToService_Click()" class="card bg-transparent d-flex justify-content-center text-decoration-none" style="cursor:pointer">
+        <div class="w-100 h-100 d-flex justify-content-center mt-2 rounded">
+            <div class="thumbnail-img-div rounded">
+                <img class="thumbnail-img" src="@Service.ImageData" style="inline-size:100%; aspect-ratio:1/1; object-fit:cover;" >
+                </div>
+            </div>
+    </a>
+            <hr class="text-white" />
+            <div class="col">
+            <a @onclick="() => NavigateToService_Click()" class="card bg-transparent d-flex justify-content-center text-decoration-none" style="max-width:250px;cursor:pointer;">
+                    <div class="d-flex justify-content-between align-items-center m-1">
+                        <p class="fw-semibold text-white overflow-hidden m-1" style="font-size:14px">
+                            @Service.Name
+                        </p>
+                    
+                        <p class="m-0">
+                            <b class="text-white">@Service.Price.ToString("C")</b>
+                        </p>
+
+                    </div>
+                </a>
+                <div class="d-flex justify-content-between align-items-center m-1">
+                    <p class="text-white text-wrap m-2" style="font-size: 12px; height:50px; overflow:hidden" >
+                        @Service.Description
+                    </p>
+                </div>
+            </div>
+            <hr class="text-white" />
+    </div>
+</div>

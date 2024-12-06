@@ -1,0 +1,237 @@
+﻿@inherits AdminAppointmentDetailsBase
+
+<div class="col border bg-dark jay-green-border rounded h-100" Style="border-color:#444 !important">
+
+    <div class="row ">
+        <div class="col d-flex justify-content-center m-2">
+            Appointment 
+        </div>
+    </div>
+    @if (Appointment == null)
+    {
+        <div class="row">
+            <div class="col d-flex justify-content-center m-2">
+                Please Select an Appointment
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="@AppointmentDetailRowclasses">
+            <div class="@AppointmentDetailLabelclasses">
+                Client:
+            </div>
+            <div class="col">
+                @Appointment.User.FirstName @Appointment.User.LastName
+            </div>
+        </div>
+        <div class="@AppointmentDetailRowclasses">
+            <div class="@AppointmentDetailLabelclasses">
+                Phone:
+            </div>
+            @if (Appointment.User.Phone == null)
+            {
+                <div class="col">
+                </div>
+
+            }
+            else
+            {
+                <div class="col">
+                    @Appointment.User.Phone
+
+                </div>
+            }
+        </div>
+        <div class="@AppointmentDetailRowclasses">
+            <div class="@AppointmentDetailLabelclasses">
+                Email:
+            </div>
+            @if (Appointment.User.Email == null)
+            {
+                <div class="col">
+                </div>
+
+            }
+            else
+            {
+                <div class="col" Style="overflow:hidden; font-size:14px">
+                    @Appointment.User.Email
+
+                </div>
+            }
+        </div>
+        <div class="@AppointmentDetailRowclasses">
+            <div class="@AppointmentDetailLabelclasses">
+                Date:
+            </div>
+                @if (Appointment.StartTime == null) 
+                {
+                    <div class="col">
+
+                    </div>
+
+                } 
+                else
+                {
+                    <div class="col">
+                        @Appointment.StartTime.Value.ToLongDateString()
+
+                    </div>
+                }
+        </div>
+        <div class="@AppointmentDetailRowclasses">
+            <div class="@AppointmentDetailLabelclasses">
+                Start Time: 
+            </div>
+                @if (Appointment.StartTime == null)
+                {
+                    <div class="col">
+                    </div>
+
+                }
+                else
+                {
+                    <div class="col">
+                        @Appointment.StartTime.Value.ToShortTimeString()
+                    </div>
+                }
+        </div>
+        <div class="@AppointmentDetailRowclasses">
+            <div class="@AppointmentBoolDetailLabelclasses">
+                Waiver:
+            </div>
+                @if (Appointment.User.IsWaiverAcknowledged == null)
+                {
+                    <div class="col">
+
+                    </div>
+                }
+                else
+                {
+                    <div class="col">
+                        @Appointment.User.IsWaiverAcknowledged.DisplayBoolAsYesNo()
+                    </div>
+                }
+        </div>
+        <div class="@AppointmentDetailRowclasses">
+            <div class="@AppointmentBoolDetailLabelclasses">
+                Sensitive skin:
+            </div>
+            @if (Appointment.User.HasSensitiveSkin == null)
+            {
+                <div class="col">
+                </div>
+            }
+            else
+            {
+                <div class="col">
+                    @Appointment.User.HasSensitiveSkin.DisplayBoolAsYesNo()
+                </div>
+            }
+        </div>
+        <div class="@AppointmentDetailRowclasses">
+            <div class="@AppointmentBoolDetailLabelclasses">
+                Allergies:
+            </div>
+            @if (Appointment.User.HasAllergies == null)
+            {
+                <div class="col">
+                </div>
+            }
+            else
+            {
+                <div class="col">
+                    @Appointment.User.HasAllergies.DisplayBoolAsYesNo()
+                </div>
+            }
+        </div>
+        <div class="@AppointmentDetailRowclasses">
+            <div class="@AppointmentBoolDetailLabelclasses">
+                Eye Problems:
+            </div>
+            @if (Appointment.User.HasHadEyeProblems4Weeks == null)
+            {
+                <div class="col">
+                </div>
+            }
+            else
+            {
+                <div class="col">
+                    @Appointment.User.HasHadEyeProblems4Weeks.DisplayBoolAsYesNo()
+                </div>
+            }
+        </div>
+        <div class="@AppointmentDetailRowclasses">
+            <div class="@AppointmentBoolDetailLabelclasses">
+                Contact Lenses:
+            </div>
+            @if (Appointment.User.WearsContanctLenses == null)
+            {
+                <div class="col">
+                </div>
+            }
+            else
+            {
+                <div class="col">
+                    @Appointment.User.WearsContanctLenses.DisplayBoolAsYesNo()
+                </div>
+            }
+        </div>
+        <div class="@AppointmentDetailRowclasses">
+            <div class="row d-flex justify-content-center">
+                Services
+            </div>
+            @if (Appointment.Services.Count() == 0)
+            {
+                <div class="row d-flex justify-content-center">No Services</div>
+            }
+            else
+            {
+                @foreach (var item in Appointment.Services)
+                {
+                    <div class="row justify-content-center" style="font-size:14px"x>
+                        @item.ServiceName - @item.Price.ToString("C")
+                    </div>
+                }
+            }
+        </div>
+        <div class="@AppointmentDetailRowclasses">
+            <div class="@AppointmentDetailLabelclasses">
+                Duration:
+            </div>
+            @if (Appointment.Services == null)
+            {
+                <div class="col">
+                </div>
+            }
+            else
+            {
+                <div class="col">
+                    @DisplayTotalDuration(Appointment)
+                </div>
+            }
+        </div>
+        <div class="@AppointmentDetailRowclasses">
+            <div class="row d-flex justify-content-center">
+                Products
+            </div>
+            @if (Appointment.Products.Count() == 0)
+            {
+                <div class="row d-flex justify-content-center">No Products</div>
+            }
+            else
+            {
+                @foreach (var item in Appointment.Products)
+                {
+                    <div class="row justify-content-center" style="font-size:14px" x>
+                        @item.ProductName - @item.Price.ToString("C")
+                    </div>
+                }
+            }
+        </div>
+        
+    }
+
+
+</div>

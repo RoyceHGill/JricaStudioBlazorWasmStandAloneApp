@@ -1,0 +1,88 @@
+﻿@inherits PolicyAdministrationBase
+
+@if (Admin == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    <div class="mt-5">
+
+        <h3>Policies</h3>
+
+
+        <div>
+            <a @onclick="() => AddPolicy_Click()" class="btn btn-success jay-green-bg mt-3">Add Policy</a>
+            @if (IsAddingNewPolicy)
+            {
+
+                <div class="mt-3">
+                    <label>
+                        Policy Title:
+                    </label>
+                    <InputText oninvalid="" class="w-100" @bind-Value="@ToAddPolicyTitle"/>
+                </div>
+                <div class="mt-3">
+                    <label>
+                        Policy Article:
+                    </label>
+                    <InputTextArea class="w-100" @bind-Value="@ToAddPolicyArticle" style="resize:none; height:10rem" />
+                </div>
+            
+                <a class="btn btn-success jay-green-bg" @onclick="() => SaveNewPolicy_Click()">
+                    Save Policy
+                </a>
+            }
+        </div>
+        <table class="table table-responsive border table-dark mt-3" Style="border-color:#444 !important">
+            <thead>
+                <tr>
+                    <th scope="col" class="small">
+                        Title
+                    </th>
+                    <th scope="col" class="small">
+
+                    </th>
+                    <th scope="col" class="small">
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Policies.Any() && Policies != null)
+            {
+                @foreach (var item in Policies)
+                {
+                    <tr>
+                        <td class="small">
+                            @item.PolicyTitle
+                        </td>
+                        <td>@item.PolicyArticle</td>
+                        <td>
+                            <a class="btn btn-success jay-green-bg">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td class="small">
+                        No Policies
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+        </table>
+    </div>
+
+}
+

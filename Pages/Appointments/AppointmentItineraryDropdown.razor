@@ -1,0 +1,135 @@
+﻿@inherits AppointmentItineraryDropdownBase;
+
+<div class="d-flex mx-2 align-items-center dropdown dropstart dropleft">
+    <button class="btn btn-success jay-green-bg" onclick="ChangeBtnWarningToBtnSuccess('dropdownToggleButton')" type="button" id="dropdownToggleButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="material-symbols-outlined fs-2">
+            shopping_bag
+        </span>
+
+    </button>
+    <div class="dropdown-menu bg-black shadow-sm dropdown-product" id="dropdown-menu-items" style="border-style:solid; border-color:darkgrey">
+        <h5 class="dropdown-item-text text-white">JRica.Studio</h5>
+        <h4 class="dropdown-item-text text-white">@User.FirstName @User.LastName</h4>
+        @if (Appointment == null)
+        {
+            <DisplaySpinner></DisplaySpinner>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col">
+                    <h6 class="dropdown-item-text text-white">Status: @Appointment.Status.ToString().FromPascalToString()</h6>
+                </div>
+                @if (Appointment.StartTime != null)
+                {
+                    <div class="col">
+                        <h6 class="dropdown-item-text text-white">Appointment Time: @Appointment.StartTime.Value.ToString("hh:mm tt - dd/MM/yyyy")</h6>
+                    </div>
+                }
+                
+            </div>
+        }
+        <hr class="text-white" />
+        <h6 class="dropdown-item-text text-white">Your Services</h6> 
+        @if (AppointmentServiceDtos == null || AppointmentProductDtos == null)
+        {
+            <DisplaySpinner></DisplaySpinner>
+        }
+        else
+        {
+            @if (AppointmentServiceDtos.Count() == 0)
+            {
+                <h5 class="dropdown-item-text text-white">No Services Selected</h5>
+            }
+
+            @if(AppointmentServiceDtos.Count() > 0)
+            {
+                <div style="max-height:30vh; overflow-y:auto; overflow-x:hidden;">
+                @foreach (var item in AppointmentServiceDtos)
+                {
+                    <div class="row justify-content-between">
+                        <div class="col-2">
+                            <img class="m-2 img-fluid text-white align-self-center" src="@item.ServiceImagePath" />
+                        </div>
+                            <div class="col-4 text-white align-self-center text-nowrap overflow-hidden" style="font-size:14px">
+                            @item.ServiceName
+                        </div>
+                            <div class="col-2 text-white align-self-center" style="font-size:14px">
+                            @item.Price.ToString("C")
+                        </div>
+                            <div class="col-3 text-white text-nowrap align-self-center" style="font-size:14px">
+                            @item.Duration.TotalMinutes min
+                        </div>
+
+                    </div>
+                }
+                </div>
+            }
+            <hr class="text-white" />
+            <h6 class="dropdown-item-text text-white">Your Products</h6>
+            @if (AppointmentProductDtos.Count() == 0)
+            {
+                <h5 class="dropdown-item-text text-white">No Products Selected</h5>
+            }
+
+            @if(AppointmentProductDtos.Count() > 0)
+            {
+                <div style="max-height:30vh; overflow-y:auto; overflow-x:hidden;">
+                @foreach (var item in AppointmentProductDtos)
+                {
+                    <div class="row">
+                        <div class="col-2">
+                                <img class="m-2 img-fluid text-white align-self-center" src="@item.ProductImagePath" />
+                        </div>
+                            <div class="col-4 text-white align-self-center text-nowrap overflow-hidden" style="font-size:14px">
+                            @item.ProductName
+                        </div>
+                            <div class="col text-white align-self-center" style="font-size:14px">
+                            @item.Price.ToString("C")
+                        </div>
+                            <div class="col-2 text-white align-self-center" style="font-size:14px">
+                            X @item.Quantity
+                        </div>
+
+                    </div>
+                }
+                </div>
+            }
+            if (Appointment == null)
+            {
+                <DisplaySpinner></DisplaySpinner>
+            }
+            else
+            {
+                if (Appointment.Status >= JaysLashesWebApp.Models.enums.AppointmentStatus.AwaitingApproval)
+                {
+                    <div class="row">
+                        <div class=" col-lg d-flex justify-content-end">
+                            <a class="btn btn-success jay-green-bg m-3" @onclick="() => NewAppointment_Click()" >Start New Appointment</a>
+                        </div>
+                        <div class="col-lg d-flex justify-content-end">
+                            <a class="btn btn-success jay-green-bg m-3" href="/Finalize/@Appointment.Id">Summary</a>
+                        </div>
+                        
+                    </div>
+                }
+                else
+                {
+                    
+                    <div class="row">
+                        <div class=" col-lg d-flex justify-content-end">
+                            <a class="btn btn-success jay-green-bg m-3" @onclick="() => NewAppointment_Click()">Start New Appointment</a>
+                        </div>
+                        <div class=" col-lg d-flex justify-content-end">
+                            <a class="btn btn-success jay-green-bg m-3" href="/Appointment/Edit/@AppointmentId">Edit & Book</a>
+                        </div>
+                    </div>
+                }
+            }
+            
+            
+        }
+    </div>
+</div>
+
+

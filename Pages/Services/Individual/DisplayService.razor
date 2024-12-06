@@ -1,0 +1,119 @@
+﻿@inherits DisplayServiceBase;
+
+@if (Service == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    <div class="row  flex-md-row">
+        <div class="col-md-7 col-12 d-flex justify-content-center pt-3">
+            <div class="mt-5">
+                <img class="w-100 rounded" src="@Service.ImageData">
+                
+            </div>
+        </div>
+        <div class="col  p-2">
+            <h2 class="p-2 text-success fw-bold"> 
+                @Service.Price.ToString("C") AUD
+            </h2 >
+            <h6 class="p-2">
+                @Service.Duration.TotalMinutes Minutes / @Service.Duration.TotalHours hrs
+            </h6>
+            <h4 class="p-2">
+                @Service.Name
+            </h4>
+            <div class="p-2">
+                @Service.CategoryName
+            </div>
+            <div class="row  p-2">
+                <div class="col-6  d-flex align-items-center">
+                    Next Available Appointment:
+                </div>
+                @if (AvailableTime != null)
+                {
+                    <div class=" col-6  d-flex align-items-center">
+                        @if (AvailableTime.StartTime.Date == DateTime.Now.Date)
+                        {
+                            <div> Today </div>
+                        }
+                        else
+                        {
+                            <div>@AvailableTime.StartTime.ToString("dddd dd/MM/yyyy")</div>
+                        }
+                        <div class="m-1">
+                            <button class="@AvailableTimeButtonclasses" @onclick="() => SetStartTime_OnClick(AvailableTime.StartTime)">@AvailableTime.StartTime.ToString("HH:mm")</button>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-6 d-flex align-items-center">
+                        <div>
+                            None Available
+                        </div>
+                    </div>
+                }
+            </div>
+            <hr />
+            <br />
+            <div class="row bg-dark rounded p-1">
+                <h6>Payment Options</h6>
+                <div class="col p-2 d-flex justify-content-around align-items-center" style="height:8vh">
+                    <img class="h-100 bg-white rounded" src="/Resources/PayID_logo.svg" />
+                    <img class="h-100" src="/Resources/BPay-logo.svg" />
+                    <h6>Cash</h6>
+                    <h6>Bank Transfer</h6>
+                </div>
+            </div>
+            Payment in full is not required to make an appointment.
+            <br />
+            A deposit may be required to secure your appointment. Deposited funds will be used towards the appointment's total.
+            <div class="d-flex justify-content-center">
+
+                <div  class="row w-75 m-3">
+                @if (Id != Guid.Empty)
+                {
+                    <a class="btn btn-success jay-green-bg m-2"
+                         @onclick="() => AddToAppointment_Click(new AppointmentServiceToAddDto() {
+                        AppointmentId = AppointmentId,
+                        ServiceId = Service.Id
+                    })">
+                        Add to appointment
+                    </a>
+                }
+                else
+                {
+                    <button class="btn btn-success jay-green-bg m-2" disabled>
+                        Add to appointment
+                    </button>
+                }
+                </div>
+            @if (ErrorMessage != null)
+            {
+                <div class="text-danger">
+                    @ErrorMessage
+                </div>
+            }
+            </div>
+            <div class="p-4">
+                Your Service will performed on site, at our home based business in Banyo, Brisbane, QLD. Any products added to your appointment can be collected when attending the appointment. 
+                <br />
+                <hr />
+                We will reach out to you to confirm your appointment with you only once submitted.
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="p-3">
+        <h3>
+            About this service:
+        </h3>
+        @Service.Description
+    </div>
+
+
+}

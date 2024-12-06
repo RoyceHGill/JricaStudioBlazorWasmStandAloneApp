@@ -1,0 +1,55 @@
+﻿@inherits ContactFormBase
+
+<h3 class="mt-5">Contact Us</h3>
+
+<div class="row d-flex justify-content-center">
+    <div class="col-12 col-lg-6">
+        <div class="m-3">
+            Name:
+            <input class="w-100" type="text" @bind-value="Name" />
+        </div>
+        <div class="m-3">
+            Email:
+            <input class="w-100" type="email" @bind-value="Email" />
+        </div >
+        <div class="m-3">
+            Subject:
+            <input class="w-100" type="text" @bind-value="Subject" />
+        </div>
+        <div class="m-3">
+            Message:
+            <textarea class="w-100" style="height:5rem; resize:none;" maxlength="500" type="text" @bind="Message" />
+        </div>
+        <div class="w-100 d-flex justify-content-around">
+            <div>
+                <a class="btn btn-success jay-green-bg" @onclick="() => ClearFeilds_Click()">Clear</a>
+            </div>
+            <div>
+                <a class="btn btn-success jay-green-bg" @onclick="() => SendContactForm_Click()">Send</a>
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(ConfirmationMessage))
+        {
+            <div>
+                @ConfirmationMessage
+            </div>
+        }
+        else
+        {
+            <div>
+                @MailingError
+            </div>
+        }
+
+        @if (ValidationErrors != null)
+        {
+            foreach (var item in ValidationErrors)
+            {
+                <div class="alert alert-dark mt-3">
+                    @item
+                </div>
+            }
+
+        }
+    </div>
+</div>

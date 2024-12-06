@@ -1,0 +1,29 @@
+﻿@page "/Services"
+
+@inherits ServicesBase
+
+@if (Services == null)
+{
+    <DisplaySpinner />
+}
+else
+{
+
+    var productCount = Services.Count();
+
+     @if (productCount > 0)
+    {
+        var groupedServicesByCategory = from service in Services group service by service.ServiceCategoryId into servicesByCategoryGroup orderby servicesByCategoryGroup.Key select servicesByCategoryGroup;
+        var productRowList = new List<ProductDto>();
+        <div class="d-flex flex-column">
+        @foreach (var serviceGroup in groupedServicesByCategory)
+        {
+            <div class="d-flex justify-content-between">
+                <h2 class="text-white">@serviceGroup.FirstOrDefault(pg => pg.ServiceCategoryId == serviceGroup.Key).CategoryName</h2>
+                <hr />
+            </div>
+            <ServicesCards Services="@serviceGroup"></ServicesCards>
+        }
+        </div>
+    }
+}

@@ -1,0 +1,24 @@
+﻿@using JricaStudioApp.Pages.Products.Individual
+
+
+@inherits RandomProductsBase;
+
+
+@if (Products == null)
+{
+    <DisplaySpinner />
+}
+else
+{
+    <div class="d-flex justify-content-between">
+        <h1>Try our Products</h1>
+
+        <a href="/Products" class="text-white fw-bold  align-self-center m-3">See All</a>
+    </div>
+    <div class="row mt-3">
+        @foreach (var item in Products)
+        {
+            <ProductCard Product="item" AppointmentId="@AppointmentId"></ProductCard>
+        }
+    </div>
+}

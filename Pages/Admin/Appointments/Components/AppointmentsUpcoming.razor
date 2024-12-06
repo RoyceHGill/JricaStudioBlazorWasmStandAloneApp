@@ -1,0 +1,47 @@
+﻿@inherits AppointmentsUpcomingBase
+@if(Appointments == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    <div class="container border border-success rounded p-3">
+        <div class="row">
+            <div class="col">
+                <h6 class="fw-bold">
+                    Upcoming Appointments
+
+                </h6>
+            </div>
+            <div class="col-4 col-md-3">
+                <a class="btn btn-success jay-green-bg" @onclick="() => ViewAll_Click()" style="font-size:small">View All</a>
+            </div>
+        </div>
+        
+        <divider></divider>
+        @if (Appointments.Count() == 0)
+        {
+        <div class="d-flex justify-content-center align-content-center">
+            You're all caught up
+            </div>
+        }
+        else
+        {
+            <AppointmentWidgetTable Appointments="Appointments"></AppointmentWidgetTable>
+            @if (AppointmentCount > 1)
+            {
+                <div>
+                    You have @AppointmentCount upcoming appointments.
+                </div>
+            }
+            else
+            {
+                <div>
+                    You have @AppointmentCount upcoming appointment.
+                </div>
+            }
+        }
+            
+    </div>
+
+}

@@ -1,0 +1,27 @@
+﻿@inherits MainLayoutBase
+
+
+
+<div class="page">
+
+    <main>
+        @if (!HideToolBar)
+        {
+            <StaticTopNavBar></StaticTopNavBar>
+
+        }
+        <div class="d-flex justify-content-center ">
+            <article class="content px-4 p-5 mt-5 col-lg-8 bg-black">
+                @Body
+                <SocialMediaElement></SocialMediaElement>
+                <PageFooter></PageFooter>
+            </article>
+        </div>
+        @if (!HideToolBar)
+        {
+            <StaticBottomNavBar></StaticBottomNavBar>
+        }
+    </main>
+</div>
+
+

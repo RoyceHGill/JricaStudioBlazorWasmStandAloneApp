@@ -1,0 +1,274 @@
+﻿@inherits FinalizationPageBase
+@page "/Finalize/{id:guid}"
+
+<h1>Check your appointment details and Submit</h1>
+<br />
+@if (Appointment == null && ErrorMessage != null)
+{
+    <p>@ErrorMessage</p>
+}
+@if (Appointment == null && ErrorMessage == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    <div class="row">
+        <div class="col-10">
+
+            <div>
+                Hi @Appointment.FirstName @Appointment.LastName
+            </div>
+            
+            <div>
+                Here's the information you have provided us:
+            </div>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-6">
+                    Date of Birth:
+                </div>
+                <div class="col-6 " Style="font-size:13px;">
+                    @Appointment.DOB.ToString("dd/MM/yyyy")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    Phone:
+                </div>
+                <div class="col-6 " Style="font-size:13px;">
+                    @Appointment.Phone
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-6">
+                    Email:
+                </div>
+                <div class="col-6" Style="font-size:13px;">
+                    @Appointment.Email
+                </div>
+            </div>
+            <br>
+            <divider></divider>
+            <div class="row">
+                <div class="col-9">
+                    Do you wear contact lenses?
+                </div>
+                <div class="col-3">
+                    @if (Appointment.WearsContanctLenses)
+                    {
+                        <b>Yes</b>
+                    }
+                    else
+                    {
+                        <b>No</b>
+                    }
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-9">
+                    Have you had any eye related medical issues in the past 4 weeks?
+                </div>
+                <div class="col-3">
+                    @if (Appointment.HasHadEyeProblems4Weeks)
+                    {
+                        <b>Yes</b>
+                    }
+                    else
+                    {
+                        <b>No</b>
+                    }
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-9">
+                    Do you have any Allergies to: Pets, Adhesives or Soaps?
+                </div>
+                <div class="col-3">
+                    @if (Appointment.HasAllergies)
+                    {
+                        <b>Yes</b>
+                    }
+                    else
+                    {
+                        <b>No</b>
+                    }
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-9">
+                    Have you ever had Eye lash extensions before?
+                </div>
+                <div class="col-3">
+                    @if (Appointment.HasHadEyelashExtentions)
+                    {
+                        <b>Yes</b>
+                    }
+                    else
+                    {
+                        <b>No</b>
+                    }
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-9">
+                    I have skin that is prone to irritation?
+                </div>
+                <div class="col-3">
+                    @if (Appointment.HasSensitiveSkin)
+                    {
+                        <b>Yes</b>
+                    }
+                    else
+                    {
+                        <b>No</b>
+                    }
+                </div>
+            </div>
+            <br>
+        </div>
+        <div class="col-2 d-flex justify-content-end align-items-center">
+            <div>
+                <a class="btn btn-success jay-green-bg" @onclick="() => EditIndemnity_Click(Id)">Edit</a>
+            </div>
+        </div>
+    </div>
+    <divider></divider>
+    <div class="row">
+        <div class="col-10">
+            <div class="row">
+                <div class="col-9">
+                    I have read and under stood the Wavier form?
+
+                </div>
+                <div class="col-3">
+                    @if (Appointment.IsWavierAcknowledged)
+                    {
+                        <b>Yes</b>
+                    }
+                    else
+                    {
+                        <b>No</b>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-2 d-flex justify-content-end align-items-center">
+            <div>
+                <a class="btn btn-success jay-green-bg" @onclick="() => ViewUserWaverForm_Click(UserId)">Read</a>
+            </div>
+        </div>
+    </div>
+    <divider></divider>
+    <div class="row">
+        <div class="col-10">
+            <div class="row">
+                <div class="col-6">
+                    Your appointment is on
+
+                </div>
+                <div class="col-6" Style="font-size:13px;">
+                    @Appointment.StartTime.Value.ToString("dd/MM/yyyy") at @Appointment.StartTime.Value.ToShortTimeString()
+                </div>
+            </div>
+        </div>
+        <div class="col-2 d-flex justify-content-end align-items-center">
+
+            <div>
+                @if (Appointment.Status < JaysLashesWebApp.Models.enums.AppointmentStatus.AwaitingApproval)
+                {
+                    <a class="btn btn-success jay-green-bg" @onclick="() => EditBookingTime_Click(Id)">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+    <divider></divider>
+        <div class="row">
+            <div class="col">
+                <h2>Services</h2>
+            @if (Appointment.Services.Count() <= 0)
+            {
+                <div>
+                    No Services Selected
+                </div>
+            }
+            else
+            {
+                @foreach (var item in Appointment.Services)
+                {
+                <div class="row justify-content-around">
+                    <div class="col-2">
+                        <img class="m-2 img-fluid text-white align-self-center" style="font-size:14px" src="@item.ServiceImagePath" />
+                    </div>
+                        <div class="col-3 col-lg-5 text-white text-nowrap overflow-hidden align-self-center" style="font-size:14px">
+                        @item.ServiceName
+                    </div>
+                        <div class="col-2 align-self-center" style="font-size:14px">
+                        @item.Duration.TotalMinutes.ToString() Min
+                    </div>
+                        <div class="col-2 text-white align-self-center" Style="font-size:14px">
+                            @item.Price.ToString("C")
+                    </div>
+                </div>
+                }
+            }
+            </div>
+            @if (Appointment.Products.Count() <= 0) {}
+            else
+            {
+                <div class="col-lg-5">
+                <h2>Products</h2>
+                @foreach (var item in Appointment.Products)
+                {
+                <div class="row justify-content-around">
+                    <div class="col-2">
+                        <img class="m-2 img-fluid text-white align-self-center" style="font-size:14px" src="@item.ProductImagePath" />
+                    </div>
+                    <div class="col-3 col-lg-5 text-white text-nowrap overflow-hidden align-self-center">
+                        @item.ProductName
+                    </div>
+                        <div class="col-2 align-self-center" Style="font-size:14px">
+                        x @item.Quantity.ToString()
+                    </div>
+                        <div class="col-2 text-white align-self-center" Style="font-size:14px">
+                        @item.Price.ToString("C")
+                    </div>
+                </div>
+                }
+            </div>
+            }
+        @if (Appointment.Status < JaysLashesWebApp.Models.enums.AppointmentStatus.AwaitingApproval)
+        {
+            <div class="d-flex  col-lg-1 align-self-center justify-content-center">
+                <a @onclick="() => EditAppointmentItinerary_Click(Appointment.Id)" class="btn btn-success jay-green-bg mt-3">Edit</a>
+            </div>
+        }
+            
+        </div>
+    <divider></divider>
+    <div class="text-center container">
+        <h4>"What's Next?"</h4>
+
+        After submitting this form we will reach out to confirm your booking through text message, Please do not show up for your appointment unless you're told to do so. We hope to respond to your appointment withing the first 24 hours. If you do not receive a message please check your Spam/Scam/Phishing inbox in-case it has been incorrectly flagged.
+    </div>
+    <br />
+    <div class="">
+        <div id="AlertsContainer" class="col">
+
+        </div>
+        @if (Appointment.Status < JaysLashesWebApp.Models.enums.AppointmentStatus.AwaitingApproval)
+        {
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-success jay-green-bg" @onclick="() => SubmitAppointment_Click()">Submit</a>
+            </div>
+        }
+        
+    </div>
+    <divider></divider>
+}

@@ -1,0 +1,59 @@
+﻿@inherits PageFooterBase
+<div class="d-flex justify-content-center mt-3">
+    <div class="row border-dark border p-3 rounded col-lg-8 col-12 d-flex justify-content-between">
+        <div class="col-12 col-lg-6 d-flex justify-content-around gap-3 flex-lg-row flex-column">
+            <div class="d-flex flex-column w-100">
+                <h5>Navigation</h5>
+
+                <ul id="page-footer-navigation-list" class="col-12 col-lg-6">
+                    <li>
+                        <a @onclick="() => GoToHome_Click()">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a @onclick="() => GoToServices_Click()">
+                            Services
+                        </a>
+                    </li>
+                    <li>
+                        <a @onclick="() => GoToProducts_Click()">
+                            Products
+                        </a>
+                    </li>
+                    <li>
+                        <a @onclick="() => GoToPolices_Click()">
+                            Polices
+                        </a>
+                    </li>
+                    <li>
+                        <a @onclick="() => GoToAboutUs_Click()">
+                            About us
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="col-12 col-lg-6">
+                <h5>Contact</h5>
+                <br />
+                Jayrica Cunanan 
+                <br />
+                Ph. 0432084004
+                <br />
+                Email. <a @onclick="() => GoToAboutUs_Click()">jricastudio@gmail.com</a>
+                <br />
+                Location. Virgina, Queensland, Australia
+            </div>
+        </div>
+        <div class="col-12 col-lg-5 d-flex justify-content-center">
+            <div class="">
+                <img class="w-100" style="height:auto" src="/Resources/ExampleLogoNoBackGroundSmallInverted.png" />
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+

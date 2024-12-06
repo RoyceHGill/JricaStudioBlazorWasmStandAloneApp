@@ -1,0 +1,67 @@
+﻿@using JricaStudioApp.Pages.Services.Individual
+@inherits ServiceShowcaseAdministrationBase
+
+
+@if (Admin == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    <h3>Update Service Showcase</h3>
+    @if (Services != default)
+    {
+        <div class="col d-flex justify-content-around m-3">
+            <div>
+                <InputSelect @bind-Value="UpdateDto.ServiceId ">
+                    @foreach (var item in Services)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </InputSelect>
+            </div>
+
+
+            <a @onclick="() => UpdateServiceShowcase_Click()" class="btn btn-success jay-green-bg"> Save Service Showcase</a>
+        </div>
+        if (!string.IsNullOrWhiteSpace(ErrorMessage))
+        {
+            <div class="text-danger">
+                @ErrorMessage
+            </div>
+        }
+        if (!string.IsNullOrWhiteSpace(ConfirmationMessage))
+        {
+            <div class="text-success">
+
+            </div>
+        }
+    }
+    else
+    {
+
+    }
+    <hr />
+
+        <h3>
+            Current Service Showcase Item
+        </h3>
+        if (ShowcaseService != null)
+        {
+            <DisplayService PreviewService="PassService(ShowcaseService)"></DisplayService>
+        }
+    else
+    {
+        <h3 class="text-center">
+            No Service Selected
+        </h3>
+    }
+
+        
+        
+        
+        
+}
+
+
+

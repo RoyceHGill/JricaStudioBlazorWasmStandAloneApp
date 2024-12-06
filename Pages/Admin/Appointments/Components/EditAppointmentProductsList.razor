@@ -1,0 +1,38 @@
+﻿@inherits EditAppointmentProductsListBase
+
+@if (Products != null)
+{
+    @if (Products.Count() <= 0)
+    {
+        <div class="">
+            No Products Selected
+        </div>
+    }
+    @foreach (var item in Products)
+    {
+        <div class="row justify-content-around">
+            <div class=" col-1">
+                <img class="m-2 img-fluid text-white align-self-center" src="@item.ProductImagePath" />
+            </div>
+            <div class=" col-3 text-white align-self-center">
+                <p class=" mb-0 text-nowrap overflow-hidden" style="font-size:14px">@item.ProductName</p>
+            </div>
+            <div class="col-2 text-white align-self-auto justify-content-center align-self-center">
+                qty
+                <input type="number" @bind="item.Quantity" class="w-100 bg-black text-white border-white" @oninput="() => MakeVisible(item.Id.ToString())">
+                <button class="btn btn-success jay-green-bg visually-hidden" data-itemId="@item.Id.ToString()" @onclick="() => UpdateAppoitmentProductQuantity_Click(item.Id, item.Quantity)">update</button>
+            </div>
+            <div class="col-2 text-white justify-content-center align-self-center" style="font-size:14px">
+                @item.Price.ToString("C")
+            </div>
+            <a style="height:40px; width:40px" class="p-0 col-2 d-flex justify-content-center align-items-center align-self-center btn" @onclick="() => DeleteAppointmentProduct_Click(item.Id)">
+                <span class="material-symbols-outlined" style="color:red">close</span>
+            </a>
+        </div>
+    }
+}
+else
+{
+    <DisplaySpinner></DisplaySpinner>
+
+}

@@ -1,0 +1,131 @@
+﻿@using JaysLashesWebApp.Models.enums
+@inherits DisplayProductBase
+
+@if(Product == null && ErrorMessage == null)
+{
+    <DisplaySpinner />
+
+}
+else if (ErrorMessage != null)
+{
+    <h3 class="text-danger">@ErrorMessage</h3>
+}
+else
+{
+    <div class="row  flex-md-row">
+        <div class="col-md-7 col-12 d-flex justify-content-center pt-3">
+            <div class="mt-5">
+                <img class="w-100 rounded" src="@Product.ImageData">
+
+            </div>
+        </div>
+        <div class="col  p-2">
+            <h2 class="p-2 text-success fw-bold">
+                @Product.Price.ToString("C") AUD
+            </h2>
+            @if (Product.Quantity > 0)
+            {
+                <h6 class="p-2">
+                    @Product.Quantity Left
+                </h6>
+            }
+            else
+            {
+                <h6 class="p-2 text-danger">
+                    Out of stock
+                </h6>
+            }
+
+            <h4 class="p-2">
+                @Product.Name
+            </h4>
+            <div class="p-2">
+                @Product.CategoryName
+            </div>
+            <div class="p-3">
+                <h3>
+                    About this item:
+                </h3>
+                @Product.Description
+            </div>
+            <hr />
+            <br />
+            <div class="row bg-dark rounded p-1">
+                <h6>Payment Options</h6>
+                <div class="col p-2 d-flex justify-content-around align-items-center" style="height:8vh">
+                    <img class="h-100 bg-white rounded" src="/Resources/PayID_logo.svg" />
+                    <img class="h-100" src="/Resources/BPay-logo.svg" />
+                    <h6>Cash</h6>
+                    <h6>Bank Transfer</h6>
+                </div>
+
+            </div>
+            Payment in full is not required until completion of your appointment.
+            <br />
+            A deposit may be required to make an appointment. Deposited funds will be used towards the appointment's total.
+            <div class="d-flex justify-content-center">
+
+                @if (Product.Quantity <= 0)
+                {
+                    <div class="d-flex justify-content-between">
+                        <b class="text-danger col-8">Sign up to get notified when this is back in stock</b>
+                        <div>
+                            <div class="btn btn-success jay-green-bg">
+                                Sign Up
+                            </div>
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex justify-content-end">
+
+                        @if (Id != Guid.Empty && Appointment.Status < AppointmentStatus.AwaitingApproval && Product.Quantity > 0)
+                        {
+                            <div class="btn btn-success jay-green-bg"
+                                 @onclick="() => AddToAppointment_Click(new AppointmentProductToAddDto()
+                        {
+                            ProductId = Product.Id,
+                            AppointmentId = AppointmentId,
+                            Quantity = Product.Quantity
+                        })">
+                                Add to Cart
+                            </div>
+                        }
+                        else
+                        {
+                            <button class="btn btn-success jay-green-bg m-2" disabled>
+                                Add to Cart
+                            </button>
+                        }
+                        @if (ErrorMessage != null)
+                        {
+                            <div class="text-danger">
+                                @ErrorMessage
+                            </div>
+                        }
+
+                    </div>
+                }
+            </div>
+            <div class="p-4">
+                Your Service will performed on site, at our home based business in Banyo, Brisbane, QLD. Any products added to your appointment can be collected when attending the appointment.
+                <br />
+                <hr />
+                We will reach out to you to confirm your appointment with you only once submitted.
+            </div>
+            
+        </div>
+
+
+    </div>
+
+
+    
+
+
+
+    
+    
+}

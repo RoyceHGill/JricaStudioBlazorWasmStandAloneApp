@@ -1,0 +1,169 @@
+﻿@inherits AdminUserDetailsBase
+
+
+<div class="col border bg-dark jay-green-border rounded h-100" style="border-color:#444 !important">
+
+    <div class="row">
+        <div class="col d-flex justify-content-center m-2">
+            User
+        </div>
+    </div>
+    @if(User == null)
+    {
+        <div class="row">
+            <div class="col d-flex justify-content-center m-2">
+                Please Select a User
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="@DetailRowclasses">
+            <div class="@DetailLabelclasses">
+                Name:                   
+            </div>
+            <div class="col align-self-center">
+                @User.FirstName @User.LastName
+            </div>
+        </div>
+        <div class="@DetailRowclasses">
+            <div class="col-3 text-end">
+                Email:
+            </div>
+            <div class="col small overflow-hidden flex-column align-self-center">
+                @User.Email
+            </div>
+        </div>
+        <div class="@DetailRowclasses">
+            <div class="@DetailLabelclasses">
+                Phone:
+            </div>
+            <div class="col align-self-center">
+                @User.Phone
+            </div>
+        </div>
+        <div class="@DetailRowclasses">
+            <div class="@DetailLabelclasses">
+                Date of Birth:
+            </div>
+            <div class="col align-self-center">
+                @User.DOB
+            </div>
+        </div>
+        <div class="@DetailRowclasses">
+            <div class="@DetailLgLabelclasses">
+                Allergies:
+            </div>
+            <div class="col align-self-center">
+                @User.HasAllergies.DisplayBoolAsYesNo()
+            </div>
+        </div>
+        <div class="@DetailRowclasses">
+            <div class="@DetailLgLabelclasses">
+                Wears Contact Lenses:
+            </div>
+            <div class="col align-self-center">
+                @User.WearsContanctLenses.DisplayBoolAsYesNo()
+            </div>
+        </div>
+        <div class="@DetailRowclasses">
+            <div class="@DetailLgLabelclasses">
+                Sensitive skin:
+            </div>
+            <div class="col align-self-center">
+                @User.HasSensitiveSkin.DisplayBoolAsYesNo()
+            </div>
+        </div>
+        <div class="@DetailRowclasses">
+            <div class="@DetailLgLabelclasses">
+                Eye Problems:
+            </div>
+            <div class="col align-self-center">
+                @User.HasHadEyeProblems4Weeks.DisplayBoolAsYesNo()
+            </div>
+        </div>
+        <div class="@DetailRowclasses">
+            <div class="@DetailLgLabelclasses">
+                Waiver Acknowledged:
+            </div>
+            <div class="col align-self-center">
+                @User.IsWaiverAcknowledged.DisplayBoolAsYesNo()
+            </div>
+        </div>
+        <div class="@DetailRowclasses">
+            <div class="@DetailLgLabelclasses">
+                Appointments made:
+            </div>
+            <div class="col align-self-center">
+                @User.Appointments.Where(a => a.Status >= JaysLashesWebApp.Models.enums.AppointmentStatus.AwaitingApproval).Count()
+            </div>
+        </div>
+        @if (User.Appointments.Any())
+        {
+            <div class="@DetailRowclasses">
+
+                <div class="table-responsive">
+
+                    <div class="table table-sm table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">Booked</th>
+                                <th scope="col">Mins</th>
+                                <th scope="col">Services</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                @foreach (var item in User.Appointments)
+                                {
+                                <tr>
+                                    @if (item.StartTime == null)
+                                    {
+                                        <td>
+                                            N/A
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            @item.StartTime.Value.ToString("HH:mm dd/MM")
+                                        </td>
+                                    }
+                                    @if (!item.Services.Any())
+                                    {
+                                        <td>
+                                            N/A
+                                        </td>
+                                        <td>
+                                            N/A
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            @item.Services.Sum(s => s.Duration.TotalMinutes)
+                                        </td>
+                                        <td>
+                                            @foreach(var service in item.Services)
+                                            {
+                                                <div class="overflow-hidden text-nowrap" style="max-width:10ch">
+                                                    @service.ServiceName
+                                                </div>
+                                            }
+                                        </td>
+                                    }
+                                    <td>
+                                        <a @onclick="() => GoToAppointment_Click(item.Id)" class="text-nowrap btn btn-success jay-green-bg">
+                                            Go to
+                                        </a>
+                                    </td>
+                                </tr>
+                                }
+                        </tbody>
+                    </div>
+                </div>
+            </div>
+        }
+        
+    }
+</div>

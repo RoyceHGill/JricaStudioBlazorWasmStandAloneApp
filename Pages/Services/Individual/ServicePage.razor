@@ -1,0 +1,17 @@
+﻿@page "/ServiceDetails/{id:guid}"
+@inherits ServicePageBase;
+@using JricaStudioApp.Pages.Products.Iterative
+
+@if (Service == null && ErrorMessage == null)
+{
+    <DisplaySpinner/>
+}
+else if (ErrorMessage != null)
+{
+    <h3 class="text-danger">@ErrorMessage</h3>
+}
+else
+{
+    <DisplayService Id ="Id"></DisplayService>
+    <RandomProducts Length="8"></RandomProducts>
+}

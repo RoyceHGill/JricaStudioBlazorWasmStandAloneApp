@@ -1,0 +1,24 @@
+﻿@inherits AppointmentWidgetTableBase
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col" class="small">Name</th>
+            <th scope="col" class="small">Start Time</th>
+            <th scope="col" class="small">Duration</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Appointments)
+        {
+            <tr>
+                <td class="small overflow-hidden" style="max-width:7rem">@item.FirstName</td>
+                <td class="small">@item.StartTime.ToString("dd/MM/yyyy") @item.StartTime.ToShortTimeString()</td>
+                <td class="small"> @((item.EndTime - item.StartTime).TotalMinutes) Minutes</td>
+                <td> <a @onclick="() => GoToAppointment_Click(item.Id)" class="btn btn-success jay-green-bg" style="font-size:small">View</a></td>
+            </tr>
+        }
+
+    </tbody>
+</table>

@@ -1,0 +1,37 @@
+﻿@inherits PopularProductUpsellBase
+@if (Product == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    if (Product.Id != Guid.Empty)
+    {
+        if (!AppointmentProductDtos.Any(a => a.ProductId == Product.Id))
+        {
+
+            <div class="row justify-content-around border-success border-3 rounded p-2">
+                <div class="col-2">
+                    <img class="img-fluid m-1" src="@Product.ImageData" />
+                </div>
+                <div class="col-2 m-1 align-content-center">
+                    <button class="btn btn-success jay-green-bg align-self-center " @onclick="() => AddProductShowCaseToAppointment_OnClick()">
+                        +
+                    </button>
+                </div>
+                <div class="col">
+                    Add
+                    @Product.Name
+                </div>
+                <div class="col-2">
+                    @Product.Price.ToString("C")
+                </div>
+
+
+            </div>
+        }
+    }
+    
+    
+}
+

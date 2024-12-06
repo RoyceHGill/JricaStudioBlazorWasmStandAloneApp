@@ -1,0 +1,71 @@
+﻿@inherits BlockOutDatesAdministrationBase
+
+@if (Admin == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    <h3>
+       Upcoming Block Out Dates
+    </h3>
+    <div class="row d-flex justify-content-center">
+        <div class="col col-lg-10">
+            <lable class="m-1 text-white">Add new block out date: </lable>
+            <input class="m-1" type="date" @bind-value="BlockOutDateToAdd.Date" />
+            @if (ErrorMessage != null)
+            {
+                    @ErrorMessage
+            }
+            @if (ConfirmationMessage != null)
+            {
+                    @ConfirmationMessage
+            }
+            <a @onclick="() => AddBlockOutDate_Click()" class="btn btn-success jay-green-bg m-3">
+                Save
+            </a>
+
+            
+            
+            <table class="table border table-dark" Style="border-color:#444 !important">
+                <thead>
+                    <tr>
+                        <th scope="col" class="small">Date</th>
+                        <th scope="col" class="small"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (BlockOutDates != null)
+                    {
+                        foreach (var item in BlockOutDates)
+                        {
+                            <tr>
+                                <td class="">
+                                    @item.Date.ToString("dd/MM/yyyy")
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger" @onclick="() => DeleteBlockOutDate(item.Id)">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                Block out dates are empty
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+

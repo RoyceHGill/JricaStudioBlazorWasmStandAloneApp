@@ -1,0 +1,123 @@
+﻿@inherits WaiverFormBase;
+@page "/Wavier/{id:guid}"
+
+<h1>
+    Liability Waiver
+</h1>
+
+@if(User == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+else
+{
+    <div class="d-flex justify-content-center">
+        <div class="w-75 pt-5" style="text-align:center; font-family:Bahnschrift;">
+            I @User.FirstName @User.LastName, authorize JRica.Studio to apply eyelash extensions to myself. On this day @DateTime.UtcNow.ToShortDateString() and future eyelash extensions services.
+            <br>
+            <br>
+            By signing below, I am agreeing to the following:
+            <br>
+            <br>
+
+            I am over the age of 18 years old.
+            <br>
+            <br>
+
+            I understand that JRica.Studio lash technician are qualified to apply eyelash extensions.
+            <br>
+            <br>
+
+            I understand what eyelash extensions are and the process of applying eyelash extensions.
+            <br>
+            <br>
+
+            I authorize JRica.Studio to apply eyelash extensions to myself for today and all future eyelash extension services.
+            <br>
+            <br>
+
+            I give consent for photographs and videos taken of my lashes and during the services to be used for the salon’s use.
+            <br>
+            <br>
+
+            I understand that the glue is strong, and the fumes can have a powerful smell.
+            <br>
+            <br>
+
+            I understand that it is my responsibility to keep my eyes closed during the procedure and only open when advised by lash tech.
+            <br>
+            <br>
+
+            I agree to disclose any allergies I may have.
+            <br>
+            <br>
+
+            I understand that I need to listen to my lash technician’s instructions.
+            <br>
+            <br>
+
+            I understand I need to follow the aftercare advise to maintain not only the eyelash extensions, but my own natural lashes.
+            <br>
+            <br>
+
+            I understand all after care advice that my lash technician has given/ explained to me.
+            <br>
+            <br>
+
+            I understand that due to the natural cycle, I will need to maintain my lashes and book touch up appointments recommended every 2-3 weeks.
+
+            I understand that I have been advised I am not allowed to wear makeup around the eye area to my eyelash extension appointments and that in doing so I will be charge a removal fee and there is a chance th applied lashes may not hold due to left over residue.
+            <br>
+            <br>
+
+            I understand what a sample set is and agree I have been offered one.
+            <br>
+            <br>
+
+            I understand that if I have chosen not to receive a sample set before going through with the procedure, that my lash technician is not liable in any way for any reactions or results from the procedure.
+            <br>
+            <br>
+
+            I understand the infill on another lash techs work is not recommended and if completed my lashes may not last as long or look as good as a full set done by JRica.Studio service technician.
+            <br>
+            <br>
+
+            I understand that by checking the box below, I hereby release any and all persons representing this salon from all claims, demands, damages, actions and cause of actions arising out of the performance of this service.
+            <br>
+            <br>
+
+            I understand that JRica.Studio does not offer refunds in any situation, however any problems will be solved with either product or exchange or discounted future services if JRica.Studio is at fault.
+            <br>
+            <br>
+
+            I fully understand and comply with the above as stated and I am of sound mind and fully capable of executing this waiver myself.
+
+
+        </div>
+    </div>
+    
+    
+    <br />
+    if (User.IsWavierAcknowledged == false)
+    {
+        <div class="d-flex justify-content-center align-items-center mb-5">
+            <div><InputCheckbox class="col-1 m-2" @bind-Value="@User.IsWavierAcknowledged" @oninput="() => OnWaiverAccepted_CheckBoxTicked(true)" style="width:20px; height:20px" /></div>
+            I have read, understood and agree with the Liability Wavier
+        </div>
+        <div class="w-100 d-flex justify-content-around">
+            <a class="btn btn-success jay-green-bg m-5" href="/IndemnityForm/@AppointmentId" style="font-size:20px">Back</a>
+            <div></div>
+        </div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-center align-items-center mb-5 text-white-50">
+            <div><input type="checkbox" class="col-1 m-2 jays-checkbox" checked disabled="disabled" style="width:20px; height:20px" /></div>
+            I have read, understood and agree with the Liability Wavier
+        </div>
+        <div class="w-100 d-flex justify-content-around">
+            <a class="btn btn-success jay-green-bg m-5" href="/IndemnityForm/@AppointmentId" style="font-size:20px">Back</a>
+            <a class="btn btn-success jay-green-bg m-5" @onclick="() => StatusBasedNavigation_Click()" style="font-size:20px">Next</a>
+        </div>
+    }
+}

@@ -1,0 +1,101 @@
+﻿@inherits BusinessHoursAdministrationBase
+
+
+@if (Admin == null)
+{
+    <DisplaySpinner></DisplaySpinner>
+}
+<div class="row">
+<h3>
+    Business Hours
+</h3>
+    <div class="col ">
+        <div class="row">
+            @if (BusinessHours != null)
+            {
+            <div class="d-flex justify-content-around flex-wrap align-items-center">
+                @foreach (var item in BusinessHours.OrderBy(b => b.Day))
+                {
+
+                        <div class="border border rounded bg-dark m-1 p-3" style="border-color:#444 !important">
+                            <h6 class="d-flex justify-content-center">
+                                @item.Day
+                            </h6>
+                            @if (!item.IsDisabled)
+                            {
+                                <h6 class="d-flex justify-content-center m-3">
+                                    Operating Hours
+                                </h6>
+                                <div class="d-flex justify-content-between m-1">
+                                    <lable class="small">
+                                        Open:
+                                    </lable>
+                                    <input type="time" style="max-width:7rem; font-size:14px" @bind="item.OpenTime" />
+                                </div>
+                                <div class="d-flex justify-content-between m-1">
+                                    <lable class="small">
+                                        Close:
+                                    </lable>
+                                    <input type="time" style="max-width:7rem; font-size:14px" @bind="item.CloseTime" />
+                                
+                                </div>
+                            }
+                                <div class="d-flex justify-content-between m-2">
+                                    <lable class="mx-1">Closed: </lable>
+                                    <div class="w-100 d-flex justify-content-center">
+                                        <input class="jays-checkbox" type="checkbox" @bind="item.IsDisabled" />
+                                    </div>
+                                
+                                </div>
+                            @if (!item.IsDisabled)
+                            {
+                                <h5 class="d-flex justify-content-center">
+                                    After Hours
+                                </h5>
+
+                                <div class="d-flex justify-content-between m-1">
+                                    <lable class="">Hours:</lable>
+                                    <div class="d-flex justify-content-center w-100">
+                                        <input maxlength="1" type="number" step="1" @bind="item.AfterHoursGraceRange" style="max-width:2rem" />
+                                    </div>
+                                </div>
+                            }
+                        
+                        
+                        </div>
+                }
+                </div>
+            }
+            else
+            {
+                <DisplaySpinner></DisplaySpinner>
+            }
+        
+            <div class="row mt-5">
+                <div class="d-flex justify-content-around">
+                    <a @onclick="() => SaveBusinessHours_Click()" class="btn btn-success jay-green-bg">Save</a>
+                
+                    <a @onclick="() => ReloadBusinessHours_Click()" class="btn btn-danger">Re-load</a>
+                </div>
+            </div>
+            <h4 class="text-danger">
+                @ErrorMessage
+            </h4>
+            <h4 class="text-success">
+                @ConfirmationMessage
+            </h4>
+            @if (ValiadationErrorMessages != null)
+            {
+                foreach (var item in ValiadationErrorMessages)
+                {
+                    <div class="col">
+                        <div class="row text-danger" >
+                            @item
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+</div>

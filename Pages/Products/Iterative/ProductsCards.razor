@@ -1,0 +1,13 @@
+﻿@using JricaStudioApp.Pages.Products.Individual
+
+
+@inherits ProductsCardsBase;
+
+<div class="row mt-3">
+
+@foreach (var item in Products)
+{
+    <ProductCard Product="@item" AppointmentId="@AppointmentId"></ProductCard>
+}
+
+</div>
