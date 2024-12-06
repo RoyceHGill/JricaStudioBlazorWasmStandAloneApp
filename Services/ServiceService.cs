@@ -1,7 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using JricaStudioApp.Services.Contracts;
-using JaysLashesWebApp.Models.Dtos;
-using JaysLashesWebApp.Models.Dtos.Admin;
+using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos.Admin;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Models.Constants;
@@ -28,7 +28,7 @@ namespace JricaStudioApp.Services
             this._localStorageService = localStorageService;
         }
 
-        
+
 
         private async Task AddAdminHeaders()
         {
@@ -192,7 +192,7 @@ namespace JricaStudioApp.Services
                 content.Add(new StringContent(dto.Price.ToString()), nameof(dto.Price));
                 content.Add(new StringContent(dto.ServiceCategoryId.ToString()), nameof(dto.ServiceCategoryId));
 
-                content.Add(fileContent, nameof(dto.ImageFile),dto.ImageFile.Name);
+                content.Add(fileContent, nameof(dto.ImageFile), dto.ImageFile.Name);
 
                 var response = await _httpClient.PostAsync("api/Service", content);
 
@@ -241,7 +241,7 @@ namespace JricaStudioApp.Services
 
         public async Task<ImageUpdateResultDto> PatchServiceImage(Guid id, IBrowserFile image)
         {
-            
+
             await AddAdminHeaders();
 
             using var content = new MultipartFormDataContent();
@@ -341,7 +341,7 @@ namespace JricaStudioApp.Services
                 return default;
             }
             catch (ArgumentException ne)
-            {  
+            {
                 RemoveAdminHeaders();
                 return new AdminServiceCategoryDto();
             }
@@ -439,7 +439,7 @@ namespace JricaStudioApp.Services
                 RemoveAdminHeaders();
                 throw;
             }
-            
+
         }
 
         public async Task<PreviousServiceDto> GetPreviouslyOrderedService(Guid userId)
@@ -459,7 +459,7 @@ namespace JricaStudioApp.Services
                     {
                         return dto;
                     }
-                    
+
                     return default;
                 }
                 else
@@ -474,7 +474,7 @@ namespace JricaStudioApp.Services
 
                 throw;
             }
-            
+
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JaysLashesWebApp.Models.Dtos;
-using JaysLashesWebApp.Models.enums;
+using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.enums;
 using Microsoft.AspNetCore.Components;
 using Models.Dtos;
 using System.ComponentModel;

@@ -1,4 +1,4 @@
-﻿using JaysLashesWebApp.Models.Dtos;
+﻿using JricaStudioApp.Models.Dtos;
 
 namespace JricaStudioApp.Services.Contracts
 {

@@ -1,5 +1,5 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JaysLashesWebApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos;
 using Microsoft.AspNetCore.Components;
 
 namespace JricaStudioApp.Pages.Products.Iterative

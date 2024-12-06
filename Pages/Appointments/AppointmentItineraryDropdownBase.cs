@@ -1,9 +1,9 @@
 ﻿using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
 using Microsoft.AspNetCore.Components;
-using JaysLashesWebApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos;
 using Microsoft.JSInterop;
-using JaysLashesWebApp.Models.enums;
+using JricaStudioApp.Models.enums;
 
 namespace JricaStudioApp.Pages.Appointments
 {

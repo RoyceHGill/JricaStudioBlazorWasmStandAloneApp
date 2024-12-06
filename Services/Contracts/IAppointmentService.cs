@@ -1,6 +1,6 @@
-﻿using JaysLashesWebApp.Models.Dtos;
-using JaysLashesWebApp.Models.Dtos.Admin;
-using JaysLashesWebApp.Models.enums;
+﻿using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioApp.Models.enums;
 using Models.Dtos;
 using Models.Dtos.Admin;
 

@@ -1,8 +1,8 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JaysLashesWebApp.Models.Dtos;
-using JaysLashesWebApp.Models.Dtos.Admin;
-using JaysLashesWebApp.Models.Dtos.BusinessHours;
-using JaysLashesWebApp.Server.Extentions;
+using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioApp.Models.Dtos.BusinessHours;
+using JricaStudioApp.Server.Extentions;
 using Models.Dtos.Admin;
 using Models.Dtos.Admin.BusinessHours;
 using Models.Dtos.BusinessHours;

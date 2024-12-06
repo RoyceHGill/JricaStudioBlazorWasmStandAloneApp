@@ -1,8 +1,8 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JaysLashesWebApp.Models.Dtos;
-using JaysLashesWebApp.Models.Dtos.Admin;
-using JaysLashesWebApp.Models.enums;
-using JaysLashesWebApp.Server.Extentions;
+using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioApp.Models.enums;
+using JricaStudioApp.Server.Extentions;
 using Microsoft.JSInterop.Infrastructure;
 using Models.Dtos;
 using Models.Dtos.Admin;

@@ -95,7 +95,7 @@
                 Appointments made:
             </div>
             <div class="col align-self-center">
-                @User.Appointments.Where(a => a.Status >= JaysLashesWebApp.Models.enums.AppointmentStatus.AwaitingApproval).Count()
+                @User.Appointments.Where(a => a.Status >= JricaStudioApp.Models.enums.AppointmentStatus.AwaitingApproval).Count()
             </div>
         </div>
         @if (User.Appointments.Any())

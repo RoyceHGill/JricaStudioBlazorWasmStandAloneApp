@@ -1,4 +1,4 @@
-﻿using JaysLashesWebApp.Models.Dtos.Admin;
+﻿using JricaStudioApp.Models.Dtos.Admin;
 using Microsoft.AspNetCore.Components;
 
 namespace JricaStudioApp.Pages.Admin.Appointments.Components

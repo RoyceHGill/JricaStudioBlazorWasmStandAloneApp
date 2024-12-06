@@ -1,6 +1,6 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JaysLashesWebApp.Models.Dtos;
-using JaysLashesWebApp.Models.Dtos.Admin;
+using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos.Admin;
 using Microsoft.AspNetCore.Components;
 using Models.Dtos.Admin;
 

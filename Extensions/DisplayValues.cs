@@ -1,4 +1,4 @@
-﻿using JaysLashesWebApp.Models.Dtos.Admin;
+﻿using JricaStudioApp.Models.Dtos.Admin;
 
 namespace JricaStudioApp.Extensions
 {
