@@ -36,10 +36,10 @@ namespace JricaStudioApp
 
 
 #if DEBUG
-            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7247/") });
+            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7063/") });
 
 #else
-            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("API_URI") ?? "https://localhost:7247/") });
+            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("API_URI")) });
 
 #endif
 
