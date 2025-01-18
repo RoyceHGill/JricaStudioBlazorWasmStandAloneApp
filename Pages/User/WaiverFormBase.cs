@@ -1,8 +1,8 @@
 ﻿using JricaStudioApp.Constants;
 using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.enums;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.enums;
 using Microsoft.AspNetCore.Components;
 
 namespace JricaStudioApp.Pages.User

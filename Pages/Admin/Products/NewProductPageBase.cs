@@ -1,10 +1,11 @@
 ﻿using Blazorise;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Constants;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Models.Constants;
+
 using System.Runtime.CompilerServices;
 
 namespace JricaStudioApp.Pages.Admin.Products

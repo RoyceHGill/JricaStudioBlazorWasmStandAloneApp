@@ -1,10 +1,10 @@
 ﻿using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos.Admin;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using Models.Dtos.Admin;
+
 using System.ComponentModel.DataAnnotations;
 
 namespace JricaStudioApp.Pages.Admin.Services

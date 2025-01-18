@@ -1,8 +1,8 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.Dtos.Admin;
-using Models.Dtos;
-using Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
+
+
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.Text;

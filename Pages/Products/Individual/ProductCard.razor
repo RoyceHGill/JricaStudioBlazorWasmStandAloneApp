@@ -1,4 +1,4 @@
-﻿@using JricaStudioApp.Models.Dtos;
+﻿@using JricaStudioSharedLibrary.Dtos;
 @inherits ProductCardBase;
 
 
@@ -43,7 +43,7 @@
             </a>
             @if (Appointment != null)
             {
-                @if (Product.Quantity > 0 && Product.Id != Guid.Empty && Appointment.Status < JricaStudioApp.Models.enums.AppointmentStatus.AwaitingApproval)
+                @if (Product.Quantity > 0 && Product.Id != Guid.Empty && Appointment.Status < JricaStudioSharedLibrary.enums.AppointmentStatus.AwaitingApproval)
                 {
                     <div class="btn btn-success jay-green-bg" @onclick="() => AddToAppointment_Click(new AppointmentProductToAddDto()
                     {

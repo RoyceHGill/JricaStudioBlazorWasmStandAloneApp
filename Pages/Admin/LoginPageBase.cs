@@ -1,5 +1,5 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos.Admin;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -29,7 +29,7 @@ namespace JricaStudioApp.Pages.Admin
             {
                 Password = Password,
                 Username = Email.ToLower()
-            }) ;
+            });
 
             if (Admin != null)
             {
@@ -66,7 +66,7 @@ namespace JricaStudioApp.Pages.Admin
         }
 
         public async void Enter(KeyboardEventArgs e)
-       {
+        {
             if (e.Code == "Enter" || e.Code == "NumpadEnter")
             {
                 await Login_Click();

@@ -1,6 +1,6 @@
 ﻿
 using JricaStudioApp.Shared.Models;
-using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos.Admin;
 
 namespace JricaStudioApp.Services.Contracts
 {

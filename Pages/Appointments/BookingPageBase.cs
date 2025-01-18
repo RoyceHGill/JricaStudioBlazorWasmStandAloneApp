@@ -2,10 +2,11 @@
 using Blazorise;
 using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.enums;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.BusinessHours;
+using JricaStudioSharedLibrary.enums;
 using Microsoft.AspNetCore.Components;
-using Models.Dtos.BusinessHours;
+
 using Newtonsoft.Json.Linq;
 
 namespace JricaStudioApp.Pages.Appointments

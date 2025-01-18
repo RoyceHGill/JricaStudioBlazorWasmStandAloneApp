@@ -1,13 +1,14 @@
 ﻿using JricaStudioApp.Pages.Admin.Appointments.Components;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Constants;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.FileProviders;
-using Models.Constants;
-using Models.Dtos;
-using Models.Dtos.Admin;
+
+
+
 using System;
 using System.Net;
 using System.Net.Http.Headers;
@@ -33,11 +34,12 @@ namespace JricaStudioApp.Pages.Admin.Services
 
 
         private int durationInMinutes;
-        
+
         public int DurationInMinutes
         {
             get { return durationInMinutes; }
-            set { 
+            set
+            {
                 durationInMinutes = value;
                 ServiceToAdd.Duration = TimeSpan.FromMinutes(durationInMinutes);
             }
@@ -71,7 +73,7 @@ namespace JricaStudioApp.Pages.Admin.Services
 
                     throw;
                 }
-            } 
+            }
         }
 
         public async Task UploadImage(IBrowserFile file)
@@ -98,9 +100,9 @@ namespace JricaStudioApp.Pages.Admin.Services
                 Name = toAdd.Name,
                 Description = toAdd.Description,
                 ServiceCategoryId = toAdd.ServiceCategoryId,
-                CategoryName = Categories.Single(c => c.Id  == toAdd.ServiceCategoryId).Name,
+                CategoryName = Categories.Single(c => c.Id == toAdd.ServiceCategoryId).Name,
                 Duration = toAdd.Duration,
-                Price =  toAdd.Price,
+                Price = toAdd.Price,
                 ImageData = ImageData
             };
         }

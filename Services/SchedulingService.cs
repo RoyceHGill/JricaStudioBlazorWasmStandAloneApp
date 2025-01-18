@@ -1,11 +1,9 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.Dtos.Admin;
-using JricaStudioApp.Models.Dtos.BusinessHours;
-using JricaStudioApp.Server.Extentions;
-using Models.Dtos.Admin;
-using Models.Dtos.Admin.BusinessHours;
-using Models.Dtos.BusinessHours;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos.Admin.BusinessHours;
+using JricaStudioSharedLibrary.Dtos.BusinessHours;
+using JricaStudioSharedLibrary.Extentions;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
@@ -73,7 +71,7 @@ namespace JricaStudioApp.Services
 
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentAvailableDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTime();
+                    dto = dto.ConvertDateTimesToLocalTimes();
 
                     return dto;
 

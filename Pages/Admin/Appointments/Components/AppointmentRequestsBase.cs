@@ -1,7 +1,7 @@
 ﻿using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos.Admin;
-using JricaStudioApp.Models.enums;
+using JricaStudioSharedLibrary.Dtos.Admin;
+using JricaStudioSharedLibrary.enums;
 using Microsoft.AspNetCore.Components;
 
 namespace JricaStudioApp.Pages.Admin.Appointments.Components

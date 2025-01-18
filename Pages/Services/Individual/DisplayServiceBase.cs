@@ -1,8 +1,10 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos.BusinessHours;
 using Microsoft.AspNetCore.Components;
-using Models.Dtos.Admin;
-using Models.Dtos.BusinessHours;
+
+
 
 namespace JricaStudioApp.Pages.Services.Individual
 {
@@ -146,7 +148,7 @@ namespace JricaStudioApp.Pages.Services.Individual
 
             var appointment = await AppointmentService.GetAppointment(AppointmentId);
 
-            if (appointment.Status >= JricaStudioApp.Models.enums.AppointmentStatus.AwaitingApproval)
+            if (appointment.Status >= JricaStudioSharedLibrary.enums.AppointmentStatus.AwaitingApproval)
             {
                 ApplyErrorMessage("Please start a new appointment if you wish to order this Service.");
                 return;
@@ -176,7 +178,7 @@ namespace JricaStudioApp.Pages.Services.Individual
         {
             var appointment = await AppointmentService.GetAppointment(AppointmentId);
 
-            if (appointment.Status >= JricaStudioApp.Models.enums.AppointmentStatus.AwaitingApproval)
+            if (appointment.Status >= JricaStudioSharedLibrary.enums.AppointmentStatus.AwaitingApproval)
             {
                 ApplyErrorMessage("Please start a new appointment if you wish to order this Service.");
                 return;

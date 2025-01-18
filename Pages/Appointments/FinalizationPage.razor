@@ -181,7 +181,7 @@ else
         <div class="col-2 d-flex justify-content-end align-items-center">
 
             <div>
-                @if (Appointment.Status < JricaStudioApp.Models.enums.AppointmentStatus.AwaitingApproval)
+                @if (Appointment.Status < JricaStudioSharedLibrary.enums.AppointmentStatus.AwaitingApproval)
                 {
                     <a class="btn btn-success jay-green-bg" @onclick="() => EditBookingTime_Click(Id)">Edit</a>
                 }
@@ -243,7 +243,7 @@ else
                 }
             </div>
             }
-        @if (Appointment.Status < JricaStudioApp.Models.enums.AppointmentStatus.AwaitingApproval)
+        @if (Appointment.Status < JricaStudioSharedLibrary.enums.AppointmentStatus.AwaitingApproval)
         {
             <div class="d-flex  col-lg-1 align-self-center justify-content-center">
                 <a @onclick="() => EditAppointmentItinerary_Click(Appointment.Id)" class="btn btn-success jay-green-bg mt-3">Edit</a>
@@ -262,7 +262,7 @@ else
         <div id="AlertsContainer" class="col">
 
         </div>
-        @if (Appointment.Status < JricaStudioApp.Models.enums.AppointmentStatus.AwaitingApproval)
+        @if (Appointment.Status < JricaStudioSharedLibrary.enums.AppointmentStatus.AwaitingApproval)
         {
             <div class="d-flex justify-content-center">
                 <a class="btn btn-success jay-green-bg" @onclick="() => SubmitAppointment_Click()">Submit</a>

@@ -1,10 +1,11 @@
 ﻿using Blazorise.Extensions;
 using JricaStudioApp.Extensions;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos.Admin.BusinessHours;
 using Microsoft.AspNetCore.Components;
-using Models.Dtos.Admin.BusinessHours;
+
 
 namespace JricaStudioApp.Pages.Admin.Appointments.Components
 {

@@ -1,6 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
+using JricaStudioSharedLibrary.Dtos;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.Text;
