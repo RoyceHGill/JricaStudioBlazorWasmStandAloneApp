@@ -1,9 +1,9 @@
-﻿using JricaStudioSharedLibrary.Dtos;
-using JricaStudioSharedLibrary.Dtos.Admin;
+﻿using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos.Admin;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
-
-
+using Models.Dtos;
+using Models.Dtos.Admin;
 
 
 namespace JricaStudioApp.Services.Contracts

@@ -1,12 +1,12 @@
 ﻿using Blazored.LocalStorage;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioSharedLibrary.Dtos;
-using JricaStudioSharedLibrary.Dtos.Admin;
+using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos.Admin;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
-
-
-
+using Models.Constants;
+using Models.Dtos;
+using Models.Dtos.Admin;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;

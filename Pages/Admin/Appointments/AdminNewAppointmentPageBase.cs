@@ -1,11 +1,12 @@
 ﻿using Blazorise;
 using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioSharedLibrary.Dtos;
-using JricaStudioSharedLibrary.Dtos.Admin;
-using JricaStudioSharedLibrary.Dtos.BusinessHours;
+using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos.Admin;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Models.Dtos.Admin;
+using Models.Dtos.BusinessHours;
 using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Diagnostics;

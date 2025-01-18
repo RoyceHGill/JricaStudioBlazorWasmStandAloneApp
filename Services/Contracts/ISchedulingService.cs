@@ -1,10 +1,8 @@
-﻿using JricaStudioSharedLibrary.Dtos;
-using JricaStudioSharedLibrary.Dtos.Admin;
-using JricaStudioSharedLibrary.Dtos.Admin.BusinessHours;
-using JricaStudioSharedLibrary.Dtos.BusinessHours;
-
-
-
+﻿using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos.Admin;
+using Models.Dtos.Admin;
+using Models.Dtos.Admin.BusinessHours;
+using Models.Dtos.BusinessHours;
 
 namespace JricaStudioApp.Services.Contracts
 {

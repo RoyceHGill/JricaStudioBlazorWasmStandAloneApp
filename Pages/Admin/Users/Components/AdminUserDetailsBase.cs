@@ -1,6 +1,5 @@
-﻿using JricaStudioSharedLibrary.Dtos.Admin;
-using Microsoft.AspNetCore.Components;
-
+﻿using Microsoft.AspNetCore.Components;
+using Models.Dtos.Admin;
 
 namespace JricaStudioApp.Pages.Admin.Users.Components
 {

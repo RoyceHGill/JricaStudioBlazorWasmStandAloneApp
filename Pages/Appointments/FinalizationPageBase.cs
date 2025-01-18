@@ -1,6 +1,6 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JricaStudioSharedLibrary.Dtos;
-using JricaStudioSharedLibrary.enums;
+using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.enums;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Diagnostics.CodeAnalysis;

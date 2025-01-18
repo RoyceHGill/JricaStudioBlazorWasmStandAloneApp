@@ -1,9 +1,9 @@
 ﻿using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
 using Microsoft.AspNetCore.Components;
-using JricaStudioSharedLibrary.Dtos;
+using JricaStudioApp.Models.Dtos;
 using Microsoft.JSInterop;
-using JricaStudioSharedLibrary.enums;
+using JricaStudioApp.Models.enums;
 
 namespace JricaStudioApp.Pages.Appointments
 {
@@ -35,7 +35,7 @@ namespace JricaStudioApp.Pages.Appointments
 
         protected override async Task OnInitializedAsync()
         {
-
+            
             AppointmentProductDtos = await AppointmentItemService.GetAppointmentProducts(AppointmentId);
 
             AppointmentServiceDtos = await AppointmentItemService.GetAppointmentServices(AppointmentId);

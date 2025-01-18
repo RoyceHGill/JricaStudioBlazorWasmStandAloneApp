@@ -1,4 +1,4 @@
-﻿using JricaStudioSharedLibrary.Dtos.Admin;
+﻿using JricaStudioApp.Models.Dtos.Admin;
 
 namespace JricaStudioApp.Extensions
 {

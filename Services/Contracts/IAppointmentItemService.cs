@@ -1,4 +1,4 @@
-﻿using JricaStudioSharedLibrary.Dtos;
+﻿using JricaStudioApp.Models.Dtos;
 
 namespace JricaStudioApp.Services.Contracts
 {

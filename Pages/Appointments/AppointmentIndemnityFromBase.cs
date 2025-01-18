@@ -1,7 +1,8 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JricaStudioSharedLibrary.Dtos;
-using JricaStudioSharedLibrary.enums;
+using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.enums;
 using Microsoft.AspNetCore.Components;
+using Models.Dtos;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mail;

@@ -1,7 +1,7 @@
-﻿using JricaStudioSharedLibrary.Dtos;
-using JricaStudioSharedLibrary.Dtos.Admin;
-
-
+﻿using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos.Admin;
+using Models.Dtos;
+using Models.Dtos.Admin;
 
 namespace JricaStudioApp.Services.Contracts
 {

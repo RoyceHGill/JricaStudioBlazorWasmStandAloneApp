@@ -1,6 +1,7 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JricaStudioSharedLibrary.Dtos.Admin;
+using JricaStudioApp.Models.Dtos.Admin;
 using Microsoft.AspNetCore.Components;
+using Models.Dtos.Admin;
 
 namespace JricaStudioApp.Pages.Admin.Appointments.Components
 {
@@ -48,7 +49,7 @@ namespace JricaStudioApp.Pages.Admin.Appointments.Components
                     ApplyErrorMessage("Block out date was not added.");
                 }
 
-
+                
             }
             catch (Exception e)
             {
@@ -68,7 +69,7 @@ namespace JricaStudioApp.Pages.Admin.Appointments.Components
                     BlockOutDates = blockOutDates;
                     ApplyConfirmationMessage("Block out date was successfully deleted.");
                 }
-                ApplyErrorMessage("Block out date was not deleted.");
+                ApplyErrorMessage("Block out date was not deleted.");                                                                                                                                    
             }
             catch (Exception e)
             {

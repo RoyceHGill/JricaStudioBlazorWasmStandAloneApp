@@ -1,11 +1,12 @@
 ﻿using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioSharedLibrary.Dtos;
-using JricaStudioSharedLibrary.Dtos.Admin;
-using JricaStudioSharedLibrary.enums;
+using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioApp.Models.enums;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Models.Dtos.Admin;
 using System.Linq.Expressions;
 
 namespace JricaStudioApp.Pages.Admin.Appointments
@@ -31,7 +32,7 @@ namespace JricaStudioApp.Pages.Admin.Appointments
 
         protected async override Task OnInitializedAsync()
         {
-            await AuthenticateUser();
+            await AuthenticateUser(); 
             Filter = new AdminAppointmentSearchFilterDto();
             Appointments = new List<AdminAppointmentDto>();
             StateHasChanged();

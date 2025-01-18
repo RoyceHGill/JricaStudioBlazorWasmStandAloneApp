@@ -1,9 +1,11 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JricaStudioSharedLibrary.Dtos;
-using JricaStudioSharedLibrary.Dtos.Admin;
-using JricaStudioSharedLibrary.enums;
-using JricaStudioSharedLibrary.Extentions;
+using JricaStudioApp.Models.Dtos;
+using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioApp.Models.enums;
+using JricaStudioApp.Server.Extentions;
 using Microsoft.JSInterop.Infrastructure;
+using Models.Dtos;
+using Models.Dtos.Admin;
 using Newtonsoft.Json;
 using System.CodeDom.Compiler;
 using System.Net.Http.Json;
@@ -74,7 +76,7 @@ namespace JricaStudioApp.Services
 
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTimes();
+                    dto = dto.ConvertDateTimesToLocalTime();
 
                     return dto;
                 }
@@ -103,7 +105,7 @@ namespace JricaStudioApp.Services
                     }
                     var dto = await response.Content.ReadFromJsonAsync<AdminAppointmentDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTimes();
+                    dto = dto.ConvertDateTimesToLocalTime();
 
                     return dto;
                 }
@@ -125,7 +127,7 @@ namespace JricaStudioApp.Services
                 {
                     var appointmentIndemnityDto = await response.Content.ReadFromJsonAsync<AppointmentIndemnityDto>();
 
-                    appointmentIndemnityDto = appointmentIndemnityDto.ConvertDateTimesToLocalTimes();
+                    appointmentIndemnityDto = appointmentIndemnityDto.ConvertDateTimesToLocalTime();
 
                     return appointmentIndemnityDto;
                 }
@@ -148,7 +150,7 @@ namespace JricaStudioApp.Services
                 {
                     var appointmentFinaliztionDto = await response.Content.ReadFromJsonAsync<AppointmentFinalizationDto>();
 
-                    appointmentFinaliztionDto = appointmentFinaliztionDto.ConvertDateTimesToLocalTimes();
+                    appointmentFinaliztionDto = appointmentFinaliztionDto.ConvertDateTimesToLocalTime();
 
                     return appointmentFinaliztionDto;
                 }
@@ -173,7 +175,7 @@ namespace JricaStudioApp.Services
                 {
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentExistsDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTimes();
+                    dto = dto.ConvertDateTimesToLocalTime();
 
                     return dto;
                 }
@@ -206,7 +208,7 @@ namespace JricaStudioApp.Services
                 {
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentIndemnityDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTimes();
+                    dto = dto.ConvertDateTimesToLocalTime();
 
                     return dto;
                 }
@@ -228,7 +230,7 @@ namespace JricaStudioApp.Services
                 {
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTimes();
+                    dto = dto.ConvertDateTimesToLocalTime();
 
                     return dto;
                 }
@@ -259,7 +261,7 @@ namespace JricaStudioApp.Services
                 {
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTimes();
+                    dto = dto.ConvertDateTimesToLocalTime();
 
                     return dto;
                 }
@@ -284,7 +286,7 @@ namespace JricaStudioApp.Services
                 {
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTimes();
+                    dto = dto.ConvertDateTimesToLocalTime();
 
                     return dto;
                 }
@@ -310,7 +312,7 @@ namespace JricaStudioApp.Services
 
                     var dtoResponse = await response.Content.ReadFromJsonAsync<AppointmentFinalizationDto>();
 
-                    dtoResponse = dtoResponse.ConvertDateTimesToLocalTimes();
+                    dtoResponse = dtoResponse.ConvertDateTimesToLocalTime();
 
                     return dtoResponse;
                 }
