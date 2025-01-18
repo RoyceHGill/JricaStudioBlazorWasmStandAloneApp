@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using JricaStudioApp.Services.Contracts;
+using JricaStudioSharedLibrary.Constants;
 using JricaStudioSharedLibrary.Dtos;
 using JricaStudioSharedLibrary.Dtos.Admin;
 using Microsoft.AspNetCore.Components.Forms;
@@ -93,7 +94,7 @@ namespace JricaStudioApp.Services
             {
                 var product = await _httpClient.GetFromJsonAsync<IEnumerable<ProductDto>>($"api/Products/GetRandom/{targetLength}");
 
-                
+
 
                 return product;
             }
@@ -247,7 +248,7 @@ namespace JricaStudioApp.Services
                 var response = await _httpClient.PostAsJsonAsync($"api/Products/Category", dto);
                 if (response.IsSuccessStatusCode)
                 {
-                    
+
                     var category = await response.Content.ReadFromJsonAsync<AdminProductCategoryDto>();
                     RemoveAdminHeaders();
                     return category;
