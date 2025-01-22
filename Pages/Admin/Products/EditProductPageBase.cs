@@ -1,10 +1,10 @@
 ﻿using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Models.Constants;
+using JricaStudioSharedLibrary.Constants;
 
 namespace JricaStudioApp.Pages.Admin.Products
 {

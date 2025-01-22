@@ -1,8 +1,8 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos.BusinessHours;
 using Microsoft.AspNetCore.Components;
-using Models.Dtos.Admin;
-using Models.Dtos.BusinessHours;
 
 namespace JricaStudioApp.Pages.Services.Individual
 {
@@ -40,21 +40,21 @@ namespace JricaStudioApp.Pages.Services.Individual
         {
             try
             {
-                if (PreviewService != null)
+                if ( PreviewService != null )
                 {
                     Service = new ServiceDto()
                     {
                         Name = PreviewService.Name,
                         Description = PreviewService.Description,
                         Duration = PreviewService.Duration,
-                        CategoryName = Categories.Single(c => c.Id == PreviewService.ServiceCategoryId).Name,
+                        CategoryName = Categories.Single( c => c.Id == PreviewService.ServiceCategoryId ).Name,
                         ImageData = PreviewService.ImageData,
                         ServiceCategoryId = PreviewService.ServiceCategoryId,
                         Price = PreviewService.Price,
                     };
                 }
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
 
                 throw;
@@ -63,7 +63,7 @@ namespace JricaStudioApp.Pages.Services.Individual
 
         }
 
-        private void AppointmentIdChanged(Guid id)
+        private void AppointmentIdChanged( Guid id )
         {
             AppointmentId = id;
             StateHasChanged();
@@ -77,9 +77,9 @@ namespace JricaStudioApp.Pages.Services.Individual
 
                 AppointmentId = await ManageLocalStorageService.GetLocalAppointmentIdGuid();
 
-                if (Id != default)
+                if ( Id != default )
                 {
-                    Service = await ServiceService.GetService(Id);
+                    Service = await ServiceService.GetService( Id );
                 }
                 else
                 {
@@ -90,31 +90,31 @@ namespace JricaStudioApp.Pages.Services.Individual
                         Name = PreviewService.Name,
                         Description = PreviewService.Description,
                         Duration = PreviewService.Duration,
-                        CategoryName = Categories.Single(c => c.Id == PreviewService.ServiceCategoryId).Name,
+                        CategoryName = Categories.Single( c => c.Id == PreviewService.ServiceCategoryId ).Name,
                         ImageData = PreviewService.ImageData,
                         ServiceCategoryId = PreviewService.ServiceCategoryId,
                         Price = PreviewService.Price,
                     };
 
                 }
-                AvailableTime = await SchedulingService.GetNextAvailableAppointmentsTime(DateRange, Service.Duration);
+                AvailableTime = await SchedulingService.GetNextAvailableAppointmentsTime( DateRange, Service.Duration );
 
                 BusinessHours = await SchedulingService.GetBusinessHours();
 
 
-                if (Id == Guid.Empty)
+                if ( Id == Guid.Empty )
                 {
                     AvailableTimeButtonclasses += " disabled";
                 }
 
-                if (AvailableTime == null)
+                if ( AvailableTime == null )
                 {
                     AvailableTimeButtonclasses += " visually-hidden";
                 }
 
-                if (AvailableTime != null && BusinessHours != null)
+                if ( AvailableTime != null && BusinessHours != null )
                 {
-                    if (TimeOnly.FromDateTime(AvailableTime.StartTime).Add(Service.Duration) > BusinessHours.SingleOrDefault(b => b.Day == AvailableTime.StartTime.DayOfWeek).CloseTime)
+                    if ( TimeOnly.FromDateTime( AvailableTime.StartTime ).Add( Service.Duration ) > BusinessHours.SingleOrDefault( b => b.Day == AvailableTime.StartTime.DayOfWeek ).CloseTime )
                     {
                         AvailableTimeButtonclasses += " btn btn-warning";
                     }
@@ -128,43 +128,43 @@ namespace JricaStudioApp.Pages.Services.Individual
                 StateHasChanged();
 
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
 
                 throw;
             }
         }
 
-        protected async Task AddToAppointment_Click(AppointmentServiceToAddDto addDto)
+        protected async Task AddToAppointment_Click( AppointmentServiceToAddDto addDto )
         {
-            if (addDto.AppointmentId == default)
+            if ( addDto.AppointmentId == default )
             {
                 addDto.AppointmentId = await ManageLocalStorageService.GetLocalAppointmentIdGuid();
             }
 
             AppointmentId = await ManageLocalStorageService.GetLocalAppointmentIdGuid();
 
-            var appointment = await AppointmentService.GetAppointment(AppointmentId);
+            var appointment = await AppointmentService.GetAppointment( AppointmentId );
 
-            if (appointment.Status >= JricaStudioApp.Models.enums.AppointmentStatus.AwaitingApproval)
+            if ( appointment.Status >= JricaStudioSharedLibrary.enums.AppointmentStatus.AwaitingApproval )
             {
-                ApplyErrorMessage("Please start a new appointment if you wish to order this Service.");
+                ApplyErrorMessage( "Please start a new appointment if you wish to order this Service." );
                 return;
             }
 
-            await AddAppointment(addDto);
+            await AddAppointment( addDto );
         }
 
-        protected async Task AddAppointment(AppointmentServiceToAddDto addDto)
+        protected async Task AddAppointment( AppointmentServiceToAddDto addDto )
         {
             try
             {
-                await AppointmentItemService.PostAppointmentService(addDto);
-                var dtos = await AppointmentItemService.GetAppointmentServices(AppointmentId);
+                await AppointmentItemService.PostAppointmentService( addDto );
+                var dtos = await AppointmentItemService.GetAppointmentServices( AppointmentId );
 
-                AppointmentItemService.RaiseEventOnServicesChanged(dtos);
+                AppointmentItemService.RaiseEventOnServicesChanged( dtos );
             }
-            catch (Exception)
+            catch ( Exception )
             {
 
                 throw;
@@ -172,31 +172,31 @@ namespace JricaStudioApp.Pages.Services.Individual
 
         }
 
-        protected async Task SetStartTime_OnClick(DateTime time)
+        protected async Task SetStartTime_OnClick( DateTime time )
         {
-            var appointment = await AppointmentService.GetAppointment(AppointmentId);
+            var appointment = await AppointmentService.GetAppointment( AppointmentId );
 
-            if (appointment.Status >= JricaStudioApp.Models.enums.AppointmentStatus.AwaitingApproval)
+            if ( appointment.Status >= JricaStudioSharedLibrary.enums.AppointmentStatus.AwaitingApproval )
             {
-                ApplyErrorMessage("Please start a new appointment if you wish to order this Service.");
+                ApplyErrorMessage( "Please start a new appointment if you wish to order this Service." );
                 return;
             }
 
-            await AddAppointment(new AppointmentServiceToAddDto()
+            await AddAppointment( new AppointmentServiceToAddDto()
             {
                 AppointmentId = AppointmentId,
                 ServiceId = Service.Id
-            });
-            await AppointmentService.PatchAppointmentTimes(AppointmentId, new UpdateAppointmentTimesDto()
+            } );
+            await AppointmentService.PatchAppointmentTimes( AppointmentId, new UpdateAppointmentTimesDto()
             {
                 StartTime = time,
-                EndTime = time.Add(Service.Duration)
-            });
+                EndTime = time.Add( Service.Duration )
+            } );
 
-            NavigationManager.NavigateTo($"/Appointment/Edit/{AppointmentId}");
+            NavigationManager.NavigateTo( $"/Appointment/Edit/{AppointmentId}" );
         }
 
-        protected void ApplyErrorMessage(string message)
+        protected void ApplyErrorMessage( string message )
         {
             ErrorMessage = message;
 

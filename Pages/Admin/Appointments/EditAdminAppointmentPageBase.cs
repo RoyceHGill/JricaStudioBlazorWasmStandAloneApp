@@ -1,7 +1,7 @@
 ﻿using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 

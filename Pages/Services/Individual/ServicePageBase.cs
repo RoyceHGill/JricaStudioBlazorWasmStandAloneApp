@@ -1,7 +1,7 @@
 ﻿using Blazorise;
 using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
+using JricaStudioSharedLibrary.Dtos;
 using Microsoft.AspNetCore.Components;
 
 namespace JricaStudioApp.Pages.Services.Individual

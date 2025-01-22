@@ -1,10 +1,10 @@
 ﻿using Blazorise.Extensions;
 using JricaStudioApp.Extensions;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
 using Microsoft.AspNetCore.Components;
-using Models.Dtos.Admin.BusinessHours;
+using JricaStudioSharedLibrary.Dtos.Admin.BusinessHours;
 
 namespace JricaStudioApp.Pages.Admin.Appointments.Components
 {
@@ -26,20 +26,20 @@ namespace JricaStudioApp.Pages.Admin.Appointments.Components
 
             BusinessHours = await SchedulingService.GetAdminBusinessHours();
 
-            if (BusinessHours == null || !BusinessHours.Any())
+            if ( BusinessHours == null || !BusinessHours.Any() )
             {
                 var newBusinessHours = new List<AdminBusinessHoursDto>();
 
-                foreach (DayOfWeek item in Enum.GetValues(typeof(DayOfWeek)))
+                foreach ( DayOfWeek item in Enum.GetValues( typeof( DayOfWeek ) ) )
                 {
-                    newBusinessHours.Add(new AdminBusinessHoursDto
+                    newBusinessHours.Add( new AdminBusinessHoursDto
                     {
                         OpenTime = TimeOnly.MinValue,
                         CloseTime = TimeOnly.MaxValue,
                         Day = item,
                         IsDisabled = true,
                         AfterHoursGraceRange = 1
-                    });
+                    } );
                 }
                 BusinessHours = newBusinessHours;
             }
@@ -52,36 +52,36 @@ namespace JricaStudioApp.Pages.Admin.Appointments.Components
             try
             {
                 ValiadationErrorMessages = new List<string>();
-                foreach (var item in BusinessHours)
+                foreach ( var item in BusinessHours )
                 {
-                    if (item.OpenTime > item.CloseTime)
+                    if ( item.OpenTime > item.CloseTime )
                     {
-                        ValiadationErrorMessages.Add($"{item.Day}: {nameof(item.OpenTime).FromPascalToString()} " +
+                        ValiadationErrorMessages.Add( $"{item.Day}: {nameof( item.OpenTime ).FromPascalToString()} " +
                             $"{item.OpenTime.ToString()} can not be later than " +
-                            $"{nameof(item.CloseTime).FromPascalToString()} {item.CloseTime.ToString()}.");
+                            $"{nameof( item.CloseTime ).FromPascalToString()} {item.CloseTime.ToString()}." );
                     }
                 }
-                if (ValiadationErrorMessages.Count() == 0)
+                if ( ValiadationErrorMessages.Count() == 0 )
                 {
-                    foreach (var item in BusinessHours)
+                    foreach ( var item in BusinessHours )
                     {
                         item.LocalTimeOffset = DateTimeOffset.Now.Offset;
                     }
 
-                    var businesshours = await SchedulingService.PutBusinessHours(BusinessHours);
+                    var businesshours = await SchedulingService.PutBusinessHours( BusinessHours );
 
-                    if (businesshours.Any())
+                    if ( businesshours.Any() )
                     {
                         BusinessHours = businesshours;
 
                         StateHasChanged();
-                        ApplyConfirmationMessage("business hours updated.");
+                        ApplyConfirmationMessage( "business hours updated." );
                     }
                 }
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
-                ApplyErrorMessage(e.Message);
+                ApplyErrorMessage( e.Message );
             }
         }
 
@@ -91,25 +91,25 @@ namespace JricaStudioApp.Pages.Admin.Appointments.Components
             {
                 var businessHours = await SchedulingService.GetAdminBusinessHours();
 
-                if (businessHours != null)
+                if ( businessHours != null )
                 {
                     BusinessHours = businessHours;
                     StateHasChanged();
-                    ApplyConfirmationMessage("business hours reverted to last save.");
+                    ApplyConfirmationMessage( "business hours reverted to last save." );
                 }
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
-                ApplyErrorMessage(e.Message);
+                ApplyErrorMessage( e.Message );
             }
         }
 
-        protected void ApplyConfirmationMessage(string message)
+        protected void ApplyConfirmationMessage( string message )
         {
             ErrorMessage = "";
             ConfirmationMessage = message.ToCamelcase();
         }
-        protected void ApplyErrorMessage(string message)
+        protected void ApplyErrorMessage( string message )
         {
             ErrorMessage = message.ToCamelcase();
             ConfirmationMessage = "";

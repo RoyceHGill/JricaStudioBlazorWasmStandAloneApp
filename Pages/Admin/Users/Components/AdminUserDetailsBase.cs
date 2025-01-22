@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
-using Models.Dtos.Admin;
+﻿using JricaStudioSharedLibrary.Dtos.Admin;
+using Microsoft.AspNetCore.Components;
+
 
 namespace JricaStudioApp.Pages.Admin.Users.Components
 {
@@ -14,9 +15,9 @@ namespace JricaStudioApp.Pages.Admin.Users.Components
         public string DetailRowclasses { get; set; } = "row m-2";
         public string DetailLgLabelclasses { get; set; } = "col-7 text-end";
 
-        protected async Task GoToAppointment_Click(Guid id)
+        protected async Task GoToAppointment_Click( Guid id )
         {
-            NavigationManager.NavigateTo($"admin/appointments/edit/{id}");
+            NavigationManager.NavigateTo( $"admin/appointments/edit/{id}" );
         }
     }
 }

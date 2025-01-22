@@ -1,6 +1,6 @@
 ﻿using JricaStudioApp.Services.Contracts;
 using Microsoft.AspNetCore.Components;
-using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos.Admin;
 
 namespace JricaStudioApp.Pages.Admin
 {

@@ -1,6 +1,6 @@
 ﻿
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
+using JricaStudioSharedLibrary.Dtos;
 using Microsoft.AspNetCore.Components;
 using System.ComponentModel.DataAnnotations;
 

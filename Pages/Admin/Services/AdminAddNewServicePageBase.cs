@@ -1,13 +1,13 @@
 ﻿using JricaStudioApp.Pages.Admin.Appointments.Components;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.FileProviders;
-using Models.Constants;
-using Models.Dtos;
-using Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Constants;
+
+
 using System;
 using System.Net;
 using System.Net.Http.Headers;
@@ -33,13 +33,14 @@ namespace JricaStudioApp.Pages.Admin.Services
 
 
         private int durationInMinutes;
-        
+
         public int DurationInMinutes
         {
             get { return durationInMinutes; }
-            set { 
+            set
+            {
                 durationInMinutes = value;
-                ServiceToAdd.Duration = TimeSpan.FromMinutes(durationInMinutes);
+                ServiceToAdd.Duration = TimeSpan.FromMinutes( durationInMinutes );
             }
         }
 
@@ -53,34 +54,34 @@ namespace JricaStudioApp.Pages.Admin.Services
 
         }
 
-        public async Task OnImageLoaded(InputFileChangeEventArgs e)
+        public async Task OnImageLoaded( InputFileChangeEventArgs e )
         {
             var file = e.File;
             var dataBuffer = new byte[file.Size];
-            await file.OpenReadStream(maxAllowedSize: FileResources.maxuploadSize).ReadAsync(dataBuffer);
-            ImageData = $"data:image/png;base64,{Convert.ToBase64String(dataBuffer)}";
+            await file.OpenReadStream( maxAllowedSize: FileResources.maxuploadSize ).ReadAsync( dataBuffer );
+            ImageData = $"data:image/png;base64,{Convert.ToBase64String( dataBuffer )}";
 
-            if (file != null)
+            if ( file != null )
             {
                 try
                 {
                     ServiceToAdd.ImageFile = e.File;
                 }
-                catch (Exception ex)
+                catch ( Exception ex )
                 {
 
                     throw;
                 }
-            } 
+            }
         }
 
-        public async Task UploadImage(IBrowserFile file)
+        public async Task UploadImage( IBrowserFile file )
         {
             using var content = new MultipartFormDataContent();
 
-            var fileContent = new StreamContent(file.OpenReadStream(FileResources.maxuploadSize));
+            var fileContent = new StreamContent( file.OpenReadStream( FileResources.maxuploadSize ) );
 
-            fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue( file.ContentType );
 
             content.Add(
                 content: fileContent,
@@ -91,16 +92,16 @@ namespace JricaStudioApp.Pages.Admin.Services
 
         }
 
-        protected ServiceDto PassServiceDto(AdminServiceToAddDto<IBrowserFile> toAdd)
+        protected ServiceDto PassServiceDto( AdminServiceToAddDto<IBrowserFile> toAdd )
         {
             return new ServiceDto()
             {
                 Name = toAdd.Name,
                 Description = toAdd.Description,
                 ServiceCategoryId = toAdd.ServiceCategoryId,
-                CategoryName = Categories.Single(c => c.Id  == toAdd.ServiceCategoryId).Name,
+                CategoryName = Categories.Single( c => c.Id == toAdd.ServiceCategoryId ).Name,
                 Duration = toAdd.Duration,
-                Price =  toAdd.Price,
+                Price = toAdd.Price,
                 ImageData = ImageData
             };
         }
@@ -114,10 +115,10 @@ namespace JricaStudioApp.Pages.Admin.Services
         {
             try
             {
-                var result = await ServiceService.PostNewService(ServiceToAdd);
-                NavigationManager.NavigateTo("/admin/services");
+                var result = await ServiceService.PostNewService( ServiceToAdd );
+                NavigationManager.NavigateTo( "/admin/services" );
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
                 ErrorMessage = e.Message;
                 throw;

@@ -1,11 +1,11 @@
 ﻿using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.Dtos.Admin;
-using JricaStudioApp.Models.enums;
-using JricaStudioApp.Server.Extentions;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
+using JricaStudioSharedLibrary.enums;
+using JricaStudioSharedLibrary.Extentions;
 using Microsoft.JSInterop.Infrastructure;
-using Models.Dtos;
-using Models.Dtos.Admin;
+
+
 using Newtonsoft.Json;
 using System.CodeDom.Compiler;
 using System.Net.Http.Json;
@@ -24,158 +24,158 @@ namespace JricaStudioApp.Services
         public event Action<DateTime> OnStartTimeChange;
         public event Action<AppointmentDto> OnUserChange;
 
-        public AppointmentService(HttpClient httpClient, IManageLocalStorageService manageLocalStorage)
+        public AppointmentService( HttpClient httpClient, IManageLocalStorageService manageLocalStorage )
         {
             _httpClient = httpClient;
             _localStorageService = manageLocalStorage;
         }
 
-        public void RaiseEventOnIdChanged(Guid id)
+        public void RaiseEventOnIdChanged( Guid id )
         {
-            if (OnIdChanged != null)
+            if ( OnIdChanged != null )
             {
-                OnIdChanged.Invoke(id);
+                OnIdChanged.Invoke( id );
             }
         }
 
-        public void RaiseEventOnStatusChanged(AppointmentStatus status)
+        public void RaiseEventOnStatusChanged( AppointmentStatus status )
         {
-            if (OnStatusChange != null)
+            if ( OnStatusChange != null )
             {
-                OnStatusChange.Invoke(status);
+                OnStatusChange.Invoke( status );
             }
         }
 
-        public void RaiseEventOnStartTimeChanged(DateTime time)
+        public void RaiseEventOnStartTimeChanged( DateTime time )
         {
-            if (OnStartTimeChange != null)
+            if ( OnStartTimeChange != null )
             {
-                OnStartTimeChange.Invoke(time);
+                OnStartTimeChange.Invoke( time );
             }
         }
 
-        public void RaiseEventOnUserChange(AppointmentDto UserId)
+        public void RaiseEventOnUserChange( AppointmentDto UserId )
         {
-            if (OnUserChange != null)
+            if ( OnUserChange != null )
             {
-                OnUserChange.Invoke(UserId);
+                OnUserChange.Invoke( UserId );
             }
         }
 
-        public async Task<AppointmentDto> GetAppointment(Guid appointmentId)
+        public async Task<AppointmentDto> GetAppointment( Guid appointmentId )
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/Appointment/{appointmentId}");
-                if (response.IsSuccessStatusCode)
+                var response = await _httpClient.GetAsync( $"api/Appointment/{appointmentId}" );
+                if ( response.IsSuccessStatusCode )
                 {
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    if ( response.StatusCode == System.Net.HttpStatusCode.NoContent )
                     {
                         return null;
                     }
 
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTime();
+                    dto = dto.ConvertDateTimesToLocalTimes();
 
                     return dto;
                 }
                 return null;
             }
-            catch (Exception)
+            catch ( Exception )
             {
 
                 throw;
             }
         }
 
-        public async Task<AdminAppointmentDto> GetAdminAppointment(Guid appointmentId)
+        public async Task<AdminAppointmentDto> GetAdminAppointment( Guid appointmentId )
         {
             try
             {
                 await AddAdminHeader();
-                var response = await _httpClient.GetAsync($"api/Appointment/Admin/{appointmentId}");
+                var response = await _httpClient.GetAsync( $"api/Appointment/Admin/{appointmentId}" );
                 RemoveAdminHeader();
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    if ( response.StatusCode == System.Net.HttpStatusCode.NoContent )
                     {
-                        throw new Exception("User Not Found");
+                        throw new Exception( "User Not Found" );
                     }
                     var dto = await response.Content.ReadFromJsonAsync<AdminAppointmentDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTime();
+                    dto = dto.ConvertDateTimesToLocalTimes();
 
                     return dto;
                 }
                 return null;
             }
-            catch (Exception)
+            catch ( Exception )
             {
                 throw;
             }
         }
 
-        public async Task<AppointmentIndemnityDto> GetAppointmentIndemnity(Guid appointmentId)
+        public async Task<AppointmentIndemnityDto> GetAppointmentIndemnity( Guid appointmentId )
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/Appointment/Indemnity/{appointmentId}");
+                var response = await _httpClient.GetAsync( $"api/Appointment/Indemnity/{appointmentId}" );
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
                     var appointmentIndemnityDto = await response.Content.ReadFromJsonAsync<AppointmentIndemnityDto>();
 
-                    appointmentIndemnityDto = appointmentIndemnityDto.ConvertDateTimesToLocalTime();
+                    appointmentIndemnityDto = appointmentIndemnityDto.ConvertDateTimesToLocalTimes();
 
                     return appointmentIndemnityDto;
                 }
                 return null;
             }
-            catch (Exception)
+            catch ( Exception )
             {
 
                 throw;
             }
         }
 
-        public async Task<AppointmentFinalizationDto> GetAppointmentFinalization(Guid appointmentId)
+        public async Task<AppointmentFinalizationDto> GetAppointmentFinalization( Guid appointmentId )
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/Appointment/Finalization/{appointmentId}");
+                var response = await _httpClient.GetAsync( $"api/Appointment/Finalization/{appointmentId}" );
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
                     var appointmentFinaliztionDto = await response.Content.ReadFromJsonAsync<AppointmentFinalizationDto>();
 
-                    appointmentFinaliztionDto = appointmentFinaliztionDto.ConvertDateTimesToLocalTime();
+                    appointmentFinaliztionDto = appointmentFinaliztionDto.ConvertDateTimesToLocalTimes();
 
                     return appointmentFinaliztionDto;
                 }
                 return null;
             }
 
-            catch (Exception)
+            catch ( Exception )
             {
 
                 throw;
             }
         }
 
-        public async Task<AppointmentExistsDto> GetAppointmentExists(Guid id)
+        public async Task<AppointmentExistsDto> GetAppointmentExists( Guid id )
         {
 
             try
             {
-                var response = await _httpClient.GetAsync($"api/Appointment/Exists/{id}");
+                var response = await _httpClient.GetAsync( $"api/Appointment/Exists/{id}" );
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentExistsDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTime();
+                    dto = dto.ConvertDateTimesToLocalTimes();
 
                     return dto;
                 }
@@ -183,11 +183,11 @@ namespace JricaStudioApp.Services
                 else
                 {
                     var message = response.Content.ReadAsStringAsync();
-                    throw new Exception($"Http status: {response.StatusCode}Message: {message}");
+                    throw new Exception( $"Http status: {response.StatusCode}Message: {message}" );
 
                 }
             }
-            catch (Exception)
+            catch ( Exception )
             {
 
                 throw;
@@ -195,42 +195,42 @@ namespace JricaStudioApp.Services
 
         }
 
-        public async Task<AppointmentIndemnityDto> PatchAppointmentIndemityForm(Guid id, UpdateAppointmentIndemnityDto indemnityDto)
+        public async Task<AppointmentIndemnityDto> PatchAppointmentIndemityForm( Guid id, UpdateAppointmentIndemnityDto indemnityDto )
         {
             try
             {
-                var jsonRequest = JsonConvert.SerializeObject(indemnityDto);
-                var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
+                var jsonRequest = JsonConvert.SerializeObject( indemnityDto );
+                var content = new StringContent( jsonRequest, Encoding.UTF8, "application/json-patch+json" );
 
-                var response = await _httpClient.PatchAsync($"api/Appointment/Indemnity/{id}", content);
+                var response = await _httpClient.PatchAsync( $"api/Appointment/Indemnity/{id}", content );
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentIndemnityDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTime();
+                    dto = dto.ConvertDateTimesToLocalTimes();
 
                     return dto;
                 }
                 return null;
             }
-            catch (Exception)
+            catch ( Exception )
             {
                 throw;
             }
         }
 
-        public async Task<AppointmentDto> PostAppointment(AppointmentToAddDto appointment)
+        public async Task<AppointmentDto> PostAppointment( AppointmentToAddDto appointment )
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync<AppointmentToAddDto>("api/Appointment", appointment);
+                var response = await _httpClient.PostAsJsonAsync<AppointmentToAddDto>( "api/Appointment", appointment );
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTime();
+                    dto = dto.ConvertDateTimesToLocalTimes();
 
                     return dto;
                 }
@@ -238,87 +238,87 @@ namespace JricaStudioApp.Services
                 else
                 {
                     var message = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Http status: {response.StatusCode}Message: {message}");
+                    throw new Exception( $"Http status: {response.StatusCode}Message: {message}" );
                 }
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
 
                 throw;
             }
         }
 
-        public async Task<AppointmentDto> PatchAppointmentTimes(Guid id, UpdateAppointmentTimesDto timesDto)
+        public async Task<AppointmentDto> PatchAppointmentTimes( Guid id, UpdateAppointmentTimesDto timesDto )
         {
             try
             {
-                var jsonRequest = JsonConvert.SerializeObject(timesDto);
-                var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
+                var jsonRequest = JsonConvert.SerializeObject( timesDto );
+                var content = new StringContent( jsonRequest, Encoding.UTF8, "application/json-patch+json" );
 
-                var response = await _httpClient.PatchAsync($"api/Appointment/UpdateTimes/{id}", content);
+                var response = await _httpClient.PatchAsync( $"api/Appointment/UpdateTimes/{id}", content );
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTime();
+                    dto = dto.ConvertDateTimesToLocalTimes();
 
                     return dto;
                 }
                 return null;
             }
-            catch (Exception)
+            catch ( Exception )
             {
                 throw;
             }
         }
 
-        public async Task<AppointmentDto> PatchAppointmentStatus(Guid id, UpdateAppointmentStatusDto status)
+        public async Task<AppointmentDto> PatchAppointmentStatus( Guid id, UpdateAppointmentStatusDto status )
         {
             try
             {
-                var jsonRequest = JsonConvert.SerializeObject(status);
-                var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
+                var jsonRequest = JsonConvert.SerializeObject( status );
+                var content = new StringContent( jsonRequest, Encoding.UTF8, "application/json-patch+json" );
 
-                var response = await _httpClient.PatchAsync($"api/Appointment/UpdateStatus/{id}", content);
+                var response = await _httpClient.PatchAsync( $"api/Appointment/UpdateStatus/{id}", content );
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
-                    dto = dto.ConvertDateTimesToLocalTime();
+                    dto = dto.ConvertDateTimesToLocalTimes();
 
                     return dto;
                 }
                 return null;
             }
-            catch (Exception)
+            catch ( Exception )
             {
                 throw;
             }
         }
 
-        public async Task<AppointmentFinalizationDto> PatchAppointmentSubmission(Guid id, UpdateAppointmentSubmissionDto dto)
+        public async Task<AppointmentFinalizationDto> PatchAppointmentSubmission( Guid id, UpdateAppointmentSubmissionDto dto )
         {
             try
             {
-                var jsonRequest = JsonConvert.SerializeObject(dto);
-                var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
+                var jsonRequest = JsonConvert.SerializeObject( dto );
+                var content = new StringContent( jsonRequest, Encoding.UTF8, "application/json-patch+json" );
 
-                var response = await _httpClient.PatchAsync($"api/Appointment/Submit/{id}", content);
+                var response = await _httpClient.PatchAsync( $"api/Appointment/Submit/{id}", content );
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
 
                     var dtoResponse = await response.Content.ReadFromJsonAsync<AppointmentFinalizationDto>();
 
-                    dtoResponse = dtoResponse.ConvertDateTimesToLocalTime();
+                    dtoResponse = dtoResponse.ConvertDateTimesToLocalTimes();
 
                     return dtoResponse;
                 }
                 return null;
             }
-            catch (Exception)
+            catch ( Exception )
             {
                 throw;
             }
@@ -329,14 +329,14 @@ namespace JricaStudioApp.Services
             try
             {
                 await AddAdminHeader();
-                var response = await _httpClient.GetAsync($"api/Appointment/Requests");
+                var response = await _httpClient.GetAsync( $"api/Appointment/Requests" );
                 RemoveAdminHeader();
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    if ( response.StatusCode == System.Net.HttpStatusCode.NoContent )
                     {
-                        throw new NullReferenceException("No Appointments");
+                        throw new NullReferenceException( "No Appointments" );
                     }
 
                     var dto = await response.Content.ReadFromJsonAsync<IEnumerable<AdminAppointmentWidgetDto>>();
@@ -347,11 +347,11 @@ namespace JricaStudioApp.Services
                 }
                 return default;
             }
-            catch (NullReferenceException ne)
+            catch ( NullReferenceException ne )
             {
                 return new List<AdminAppointmentWidgetDto>();
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
                 throw;
             }
@@ -361,15 +361,15 @@ namespace JricaStudioApp.Services
         {
             var key = await _localStorageService.GetLocalAdminKeyGuid();
 
-            if (!_httpClient.DefaultRequestHeaders.TryGetValues("AdminKey", out var values))
+            if ( !_httpClient.DefaultRequestHeaders.TryGetValues( "AdminKey", out var values ) )
             {
-                _httpClient.DefaultRequestHeaders.Add("AdminKey", key.ToString());
+                _httpClient.DefaultRequestHeaders.Add( "AdminKey", key.ToString() );
             }
         }
 
         private void RemoveAdminHeader()
         {
-            _httpClient.DefaultRequestHeaders.Remove("Adminkey");
+            _httpClient.DefaultRequestHeaders.Remove( "Adminkey" );
         }
 
         public async Task<IEnumerable<AdminAppointmentWidgetDto>> GetAdminUpcomingAppointments()
@@ -377,14 +377,14 @@ namespace JricaStudioApp.Services
             try
             {
                 await AddAdminHeader();
-                var response = await _httpClient.GetAsync($"api/Appointment/Upcoming");
+                var response = await _httpClient.GetAsync( $"api/Appointment/Upcoming" );
                 RemoveAdminHeader();
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    if ( response.StatusCode == System.Net.HttpStatusCode.NoContent )
                     {
-                        throw new NullReferenceException("No Appointments");
+                        throw new NullReferenceException( "No Appointments" );
                     }
                     var appointments = await response.Content.ReadFromJsonAsync<IEnumerable<AdminAppointmentWidgetDto>>();
 
@@ -394,28 +394,28 @@ namespace JricaStudioApp.Services
                 }
                 return default;
             }
-            catch (NullReferenceException ne)
+            catch ( NullReferenceException ne )
             {
                 return new List<AdminAppointmentWidgetDto>();
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
                 throw;
             }
         }
 
-        public async Task<IEnumerable<AdminAppointmentDto>> GetAdminAppointments(AdminAppointmentSearchFilterDto filter)
+        public async Task<IEnumerable<AdminAppointmentDto>> GetAdminAppointments( AdminAppointmentSearchFilterDto filter )
         {
             try
             {
                 await AddAdminHeader();
-                var response = await _httpClient.PostAsJsonAsync($"api/Appointment/Search/", filter);
+                var response = await _httpClient.PostAsJsonAsync( $"api/Appointment/Search/", filter );
                 RemoveAdminHeader();
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    if ( response.StatusCode == System.Net.HttpStatusCode.NoContent )
                     {
-                        throw new NullReferenceException("No Appointments");
+                        throw new NullReferenceException( "No Appointments" );
                     }
                     var appointments = await response.Content.ReadFromJsonAsync<IEnumerable<AdminAppointmentDto>>();
 
@@ -425,30 +425,30 @@ namespace JricaStudioApp.Services
                 }
                 return default;
             }
-            catch (NullReferenceException ne)
+            catch ( NullReferenceException ne )
             {
                 return new List<AdminAppointmentDto>();
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
                 throw;
             }
         }
 
-        public async Task<AppointmentDto> PatchAdminAppointmentStatus(Guid id, UpdateAppointmentStatusDto status)
+        public async Task<AppointmentDto> PatchAdminAppointmentStatus( Guid id, UpdateAppointmentStatusDto status )
         {
             try
             {
                 await AddAdminHeader();
 
-                var jsonRequest = JsonConvert.SerializeObject(status);
-                var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
+                var jsonRequest = JsonConvert.SerializeObject( status );
+                var content = new StringContent( jsonRequest, Encoding.UTF8, "application/json-patch+json" );
 
-                var response = await _httpClient.PatchAsync($"api/Appointment/UpdateStatusAdmin/{id}", content);
+                var response = await _httpClient.PatchAsync( $"api/Appointment/UpdateStatusAdmin/{id}", content );
                 RemoveAdminHeader();
 
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
@@ -459,22 +459,22 @@ namespace JricaStudioApp.Services
 
                 return null;
             }
-            catch (Exception)
+            catch ( Exception )
             {
                 throw;
             }
         }
 
-        public async Task<AppointmentDto> PatchAppointmentUserId(Guid id, UpdateAppointmentUserDto dto)
+        public async Task<AppointmentDto> PatchAppointmentUserId( Guid id, UpdateAppointmentUserDto dto )
         {
             try
             {
-                var jsonRequest = JsonConvert.SerializeObject(dto);
-                var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
+                var jsonRequest = JsonConvert.SerializeObject( dto );
+                var content = new StringContent( jsonRequest, Encoding.UTF8, "application/json-patch+json" );
 
-                var response = await _httpClient.PatchAsync($"api/Appointment/UpdateUser/{id}", content);
+                var response = await _httpClient.PatchAsync( $"api/Appointment/UpdateUser/{id}", content );
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
                     var dtoResponse = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
@@ -484,22 +484,22 @@ namespace JricaStudioApp.Services
                 }
                 return null;
             }
-            catch (Exception)
+            catch ( Exception )
             {
                 throw;
             }
         }
 
-        public async Task<AppointmentDto> UpdateAppointment(Guid id, UpdateAppointmentDto dto)
+        public async Task<AppointmentDto> UpdateAppointment( Guid id, UpdateAppointmentDto dto )
         {
             try
             {
-                var jsonRequest = JsonConvert.SerializeObject(dto);
-                var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
+                var jsonRequest = JsonConvert.SerializeObject( dto );
+                var content = new StringContent( jsonRequest, Encoding.UTF8, "application/json-patch+json" );
 
-                var response = await _httpClient.PatchAsync($"api/Appointment/Update/{id}", content);
+                var response = await _httpClient.PatchAsync( $"api/Appointment/Update/{id}", content );
 
-                if (response.IsSuccessStatusCode)
+                if ( response.IsSuccessStatusCode )
                 {
                     var dtoResponse = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
@@ -510,23 +510,23 @@ namespace JricaStudioApp.Services
 
                 return null;
             }
-            catch (Exception)
+            catch ( Exception )
             {
                 throw;
             }
         }
 
-        public async Task<AppointmentAdminToAddDto> PostAppointmentAdmin(AppointmentAdminToAddDto dto)
+        public async Task<AppointmentAdminToAddDto> PostAppointmentAdmin( AppointmentAdminToAddDto dto )
         {
             try
             {
                 await AddAdminHeader();
-                var jsonRequest = JsonConvert.SerializeObject(dto);
-                var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
+                var jsonRequest = JsonConvert.SerializeObject( dto );
+                var content = new StringContent( jsonRequest, Encoding.UTF8, "application/json-patch+json" );
 
-                var response = await _httpClient.PostAsync("api/Appointment/Admin", content);
+                var response = await _httpClient.PostAsync( "api/Appointment/Admin", content );
 
-                if (response.IsSuccessStatusCode & response != null)
+                if ( response.IsSuccessStatusCode & response != null )
                 {
 
                     var dtoResponse = await response.Content.ReadFromJsonAsync<AppointmentAdminToAddDto>();
@@ -539,10 +539,10 @@ namespace JricaStudioApp.Services
                 else
                 {
                     var message = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Http status: {response.StatusCode}Message: {message}");
+                    throw new Exception( $"Http status: {response.StatusCode}Message: {message}" );
                 }
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
 
                 throw;

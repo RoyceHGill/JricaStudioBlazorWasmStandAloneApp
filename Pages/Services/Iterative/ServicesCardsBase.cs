@@ -1,4 +1,4 @@
-﻿using JricaStudioApp.Models.Dtos;
+﻿using JricaStudioSharedLibrary.Dtos;
 using Microsoft.AspNetCore.Components;
 
 namespace JricaStudioApp.Pages.Services

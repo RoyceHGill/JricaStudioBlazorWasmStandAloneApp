@@ -1,13 +1,13 @@
 ﻿using Blazorise.Extensions;
 using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
-using Models.Constants;
-using Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Constants;
+
 using Newtonsoft.Json.Linq;
 
 namespace JricaStudioApp.Pages.Admin.Services

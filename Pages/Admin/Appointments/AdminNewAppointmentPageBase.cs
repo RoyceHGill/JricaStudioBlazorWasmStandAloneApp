@@ -1,12 +1,11 @@
 ﻿using Blazorise;
 using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
-using JricaStudioApp.Models.Dtos;
-using JricaStudioApp.Models.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos;
+using JricaStudioSharedLibrary.Dtos.Admin;
+using JricaStudioSharedLibrary.Dtos.BusinessHours;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Models.Dtos.Admin;
-using Models.Dtos.BusinessHours;
 using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Diagnostics;
@@ -78,10 +77,10 @@ namespace JricaStudioApp.Pages.Admin.Appointments
             };
 
             AppointmentValidationErrorMessages = new List<string>();
-            ExistingUsers = await UserService.SearchUsers(new UserFilterDto
+            ExistingUsers = await UserService.SearchUsers( new UserFilterDto
             {
                 SearchText = SearchFilter
-            });
+            } );
 
 
             Products = await ProductService.GetItems();
@@ -92,10 +91,10 @@ namespace JricaStudioApp.Pages.Admin.Appointments
 
         protected async void SearchUsers_Click()
         {
-            var users = await UserService.SearchUsers(new UserFilterDto
+            var users = await UserService.SearchUsers( new UserFilterDto
             {
                 SearchText = SearchFilter
-            });
+            } );
 
             ExistingUsers = users;
 
@@ -108,22 +107,22 @@ namespace JricaStudioApp.Pages.Admin.Appointments
             var appointmentValid = await ValidateFeilds();
 
 
-            if (IsNewUser)
+            if ( IsNewUser )
             {
-                User = await UserService.PostNewUserAdmin(UserToAdd);
-                if (User == null)
+                User = await UserService.PostNewUserAdmin( UserToAdd );
+                if ( User == null )
                 {
                     ValidationErrorMessage = "Email is Taken";
                 }
             }
 
-            if (User != null)
+            if ( User != null )
             {
                 AppointmentToAdd.UserId = User.Id;
-                var appointment = await AppointmentService.PostAppointmentAdmin(AppointmentToAdd);
-                if (appointment != null)
+                var appointment = await AppointmentService.PostAppointmentAdmin( AppointmentToAdd );
+                if ( appointment != null )
                 {
-                    NavigationManager.NavigateTo("/Admin/Appointments/Confirmed");
+                    NavigationManager.NavigateTo( "/Admin/Appointments/Confirmed" );
                 }
 
             }
@@ -134,42 +133,42 @@ namespace JricaStudioApp.Pages.Admin.Appointments
         {
             AddProductErrorMessage = string.Empty;
 
-            if (ProductToAddId == null || ProductToAddId == Guid.Empty)
+            if ( ProductToAddId == null || ProductToAddId == Guid.Empty )
             {
                 AddProductErrorMessage = "Please Select a Product";
                 return;
             }
-            var product = Products.Single(p => p.Id == ProductToAddId);
-            await AddProduct(product);
+            var product = Products.Single( p => p.Id == ProductToAddId );
+            await AddProduct( product );
             ProductToAddId = Guid.Empty;
             StateHasChanged();
         }
 
-        protected async Task DeleteAppointmentProduct_Click(Guid id)
+        protected async Task DeleteAppointmentProduct_Click( Guid id )
         {
-            var product = AppointmentToAdd.ProductsToAdd.First(p => p.ProductId == id);
-            await RemoveProduct(product);
+            var product = AppointmentToAdd.ProductsToAdd.First( p => p.ProductId == id );
+            await RemoveProduct( product );
             StateHasChanged();
         }
 
-        protected async Task RemoveProduct(AppointmentProductAdminAddDto product)
+        protected async Task RemoveProduct( AppointmentProductAdminAddDto product )
         {
-            AppointmentToAdd.ProductsToAdd.Remove(product);
+            AppointmentToAdd.ProductsToAdd.Remove( product );
         }
 
-        protected async Task AddProduct(ProductDto product)
+        protected async Task AddProduct( ProductDto product )
         {
             AddProductErrorMessage = string.Empty;
-            var productLine = AppointmentToAdd.ProductsToAdd.SingleOrDefault(p => p.ProductId == product.Id);
-            if (productLine == null)
+            var productLine = AppointmentToAdd.ProductsToAdd.SingleOrDefault( p => p.ProductId == product.Id );
+            if ( productLine == null )
             {
-                AppointmentToAdd.ProductsToAdd.Add(new AppointmentProductAdminAddDto()
+                AppointmentToAdd.ProductsToAdd.Add( new AppointmentProductAdminAddDto()
                 {
                     ProductId = product.Id,
                     ProductName = product.Name,
                     Price = product.Price,
                     Quantity = 1
-                });
+                } );
 
             }
             else
@@ -182,62 +181,62 @@ namespace JricaStudioApp.Pages.Admin.Appointments
         {
             AddServiceErrorMessage = string.Empty;
 
-            if (ServiceToAddId == null || ServiceToAddId == Guid.Empty)
+            if ( ServiceToAddId == null || ServiceToAddId == Guid.Empty )
             {
                 AddServiceErrorMessage = "Please Select a Service";
                 return;
             }
-            var service = Services.Single(a => a.Id == ServiceToAddId);
-            await AddService(service);
+            var service = Services.Single( a => a.Id == ServiceToAddId );
+            await AddService( service );
             ServiceToAddId = Guid.Empty;
             StateHasChanged();
         }
 
-        protected async Task DeleteAppointmentService_Click(Guid id)
+        protected async Task DeleteAppointmentService_Click( Guid id )
         {
-            var service = AppointmentToAdd.ServicesToAdd.First(s => s.ServiceId == id);
-            await RemoveService(service);
+            var service = AppointmentToAdd.ServicesToAdd.First( s => s.ServiceId == id );
+            await RemoveService( service );
             StateHasChanged();
         }
 
-        protected async Task RemoveService(AppointmentServiceAdminAddDto service)
+        protected async Task RemoveService( AppointmentServiceAdminAddDto service )
         {
 
-            AppointmentToAdd.ServicesToAdd.Remove(service);
+            AppointmentToAdd.ServicesToAdd.Remove( service );
             Duration = CalculateDuration();
         }
 
-        protected async Task AddService(ServiceDto service)
+        protected async Task AddService( ServiceDto service )
         {
-            AppointmentToAdd.ServicesToAdd.Add(new AppointmentServiceAdminAddDto()
+            AppointmentToAdd.ServicesToAdd.Add( new AppointmentServiceAdminAddDto()
             {
                 ServiceId = service.Id,
                 ServiceName = service.Name,
                 Duration = service.Duration,
                 Price = service.Price,
-            });
+            } );
             Duration = CalculateDuration();
-            if (AppointmentToAdd.StartTime != null)
+            if ( AppointmentToAdd.StartTime != null )
             {
-                AppointmentToAdd.EndTime = CalculateEndTime(Duration, AppointmentToAdd.StartTime);
+                AppointmentToAdd.EndTime = CalculateEndTime( Duration, AppointmentToAdd.StartTime );
             }
-            UnavailaleDatesDtos = await SchedulingService.GetUnavailableDates(ScheduleRange, Duration);
+            UnavailaleDatesDtos = await SchedulingService.GetUnavailableDates( ScheduleRange, Duration );
         }
 
-        private DateTime? CalculateEndTime(TimeSpan duration, DateTime? startTime)
+        private DateTime? CalculateEndTime( TimeSpan duration, DateTime? startTime )
         {
             return startTime + duration;
         }
 
-        protected async Task SetStartTime_OnClick(DateTime time)
+        protected async Task SetStartTime_OnClick( DateTime time )
         {
             try
             {
                 AppointmentToAdd.StartTime = time;
-                AppointmentToAdd.EndTime = CalculateEndTime(Duration, time);
+                AppointmentToAdd.EndTime = CalculateEndTime( Duration, time );
 
             }
-            catch (Exception)
+            catch ( Exception )
             {
                 throw;
             }
@@ -246,9 +245,9 @@ namespace JricaStudioApp.Pages.Admin.Appointments
             StateHasChanged();
         }
 
-        protected async Task SelectUser_Click(AdminUserDto user)
+        protected async Task SelectUser_Click( AdminUserDto user )
         {
-            if (user != null)
+            if ( user != null )
             {
                 User = user;
             }
@@ -257,7 +256,7 @@ namespace JricaStudioApp.Pages.Admin.Appointments
 
         protected async Task ClearUser_Click()
         {
-            if (User != null)
+            if ( User != null )
             {
                 User = null;
             }
@@ -270,52 +269,52 @@ namespace JricaStudioApp.Pages.Admin.Appointments
             {
                 await AuthenticateUser();
                 ValidationErrorMessage = string.Empty;
-                if (UserToAdd.FirstName == string.Empty
+                if ( UserToAdd.FirstName == string.Empty
                     || UserToAdd.LastName == string.Empty
                     || UserToAdd.FirstName == null
-                    || UserToAdd.LastName == null)
+                    || UserToAdd.LastName == null )
                 {
                     ValidationErrorMessage = "Please enter the name of the client";
                     return;
                 }
-                if (UserToAdd.Phone == null)
+                if ( UserToAdd.Phone == null )
                 {
                     ValidationErrorMessage = "Please Enter a Valid Australian mobile Number";
                     return;
                 }
-                if (!ValidatePhoneNumber(UserToAdd.Phone) || UserToAdd.Phone == string.Empty)
+                if ( !ValidatePhoneNumber( UserToAdd.Phone ) || UserToAdd.Phone == string.Empty )
                 {
                     ValidationErrorMessage = "Please Enter a Valid Australian mobile Number";
                     return;
                 }
-                if (UserToAdd.Email == null)
+                if ( UserToAdd.Email == null )
                 {
                     ValidationErrorMessage = "Please Enter a valid Email Address";
                     return;
                 }
 
-                if (!ValidateEmail(UserToAdd.Email))
+                if ( !ValidateEmail( UserToAdd.Email ) )
                 {
                     ValidationErrorMessage = "Please Enter a valid Email Address";
                     return;
                 }
 
-                if (!ValidateDateOfBirth(UserToAdd.DOB))
+                if ( !ValidateDateOfBirth( UserToAdd.DOB ) )
                 {
                     ValidationErrorMessage = "Client must be older the 18 years old.";
                 }
 
-                if (!UserToAdd.IsWaiverAcknowledged)
+                if ( !UserToAdd.IsWaiverAcknowledged )
                 {
                     ValidationErrorMessage = "Client must be provided a copy of the waiver before continuing.";
                 }
 
-                if (UserToAdd.HasAllergies)
+                if ( UserToAdd.HasAllergies )
                 {
                     ValidationErrorMessage = "Client cannot have allergies to chemicals used.";
                 }
 
-                if (ValidationErrorMessage == string.Empty)
+                if ( ValidationErrorMessage == string.Empty )
                 {
                     User = new AdminUserDto()
                     {
@@ -334,23 +333,23 @@ namespace JricaStudioApp.Pages.Admin.Appointments
 
 
             }
-            catch (Exception)
+            catch ( Exception )
             {
 
                 throw;
             }
         }
-        protected async Task GetAvailability_OnClick(DateTime time)
+        protected async Task GetAvailability_OnClick( DateTime time )
         {
-            AvailableTimes = await SchedulingService.GetAvailableAppointmentsTimes(time, Duration);
+            AvailableTimes = await SchedulingService.GetAvailableAppointmentsTimes( time, Duration );
         }
 
         private TimeSpan CalculateDuration()
         {
-            var duration = TimeSpan.FromMinutes(AppointmentToAdd.ServicesToAdd.Sum(s => s.Duration.TotalMinutes));
-            if (duration == TimeSpan.Zero)
+            var duration = TimeSpan.FromMinutes( AppointmentToAdd.ServicesToAdd.Sum( s => s.Duration.TotalMinutes ) );
+            if ( duration == TimeSpan.Zero )
             {
-                duration = TimeSpan.FromMinutes(15);
+                duration = TimeSpan.FromMinutes( 15 );
             }
             return duration;
         }
@@ -367,34 +366,34 @@ namespace JricaStudioApp.Pages.Admin.Appointments
 
         protected async Task AuthenticateUser()
         {
-            if (await ManageLocalStorage.GetLocalAdminIdGuid() == Guid.Empty || await ManageLocalStorage.GetLocalAdminKeyGuid() == Guid.Empty)
+            if ( await ManageLocalStorage.GetLocalAdminIdGuid() == Guid.Empty || await ManageLocalStorage.GetLocalAdminKeyGuid() == Guid.Empty )
             {
-                NavigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo( "/" );
                 return;
             }
 
-            if (await AdminService.Reverify(await ManageLocalStorage.GetLocalAdminIdGuid()) == null)
+            if ( await AdminService.Reverify( await ManageLocalStorage.GetLocalAdminIdGuid() ) == null )
             {
-                NavigationManager.NavigateTo("/Admin/Login");
+                NavigationManager.NavigateTo( "/Admin/Login" );
                 return;
             }
         }
 
-        private bool ValidateEmail(string email)
+        private bool ValidateEmail( string email )
         {
-            if (!email.Contains("@"))
+            if ( !email.Contains( "@" ) )
             {
                 return false;
             }
 
-            var splitEmail = email.Split("@");
+            var splitEmail = email.Split( "@" );
 
-            if (splitEmail.Length != 2)
+            if ( splitEmail.Length != 2 )
             {
                 return false;
             }
 
-            if (splitEmail.Any(a => a.Contains("@")))
+            if ( splitEmail.Any( a => a.Contains( "@" ) ) )
             {
                 return false;
             }
@@ -402,33 +401,33 @@ namespace JricaStudioApp.Pages.Admin.Appointments
             return true;
         }
 
-        private bool ValidatePhoneNumber(string phoneNumber)
+        private bool ValidatePhoneNumber( string phoneNumber )
         {
-            var stripedPhoneNumber = phoneNumber.Replace(" ", "");
+            var stripedPhoneNumber = phoneNumber.Replace( " ", "" );
 
-            if (!stripedPhoneNumber.StartsWith("04") && !stripedPhoneNumber.StartsWith("+614"))
+            if ( !stripedPhoneNumber.StartsWith( "04" ) && !stripedPhoneNumber.StartsWith( "+614" ) )
             {
                 return false;
             }
 
-            if (stripedPhoneNumber.StartsWith("04"))
+            if ( stripedPhoneNumber.StartsWith( "04" ) )
             {
-                stripedPhoneNumber = stripedPhoneNumber.Remove(0, 2);
+                stripedPhoneNumber = stripedPhoneNumber.Remove( 0, 2 );
             }
 
-            if (stripedPhoneNumber.StartsWith("+614"))
+            if ( stripedPhoneNumber.StartsWith( "+614" ) )
             {
-                stripedPhoneNumber.Remove(0, 4);
+                stripedPhoneNumber.Remove( 0, 4 );
             }
 
             var stripedPhoneNumberLength = stripedPhoneNumber.Length;
 
-            if (stripedPhoneNumberLength != 8)
+            if ( stripedPhoneNumberLength != 8 )
             {
                 return false;
             }
 
-            if (!int.TryParse(stripedPhoneNumber, NumberStyles.Integer, new CultureInfo("en-AU"), out int number))
+            if ( !int.TryParse( stripedPhoneNumber, NumberStyles.Integer, new CultureInfo( "en-AU" ), out int number ) )
             {
                 return false;
             }
@@ -436,9 +435,9 @@ namespace JricaStudioApp.Pages.Admin.Appointments
             return true;
         }
 
-        private bool ValidateDateOfBirth(DateOnly DOB)
+        private bool ValidateDateOfBirth( DateOnly DOB )
         {
-            if (DOB > DateOnly.FromDateTime(DateTime.Now.AddYears(-18)))
+            if ( DOB > DateOnly.FromDateTime( DateTime.Now.AddYears( -18 ) ) )
             {
                 return false;
             }
@@ -449,26 +448,26 @@ namespace JricaStudioApp.Pages.Admin.Appointments
         {
             AppointmentValidationErrorMessages = new List<string>();
 
-            if (AppointmentToAdd.StartTime < DateTime.Now)
+            if ( AppointmentToAdd.StartTime < DateTime.Now )
             {
-                AppointmentValidationErrorMessages.Add("Please check the Appointment Date");
+                AppointmentValidationErrorMessages.Add( "Please check the Appointment Date" );
             }
 
-            if (AppointmentToAdd.ServicesToAdd.Count() <= 0)
+            if ( AppointmentToAdd.ServicesToAdd.Count() <= 0 )
             {
-                AppointmentValidationErrorMessages.Add("Please add a Service to the appointment to continue.");
+                AppointmentValidationErrorMessages.Add( "Please add a Service to the appointment to continue." );
             }
 
-            if (UserToAdd.HasHadEyeProblems4Weeks)
+            if ( UserToAdd.HasHadEyeProblems4Weeks )
             {
-                AppointmentValidationErrorMessages.Add("User should wait until they are clear of any medical conditions.");
+                AppointmentValidationErrorMessages.Add( "User should wait until they are clear of any medical conditions." );
             }
 
-            if (AppointmentToAdd.IsSampleSetComplete)
+            if ( AppointmentToAdd.IsSampleSetComplete )
             {
-                if (AppointmentToAdd.SampleSetCompleted > AppointmentToAdd.StartTime)
+                if ( AppointmentToAdd.SampleSetCompleted > AppointmentToAdd.StartTime )
                 {
-                    AppointmentValidationErrorMessages.Add("Please check the date for sample set.");
+                    AppointmentValidationErrorMessages.Add( "Please check the date for sample set." );
                 }
             }
             else
@@ -476,7 +475,7 @@ namespace JricaStudioApp.Pages.Admin.Appointments
                 AppointmentToAdd.SampleSetCompleted = null;
             }
 
-            if (AppointmentValidationErrorMessages.Count() > 0)
+            if ( AppointmentValidationErrorMessages.Count() > 0 )
             {
                 return false;
             }
@@ -484,9 +483,9 @@ namespace JricaStudioApp.Pages.Admin.Appointments
             return true;
         }
 
-        protected async Task Enter(KeyboardEventArgs e)
+        protected async Task Enter( KeyboardEventArgs e )
         {
-            switch (e.Key)
+            switch ( e.Key )
             {
                 case "Enter":
                     SearchUsers_Click();
