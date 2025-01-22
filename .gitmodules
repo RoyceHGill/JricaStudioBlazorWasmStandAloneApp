@@ -1,0 +1,3 @@
+[submodule "jricaStudioSharedLibrary"]
+	path = jricaStudioSharedLibrary
+	url = https://github.com/RoyceHGill/jricaStudioSharedLibrary
