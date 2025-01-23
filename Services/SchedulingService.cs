@@ -223,6 +223,10 @@ namespace JricaStudioApp.Services
             {
                 await AddAdminHeaders();
 
+                foreach ( var businessHoursDto in businessHours )
+                {
+                    Console.WriteLine( $"DateTime{DateTime.Now.Kind}, {DateTime.Now}" );
+                }
                 var jsonRequest = JsonConvert.SerializeObject( businessHours );
                 var content = new StringContent( jsonRequest, Encoding.UTF8, "application/json-patch+json" );
 
