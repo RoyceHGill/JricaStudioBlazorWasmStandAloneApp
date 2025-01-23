@@ -225,7 +225,7 @@ namespace JricaStudioApp.Services
 
                 foreach ( var businessHoursDto in businessHours )
                 {
-                    Console.WriteLine( $"DateTime{DateTime.Now.Kind}, {DateTime.Now}" );
+                    Console.WriteLine( $"DateTime{DateTime.Now.Kind}, {DateTime.Now}, Offset: {DateTime.Now}" );
                 }
                 var jsonRequest = JsonConvert.SerializeObject( businessHours );
                 var content = new StringContent( jsonRequest, Encoding.UTF8, "application/json-patch+json" );
