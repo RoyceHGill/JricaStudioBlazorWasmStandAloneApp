@@ -66,7 +66,6 @@ namespace JricaStudioApp.Pages.Admin.Appointments.Components
                     foreach ( var item in BusinessHours )
                     {
                         item.LocalTimeOffset = DateTimeOffset.Now.Offset;
-                        Console.WriteLine( item.LocalTimeOffset );
                     }
 
                     var businesshours = await SchedulingService.PutBusinessHours( BusinessHours );

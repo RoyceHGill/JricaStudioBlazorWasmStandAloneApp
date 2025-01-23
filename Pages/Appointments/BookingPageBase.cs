@@ -82,6 +82,7 @@ namespace JricaStudioApp.Pages.Appointments
 
         protected async Task GetAvailability_OnClick(DateTime time)
         {
+            Console.WriteLine( time );
             var availableTimes = await SchedulingService.GetAvailableAppointmentsTimes(time, Duration);
             AvailableTimes = availableTimes.OrderBy(a => a.StartTime);
         }
