@@ -494,11 +494,12 @@ namespace JricaStudioApp.Services
         {
             try
             {
+                await AddAdminHeader();
                 var jsonRequest = JsonConvert.SerializeObject( dto );
                 var content = new StringContent( jsonRequest, Encoding.UTF8, "application/json-patch+json" );
 
                 var response = await _httpClient.PatchAsync( $"api/Appointment/Update/{id}", content );
-
+                RemoveAdminHeader();
                 if ( response.IsSuccessStatusCode )
                 {
                     var dtoResponse = await response.Content.ReadFromJsonAsync<AppointmentDto>();
