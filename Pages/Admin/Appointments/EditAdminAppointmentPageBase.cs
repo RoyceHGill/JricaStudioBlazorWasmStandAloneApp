@@ -49,7 +49,7 @@ namespace JricaStudioApp.Pages.Admin.Appointments
         protected async override Task OnInitializedAsync()
         {
             Admin = await AdminService.AuthenticateUser();
-            Appointment = await AppointmentService.GetAdminAppointment(Id);
+            Appointment = await AppointmentService.GetAdminAppointment( Id );
 
             Products = await ProductService.GetItems();
             Services = await ServiceService.GetServices();
@@ -64,15 +64,15 @@ namespace JricaStudioApp.Pages.Admin.Appointments
 
         protected void CalculateTotalServicePrice()
         {
-            TotalServicesPrice = Appointment.Services.Sum(p => p.Price);
+            TotalServicesPrice = Appointment.Services.Sum( p => p.Price );
         }
 
         protected void CalculateTotalDuration()
         {
-            var totalDuration = TimeSpan.FromMinutes(Appointment.Services.Sum(s => s.Duration.TotalMinutes));
-            if (totalDuration == TimeSpan.Zero)
+            var totalDuration = TimeSpan.FromMinutes( Appointment.Services.Sum( s => s.Duration.TotalMinutes ) );
+            if ( totalDuration == TimeSpan.Zero )
             {
-                totalDuration = TimeSpan.FromMinutes(15);
+                totalDuration = TimeSpan.FromMinutes( 15 );
             }
             Duration = totalDuration;
         }
@@ -82,25 +82,25 @@ namespace JricaStudioApp.Pages.Admin.Appointments
             ServicesCount = Appointment.Services.Count();
         }
 
-        protected async Task DeleteAppointmentService_Click(Guid id)
+        protected async Task DeleteAppointmentService_Click( Guid id )
         {
 
-            Appointment.Services = await AppointmentItemService.DeleteAppointmentService(id);
+            Appointment.Services = await AppointmentItemService.DeleteAppointmentService( id );
 
             CalculateTotals();
         }
 
-        protected async Task DeleteAppointmentProduct_Click(Guid id)
+        protected async Task DeleteAppointmentProduct_Click( Guid id )
         {
-            Appointment.Products = await AppointmentItemService.DeleteAppointmentProduct(id);
+            Appointment.Products = await AppointmentItemService.DeleteAppointmentProduct( id );
             isAddingNewProduct = false;
         }
 
-        protected async Task UpdateAppointmentProductQuantity_Click(Guid id, int qty)
+        protected async Task UpdateAppointmentProductQuantity_Click( Guid id, int qty )
         {
             try
             {
-                if (qty > 0)
+                if ( qty > 0 )
                 {
                     var updateDto = new AppointmentProductQuantityUpdateDto()
                     {
@@ -108,23 +108,23 @@ namespace JricaStudioApp.Pages.Admin.Appointments
                         Quantity = qty
                     };
 
-                    var response = await AppointmentItemService.PatchUpdateAppoitmentProductQuantity(id, updateDto);
+                    var response = await AppointmentItemService.PatchUpdateAppoitmentProductQuantity( id, updateDto );
                 }
                 else
                 {
-                    await DeleteAppointmentProduct_Click(id);
+                    await DeleteAppointmentProduct_Click( id );
                     isAddingNewProduct = false;
                     return;
                 }
-                var newProducts = await AppointmentItemService.GetAppointmentProducts(await ManageLocalStorage.GetLocalAppointmentIdGuid());
+                var newProducts = await AppointmentItemService.GetAppointmentProducts( await ManageLocalStorage.GetLocalAppointmentIdGuid() );
 
 
                 UpdateTotals();
 
-                MakeInvisible(id.ToString());
+                MakeInvisible( id.ToString() );
                 isAddingNewProduct = false;
             }
-            catch (Exception)
+            catch ( Exception )
             {
 
                 throw;
@@ -133,55 +133,55 @@ namespace JricaStudioApp.Pages.Admin.Appointments
 
         protected void UpdateTotals()
         {
-            ProductCount = CalculateQuantities(Appointment.Products);
-            TotalPrice = CalculateTotalPrice(Appointment.Products);
+            ProductCount = CalculateQuantities( Appointment.Products );
+            TotalPrice = CalculateTotalPrice( Appointment.Products );
         }
 
-        protected decimal CalculateTotalPrice(IEnumerable<AppointmentProductDto> products)
+        protected decimal CalculateTotalPrice( IEnumerable<AppointmentProductDto> products )
         {
-            return (decimal)products.Sum(p => p.Price * p.Quantity);
+            return ( decimal ) products.Sum( p => p.Price * p.Quantity );
         }
 
-        protected int CalculateQuantities(IEnumerable<AppointmentProductDto> products)
+        protected int CalculateQuantities( IEnumerable<AppointmentProductDto> products )
         {
-            return products.Sum(p => p.Quantity);
+            return products.Sum( p => p.Quantity );
         }
 
-        protected async void MakeVisible(string id)
+        protected async void MakeVisible( string id )
         {
-            await JS.InvokeVoidAsync("SetVisible", id);
+            await JS.InvokeVoidAsync( "SetVisible", id );
         }
 
-        protected async void MakeInvisible(string id)
+        protected async void MakeInvisible( string id )
         {
-            await JS.InvokeVoidAsync("SetHidden", id);
+            await JS.InvokeVoidAsync( "SetHidden", id );
         }
 
         protected async Task AddProduct_Click()
         {
             try
             {
-                if (ProductToAddId == null || ProductToAddId == Guid.Empty)
+                if ( ProductToAddId == null || ProductToAddId == Guid.Empty )
                 {
                     AddProductErrorMessage = "Please Select a Product";
                     return;
                 }
-                if (AddProductErrorMessage != null)
+                if ( AddProductErrorMessage != null )
                 {
                     AddProductErrorMessage = string.Empty;
                 }
-                var result = await AppointmentItemService.PostAdminAppointmentProduct(new AppointmentProductToAddDto()
+                var result = await AppointmentItemService.PostAdminAppointmentProduct( new AppointmentProductToAddDto()
                 {
                     AppointmentId = Id,
-                    ProductId = (Guid)ProductToAddId,
+                    ProductId = ( Guid ) ProductToAddId,
                     Quantity = 1
-                });
+                } );
 
-                Appointment = await AppointmentService.GetAdminAppointment(Id);
+                Appointment = await AppointmentService.GetAdminAppointment( Id );
                 await ToggleIsAddingNewProduct_Click();
                 StateHasChanged();
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
 
                 throw;
@@ -193,26 +193,26 @@ namespace JricaStudioApp.Pages.Admin.Appointments
         {
             try
             {
-                if (ServiceToAddId == null || ServiceToAddId == Guid.Empty)
+                if ( ServiceToAddId == null || ServiceToAddId == Guid.Empty )
                 {
                     AddServiceErrorMessage = "Please Select a Service";
                     return;
                 }
-                if (AddServiceErrorMessage != null)
+                if ( AddServiceErrorMessage != null )
                 {
                     AddServiceErrorMessage = null;
                 }
-                var result = await AppointmentItemService.PostAdminAppointmentService(new AppointmentServiceToAddDto()
+                var result = await AppointmentItemService.PostAdminAppointmentService( new AppointmentServiceToAddDto()
                 {
                     AppointmentId = Id,
-                    ServiceId = (Guid)ServiceToAddId,
-                });
+                    ServiceId = ( Guid ) ServiceToAddId,
+                } );
 
-                Appointment = await AppointmentService.GetAdminAppointment(Id);
+                Appointment = await AppointmentService.GetAdminAppointment( Id );
                 await ToggleIsAddingNewService_Click();
                 StateHasChanged();
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
 
                 throw;
@@ -226,7 +226,7 @@ namespace JricaStudioApp.Pages.Admin.Appointments
 
         protected async Task ToggleIsAddingNewProduct_Click()
         {
-            if (isAddingNewProduct)
+            if ( isAddingNewProduct )
             {
                 isAddingNewProduct = false;
             }
@@ -239,7 +239,7 @@ namespace JricaStudioApp.Pages.Admin.Appointments
 
         protected async Task ToggleIsAddingNewService_Click()
         {
-            if (isAddingNewService)
+            if ( isAddingNewService )
             {
                 isAddingNewService = false;
             }
@@ -252,28 +252,28 @@ namespace JricaStudioApp.Pages.Admin.Appointments
 
         protected async Task GoToUser()
         {
-            NavigationManager.NavigateTo($"admin/users/edit/{Appointment.User.Id}");
+            NavigationManager.NavigateTo( $"admin/users/edit/{Appointment.User.Id}" );
         }
 
         protected async Task SaveAppointment_Click()
         {
             try
             {
-                var appointment = await AppointmentService.UpdateAppointment(Id, new UpdateAppointmentDto
+                var appointment = await AppointmentService.UpdateAppointment( Id, new UpdateAppointmentDto
                 {
                     StartTime = Appointment.StartTime,
-                    EndTime = Appointment.EndTime,
+                    EndTime = Appointment.StartTime + TimeSpan.FromTicks( Appointment.Services.Sum( s => s.Duration.Ticks ) ),
                     IsDepositPaid = Appointment.IsDepositPaid,
                     IsSampleSetComplete = Appointment.IsSampleSetComplete,
                     HasHadEyelashExtentions = Appointment.HasHadEyelashExtentions,
                     SampleSetCompleted = Appointment.SampleSetCompleted,
                     Status = Appointment.Status
-                });
+                } );
 
-                NavigationManager.NavigateTo($"admin/appointments/{Appointment.Status}");
+                NavigationManager.NavigateTo( $"admin/appointments/{Appointment.Status}" );
 
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
                 ErrorMessage = e.Message;
             }
@@ -281,7 +281,7 @@ namespace JricaStudioApp.Pages.Admin.Appointments
 
         protected async Task BackToAppoitnments()
         {
-            NavigationManager.NavigateTo($"admin/appointments/{Appointment.Status}");
+            NavigationManager.NavigateTo( $"admin/appointments/{Appointment.Status}" );
         }
     }
 }
