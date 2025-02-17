@@ -1,4 +1,9 @@
-﻿
+﻿function SetTimer(seconds) {
+    const timer = document.querySelector('#load-count-down')
+    if (timer != undefined || timer != null) {
+        timer.setAttribute('style', `animation: rotation ${seconds}s linear infinite;`);
+    }
+}
 
 
 function ChangeBtnSuccessToBtnWarning(id) {
