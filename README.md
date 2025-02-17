@@ -1,6 +1,8 @@
 # JricaStudioApp
 
-This is the sister application to the JricaStudio Web API. Please Follow this Link to view the API for this Client [here](https://github.com/RoyceHGill/JricaStudioWebApi). 
+This is the sister application to the JricaStudio Web API. Please Follow this Link to view the API for this Client [
+	
+](https://github.com/RoyceHGill/JricaStudioWebApi). 
 
 # Foreword
 This was a great experience building out a larger project, many mistakes were made and lessons learned. To bring them forward of future improvements of the application and also other applications that i will build.
