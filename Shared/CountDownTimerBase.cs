@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System.Timers;
 
 namespace JricaStudioApp.Shared
@@ -8,19 +9,27 @@ namespace JricaStudioApp.Shared
         public TimeSpan timeRemaining;
         private System.Timers.Timer timer;
         private bool isRunning;
-
+        [Parameter]
+        public int Seconds { get; set; } = 5;
+        [Inject]
+        public IJSRuntime JS { get; set; }
 
 
         protected override async Task OnInitializedAsync()
         {
             await StartCountdown();
         }
+
+        protected async override Task OnAfterRenderAsync( bool firstRender )
+        {
+            await JS.InvokeVoidAsync( "SetTimer", $"{Seconds}" );
+        }
         private async Task StartCountdown()
         {
             if ( isRunning )
                 return;
 
-            timeRemaining = new TimeSpan( 0, 0, 20 ); // 1 minute countdown
+            timeRemaining = new TimeSpan( 0, 0, Seconds ); // set countdown timer
             isRunning = true;
 
             timer = new System.Timers.Timer( 1000 ); // 1 second intervals
