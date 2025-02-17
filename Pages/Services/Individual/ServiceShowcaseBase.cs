@@ -22,9 +22,6 @@ namespace JricaStudioApp.Pages.Services.Individual
         public bool IsReturningCustomer { get; set; }
 
 
-
-
-
         protected override async Task OnInitializedAsync()
         {
             try
@@ -32,9 +29,9 @@ namespace JricaStudioApp.Pages.Services.Individual
                 AppointmentId = await ManageLocalStorageService.GetLocalAppointmentIdGuid();
                 UserId = await ManageLocalStorageService.GetLocalUserIdGuid();
 
-                var service = await ServiceService.GetPreviouslyOrderedService( UserId );
+                var service = await ServiceService.GetPreviouslyOrderedService(UserId);
 
-                if ( service != null )
+                if (service != null)
                 {
                     ServiceId = service.Id;
                     IsReturningCustomer = true;
@@ -42,18 +39,18 @@ namespace JricaStudioApp.Pages.Services.Individual
                 else
                 {
                     var showcaseService = await ServiceService.GetServiceShowcase();
-                    if ( showcaseService != null )
+                    if (showcaseService != null)
                     {
                         ServiceId = showcaseService.Id;
                         IsReturningCustomer = false;
                     }
                 }
             }
-            catch ( Exception e )
+            catch (Exception e)
             {
                 ErrorMessage = e.Message;
             }
-
+            
         }
 
     }
