@@ -14,7 +14,7 @@ else
     <div class="row">
         <div class="col">
             <h2>Booking</h2>
-            <DatePicker @ref="@DatePicker" Min=@DateTime.Now Max=DateTime.Now.AddDays(ScheduleRange) InputFormat="dd/MM/yyyy" DisplayFormat="dd/MM/yyyy" TValue="DateTime?" DisabledDates="@UnavailaleDatesDtos.Select(u => (DateTime?)u.UnavailableDate)" @bind-Date="@DatePickerDate" @oninput="() => GetAvailability_OnClick((DateTime)DatePickerDate)" Inline class="w-50" />
+            <DatePicker Immediate="true" @onsubmit="() => GetAvailability_OnClick((DateTime)DatePickerDate)" @ref="@DatePicker" Min=@DateTime.Now Max=DateTime.Now.AddDays(ScheduleRange) InputFormat="dd/MM/yyyy" DisplayFormat="dd/MM/yyyy" TValue="DateTime?" DisabledDates="@UnavailaleDatesDtos.Select(u => (DateTime?)u.UnavailableDate)" @bind-Date="@DatePickerDate" @oninput="() => GetAvailability_OnClick((DateTime)DatePickerDate)" Inline class=" w-50" />
             @if (AvailableTimes != null)
             {
                 <div class="d-flex flex-wrap mt-2 w-75">
