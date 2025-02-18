@@ -7,6 +7,7 @@ using JricaStudioSharedLibrary.enums;
 using Microsoft.AspNetCore.Components;
 using JricaStudioSharedLibrary.Dtos.BusinessHours;
 using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace JricaStudioApp.Pages.Appointments
 {
@@ -127,6 +128,17 @@ namespace JricaStudioApp.Pages.Appointments
 
             Appointment.Products = await AppointmentItemService.GetAppointmentProducts( Appointment.Id );
             AppointmentItemService.RaiseEventOnProductsChanged( Appointment.Products );
+        }
+
+        public async void Enter( KeyboardEventArgs e )
+        {
+            if ( e.Code == "Enter" || e.Code == "NumpadEnter" )
+            {
+                if ( StartTime != null )
+                {
+                    await GetAvailability_OnClick( ( DateTime ) StartTime );
+                }
+            }
         }
 
         protected async Task ConfirmAppointmentBooking_Click()

@@ -25,23 +25,23 @@ namespace JricaStudioApp.Pages.Admin
         {
             LoginErrorResult = "";
             StateHasChanged();
-            Admin = await AdminService.Login(new AdminLoginRequestDto
+            Admin = await AdminService.Login( new AdminLoginRequestDto
             {
                 Password = Password,
                 Username = Email.ToLower()
-            }) ;
+            } );
 
-            if (Admin != null)
+            if ( Admin != null )
             {
-                if (Admin.Updated == null || Admin.Updated < DateTime.Now.AddDays(-30))
+                if ( Admin.Updated == null || Admin.Updated < DateTime.Now.AddDays( -30 ) )
                 {
-                    NavigationManager.NavigateTo($"admin/update/{Admin.Id}");
+                    NavigationManager.NavigateTo( $"admin/update/{Admin.Id}" );
                     return;
                 }
 
-                await ManageLocalStorage.SetLocalAdminKeyGuid(Admin.AdminKey);
-                await ManageLocalStorage.SetLocalAdminIdGuid(Admin.Id);
-                NavigationManager.NavigateTo("Admin/Home");
+                await ManageLocalStorage.SetLocalAdminKeyGuid( Admin.AdminKey );
+                await ManageLocalStorage.SetLocalAdminIdGuid( Admin.Id );
+                NavigationManager.NavigateTo( "Admin/Home" );
             }
             else
             {
@@ -50,7 +50,7 @@ namespace JricaStudioApp.Pages.Admin
             }
         }
 
-        protected void UpdatePassword(ChangeEventArgs e)
+        protected void UpdatePassword( ChangeEventArgs e )
         {
             Password = e.Value.ToString();
         }
@@ -59,15 +59,15 @@ namespace JricaStudioApp.Pages.Admin
         {
             Admin = await AdminService.AuthenticateUser();
 
-            if (Admin != null)
+            if ( Admin != null )
             {
-                NavigationManager.NavigateTo("admin/home");
+                NavigationManager.NavigateTo( "admin/home" );
             }
         }
 
-        public async void Enter(KeyboardEventArgs e)
-       {
-            if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        public async void Enter( KeyboardEventArgs e )
+        {
+            if ( e.Code == "Enter" || e.Code == "NumpadEnter" )
             {
                 await Login_Click();
             }
