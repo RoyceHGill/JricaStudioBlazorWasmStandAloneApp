@@ -1,8 +1,10 @@
-﻿using JricaStudioApp.Services.Contracts;
+﻿using Blazorise;
+using JricaStudioApp.Services.Contracts;
 using JricaStudioSharedLibrary.Dtos;
 using JricaStudioSharedLibrary.Dtos.Admin;
 using JricaStudioSharedLibrary.Dtos.BusinessHours;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace JricaStudioApp.Pages.Services.Individual
 {
@@ -26,7 +28,11 @@ namespace JricaStudioApp.Pages.Services.Individual
         public ISchedulingService SchedulingService { get; set; }
         [Inject]
         public NavigationManager NavigationManager { get; set; }
-
+        public DatePicker<DateTime?> DatePicker { get; set; }
+        public DateTime? DatePickerDate { get; set; }
+        public IEnumerable<AppointmentUnavailaleDateDto> UnavailaleDatesDtos { get; set; }
+        public DateTime StartTime { get; set; }
+        public IEnumerable<AppointmentAvailableDto> AvailableTimes { get; set; }
         public ServiceDto Service { get; set; }
         public Guid AppointmentId { get; set; }
         public string ErrorMessage { get; set; }
@@ -34,10 +40,11 @@ namespace JricaStudioApp.Pages.Services.Individual
         public IEnumerable<BusinessHoursDto> BusinessHours { get; set; }
         public IEnumerable<AdminServiceCategoryDto> Categories { get; set; }
         public string AvailableTimeButtonclasses { get; set; } = "";
-        public int DateRange { get; set; } = 14;
+        public int DateRange { get; set; } = 59;
 
         protected async override Task OnParametersSetAsync()
         {
+
             try
             {
                 if ( PreviewService != null )
@@ -123,6 +130,7 @@ namespace JricaStudioApp.Pages.Services.Individual
                         AvailableTimeButtonclasses += " btn btn-success jay-green-bg";
                     }
                 }
+                UnavailaleDatesDtos = await SchedulingService.GetUnavailableDates( DateRange + 1, Service.Duration );
 
 
                 StateHasChanged();
@@ -206,6 +214,24 @@ namespace JricaStudioApp.Pages.Services.Individual
         {
             AppointmentService.OnIdChanged -= AppointmentIdChanged;
 
+        }
+
+        public async void Enter( KeyboardEventArgs e )
+        {
+            if ( e.Code == "Enter" || e.Code == "NumpadEnter" || e.Code == "Go" )
+            {
+                if ( StartTime != null )
+                {
+                    await GetAvailability_OnClick( ( DateTime ) StartTime );
+                }
+            }
+        }
+
+        protected async Task GetAvailability_OnClick( DateTime time )
+        {
+            Console.WriteLine( time );
+            var availableTimes = await SchedulingService.GetAvailableAppointmentsTimes( time, Service.Duration );
+            AvailableTimes = availableTimes.OrderBy( a => a.StartTime );
         }
     }
 }
