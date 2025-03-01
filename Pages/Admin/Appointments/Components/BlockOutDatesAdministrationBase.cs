@@ -25,7 +25,7 @@ namespace JricaStudioApp.Pages.Admin.Appointments.Components
 
             BlockOutDateToAdd = new BlockOutDateToAddDto
             {
-                Date = DateOnly.FromDateTime(DateTime.Today)
+                Date = DateOnly.FromDateTime( DateTime.Today )
             };
         }
 
@@ -33,57 +33,56 @@ namespace JricaStudioApp.Pages.Admin.Appointments.Components
         {
             try
             {
-                if (BlockOutDateToAdd.Date < DateOnly.FromDateTime(DateTime.Now))
+                if ( BlockOutDateToAdd.Date < DateOnly.FromDateTime( DateTime.Now ) )
                 {
-                    ApplyErrorMessage("Block out date can not be in the past.");
+                    ApplyErrorMessage( "Block out date can not be in the past." );
                 }
                 else
                 {
-                    var blockOutDates = await SchedulingService.AddBlockOutDate(BlockOutDateToAdd);
-                    if (blockOutDates != null)
+                    var blockOutDates = await SchedulingService.AddBlockOutDate( BlockOutDateToAdd );
+                    if ( blockOutDates != null )
                     {
                         BlockOutDates = blockOutDates;
-                        ApplyConfirmationMessage("Block out date was successfully added.");
+                        ApplyConfirmationMessage( "Block out date was successfully added." );
                         return;
                     }
-                    ApplyErrorMessage("Block out date was not added.");
+                    ApplyErrorMessage( "Block out date was not added." );
                 }
 
-                
+
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
-                ApplyErrorMessage(e.Message);
+                ApplyErrorMessage( e.Message );
             }
         }
 
 
-        protected async Task DeleteBlockOutDate(Guid blockOutDateId)
+        protected async Task DeleteBlockOutDate( Guid blockOutDateId )
         {
             try
             {
-                var blockOutDates = await SchedulingService.DeleteBlockOutDate(blockOutDateId);
+                var blockOutDates = await SchedulingService.DeleteBlockOutDate( blockOutDateId );
 
-                if (blockOutDates != null)
+                if ( blockOutDates != null )
                 {
                     BlockOutDates = blockOutDates;
-                    ApplyConfirmationMessage("Block out date was successfully deleted.");
+                    ApplyConfirmationMessage( "Block out date was successfully deleted." );
                 }
-                ApplyErrorMessage("Block out date was not deleted.");                                                                                                                                    
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
-                ApplyErrorMessage(e.Message);
+                ApplyErrorMessage( $"Block out date was not deleted. {e.Message}" );
             }
         }
 
-        protected void ApplyErrorMessage(string message)
+        protected void ApplyErrorMessage( string message )
         {
             ErrorMessage = message;
             ConfirmationMessage = default;
         }
 
-        protected void ApplyConfirmationMessage(string message)
+        protected void ApplyConfirmationMessage( string message )
         {
             ErrorMessage = default;
             ConfirmationMessage = message;

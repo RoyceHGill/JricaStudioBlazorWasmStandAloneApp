@@ -317,7 +317,7 @@ namespace JricaStudioApp.Services
             try
             {
                 await AddAdminHeaders();
-                var response = await _httpClient.DeleteAsync( $"api/Schedule/BlockOutDates/{blockOutDateId}" );
+                var response = await _httpClient.DeleteAsync( $"api/Scheduling/BlockOutDates/{blockOutDateId}" );
 
                 if ( response.IsSuccessStatusCode )
                 {

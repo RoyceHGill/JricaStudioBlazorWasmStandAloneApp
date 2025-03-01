@@ -132,7 +132,7 @@ namespace JricaStudioApp.Pages.Appointments
 
         public async void Enter( KeyboardEventArgs e )
         {
-            if ( e.Code == "Enter" || e.Code == "NumpadEnter" )
+            if ( e.Code == "Enter" || e.Code == "NumpadEnter" || e.Code == "Go" )
             {
                 if ( StartTime != null )
                 {
