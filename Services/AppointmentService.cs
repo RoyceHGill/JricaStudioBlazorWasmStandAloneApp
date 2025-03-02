@@ -452,7 +452,7 @@ namespace JricaStudioApp.Services
                 {
                     var dto = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
-                    dto = dto.ConvertDateTimesToUtcTime();
+                    dto = dto.ConvertDateTimesToLocalTimes();
 
                     return dto;
                 }
@@ -478,7 +478,7 @@ namespace JricaStudioApp.Services
                 {
                     var dtoResponse = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
-                    dtoResponse = dtoResponse.ConvertDateTimesToUtcTime();
+                    dtoResponse = dtoResponse.ConvertDateTimesToLocalTimes();
 
                     return dtoResponse;
                 }
@@ -532,7 +532,7 @@ namespace JricaStudioApp.Services
 
                     var dtoResponse = await response.Content.ReadFromJsonAsync<AppointmentAdminToAddDto>();
 
-                    dtoResponse = dtoResponse.ConvertDateTimesToUtcTime();
+                    dtoResponse = dtoResponse.ConvertDateTimesToLocalTimes();
 
                     return dtoResponse;
                 }
