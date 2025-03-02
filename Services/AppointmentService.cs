@@ -504,7 +504,7 @@ namespace JricaStudioApp.Services
                 {
                     var dtoResponse = await response.Content.ReadFromJsonAsync<AppointmentDto>();
 
-                    dtoResponse = dtoResponse.ConvertDateTimesToUtcTime();
+                    dtoResponse = dtoResponse.ConvertDateTimesToLocalTimes();
 
                     return dtoResponse;
                 }
