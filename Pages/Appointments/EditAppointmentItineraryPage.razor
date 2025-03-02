@@ -52,9 +52,9 @@ else
 
                 }
             }
-            
+
         </div>
-        
+
         <div class="col" id="stats-panel">
             <hr class="text-white">
             <div>
@@ -75,31 +75,9 @@ else
                     Total Duration: 0 minutes
                 </div>
             }
-            @if ( Appointment.StartTime != null )
+            @if(Appointment.StartTime.HasValue && Appointment.EndTime.HasValue && BusinessHours.Any())
             {
-
-                <h6 class="fw-bold">
-                    Appointment Date
-                </h6>
-                <h6>
-                    @Appointment.StartTime.Value.ToString( "dd/MM/yyyy" )
-                </h6>
-                <hr class="text-white" />
-                <h6 class="fw-bold">
-                    Appointment Times
-                </h6>
-                <h6>
-                    Start Time: @Appointment.StartTime.Value.ToShortTimeString()
-                </h6>
-                <h6>
-                    End Time: @Appointment.EndTime.Value.ToShortTimeString()
-                </h6>
-                if ( TimeOnly.FromDateTime( ( DateTime ) @Appointment.StartTime ).Add( TotalDuration ) > BusinessHours.SingleOrDefault( b => b.Day == @Appointment.StartTime.Value.DayOfWeek ).CloseTime )
-                {
-                    <div class="text-danger fw-bolder">
-                        After hours appointment: Additional charges will apply
-                    </div>
-                }
+                <DisplayAppointmentTime StartTime="(DateTime)Appointment.StartTime!" EndTime="(DateTime)Appointment.EndTime!" Duration="TotalDuration" BusinessHours="BusinessHours" />
             }
         </div>
     </div>
