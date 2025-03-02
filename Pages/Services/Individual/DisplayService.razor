@@ -1,4 +1,6 @@
 ﻿@inherits DisplayServiceBase;
+@using Blazorise;
+
 
 @if (Service == null)
 {
@@ -10,7 +12,7 @@ else
         <div class="col-md-7 col-12 d-flex justify-content-center pt-3">
             <div class="mt-5">
                 <img class="w-100 rounded" src="@Service.ImageData">
-                
+
             </div>
         </div>
         <div class="col  p-2">
@@ -44,6 +46,7 @@ else
                         <div class="m-1">
                             <button class="@AvailableTimeButtonclasses" @onclick="() => SetStartTime_OnClick(AvailableTime.StartTime)">@AvailableTime.StartTime.ToString("HH:mm")</button>
                         </div>
+                        
                     </div>
                 }
                 else
@@ -52,6 +55,30 @@ else
                         <div>
                             None Available
                         </div>
+                    </div>
+                }
+                <lable>Search By Date</lable>
+                <DatePicker @onkeyup="@Enter" @ref="@DatePicker" Min=@DateTime.Now Max=DateTime.Now.AddDays(DateRange) InputFormat="dd/MM/yyyy" DisplayFormat="dd/MM/yyyy" TValue="DateTime?" DisabledDates="@UnavailaleDatesDtos.Select(u => (DateTime?)u.UnavailableDate)" @bind-Date="@DatePickerDate" @oninput="() => GetAvailability_OnClick((DateTime)DatePickerDate)" Inline/>
+                @if ( AvailableTimes != null )
+                {
+                    <div class="d-flex flex-wrap mt-2 w-100
+                    ">
+
+                        @foreach ( var item in AvailableTimes )
+                        {
+                            if ( TimeOnly.FromDateTime( item.StartTime ).Add( Service.Duration ) > BusinessHours.SingleOrDefault( b => b.Day == item.StartTime.DayOfWeek ).CloseTime )
+                            {
+                                <div class="m-1">
+                                    <button class="btn btn-warning" @onclick="() => SetStartTime_OnClick(item.StartTime)">@item.StartTime.ToString( "HH:mm" )</button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="m-1">
+                                    <button class="btn btn-success jay-green-bg" @onclick="() => SetStartTime_OnClick(item.StartTime)">@item.StartTime.ToString( "HH:mm" )</button>
+                                </div>
+                            }
+                        }
                     </div>
                 }
             </div>
