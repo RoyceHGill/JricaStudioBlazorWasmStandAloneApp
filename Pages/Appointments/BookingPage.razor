@@ -116,7 +116,11 @@ else
                 }
             }
             <hr class="text-white" />
-<Component />            <div class="m-4 d-flex flex-row-reverse">
+            @if ( Appointment.StartTime.HasValue && Appointment.EndTime.HasValue && BusinessHours.Any() )
+            {
+                <DisplayAppointmentTime StartTime="(DateTime)Appointment.StartTime!" EndTime="(DateTime)Appointment.EndTime!" Duration="Duration" BusinessHours="BusinessHours" />
+            }
+            <div class="m-4 d-flex flex-row-reverse">
                 @if (StartTime != null)
                 {
                     <a @onclick="() => ConfirmAppointmentBooking_Click()" class="btn btn-success jay-green-bg">Confirm</a>

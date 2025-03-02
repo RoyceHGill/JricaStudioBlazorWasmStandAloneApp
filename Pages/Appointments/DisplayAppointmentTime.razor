@@ -4,22 +4,22 @@
 
 @if (StartTime != default)
 {
-    <h6 class="fw-bold">
+    <h4 class="fw-bold">
         Appointment Date
-    </h6>
-    <h6>
+    </h4>
+    <h5>
         @StartTime.ToString("dd/MM/yyyy")
-    </h6>
+    </h5>
     <hr class="text-white" />
-    <h6 class="fw-bold">
+    <h4 class="fw-bold">
         Appointment Times
-    </h6>
-    <h6>
+    </h4>
+    <h5>
         Start Time: @StartTime.ToShortTimeString()
-    </h6>
-    <h6>
+    </h5>
+    <h5>
         End Time: @EndTime.ToShortTimeString()
-    </h6>
+    </h5>
     if (TimeOnly.FromDateTime(StartTime).Add(Duration) > BusinessHours.First(b => b.Day == StartTime.DayOfWeek).CloseTime)
     {
         <div class="text-danger fw-bolder">

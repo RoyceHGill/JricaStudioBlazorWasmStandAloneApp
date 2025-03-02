@@ -75,6 +75,7 @@ else
                     Total Duration: 0 minutes
                 </div>
             }
+            <hr class=" text-white"/>
             @if(Appointment.StartTime.HasValue && Appointment.EndTime.HasValue && BusinessHours.Any())
             {
                 <DisplayAppointmentTime StartTime="(DateTime)Appointment.StartTime!" EndTime="(DateTime)Appointment.EndTime!" Duration="TotalDuration" BusinessHours="BusinessHours" />
