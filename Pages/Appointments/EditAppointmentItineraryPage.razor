@@ -143,7 +143,7 @@ else
             <hr class="text-white">
             <div class="d-flex justify-content-around">
                 <a href="#" class="btn btn-success jay-green-bg">Add More</a>
-                @if ((Appointment.Services.Count() > 0 || Appointment.Products.Count() > 0) && ValidateStartTime(Appointment, BusinessHours) && ValidateEndTime(Appointment, BusinessHours))
+                @if (ValidateProductsAndServices(Appointment.Services, Appointment.Products) && ValidateStartTime(Appointment, BusinessHours) && ValidateEndTime(Appointment, BusinessHours))
                 {
                     <a @onclick="() => StatusBasedNavigation_Click()" class="btn btn-success jay-green-bg">Proceed</a>
                 }
