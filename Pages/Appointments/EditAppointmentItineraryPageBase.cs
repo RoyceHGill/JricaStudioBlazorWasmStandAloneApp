@@ -1,4 +1,6 @@
-﻿using JricaStudioApp.Services;
+﻿using JricaStudioApp.Pages.Products.Iterative;
+using JricaStudioApp.Pages.Services.Iterative;
+using JricaStudioApp.Services;
 using JricaStudioApp.Services.Contracts;
 using JricaStudioSharedLibrary.Dtos;
 using JricaStudioSharedLibrary.Dtos.BusinessHours;
@@ -70,6 +72,17 @@ namespace JricaStudioApp.Pages.Appointments
             }
         }
 
+        public bool ValidateProductsAndServices( IEnumerable<AppointmentServiceDto> services, IEnumerable<AppointmentProductDto> products )
+        {
+            return services.Any() ? true : products.Any() ? true : false;
+        }
+
+        public bool ValiddateAppointmentTimes( AppointmentDto appointment, IEnumerable<BusinessHoursDto> businessHours )
+        {
+            return ValidateStartTime( appointment, businessHours ) ? true : ValidateEndTime( appointment, businessHours ) ? true : false;
+
+        }
+
         public bool ValidateStartTime( AppointmentDto appointment, IEnumerable<BusinessHoursDto> businessHours )
         {
 
@@ -79,7 +92,7 @@ namespace JricaStudioApp.Pages.Appointments
 
             var startTime = TimeOnly.FromDateTime( appointment.StartTime.HasValue ? appointment.StartTime.Value : DateTime.MinValue );
 
-            return startTime > businessHoursDay.OpenTime && startTime < businessHoursDay.CloseTime;
+            return startTime >= businessHoursDay.OpenTime && startTime < businessHoursDay.CloseTime;
         }
 
         public bool ValidateEndTime( AppointmentDto appointment, IEnumerable<BusinessHoursDto> businessHours )
@@ -91,7 +104,7 @@ namespace JricaStudioApp.Pages.Appointments
 
             var endTime = TimeOnly.FromDateTime( appointment.EndTime.HasValue ? appointment.EndTime.Value : DateTime.MinValue );
 
-            return endTime > businessHoursDay.OpenTime && endTime < businessHoursDay.CloseTime?.AddHours( businessHoursDay.AfterHoursGraceRange );
+            return endTime > businessHoursDay.OpenTime && endTime <= businessHoursDay.CloseTime?.AddHours( businessHoursDay.AfterHoursGraceRange );
         }
 
         protected void CalculateTotalPrice()
