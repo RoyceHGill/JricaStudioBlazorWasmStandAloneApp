@@ -87,7 +87,7 @@ namespace JricaStudioApp.Services
             catch ( Exception e )
             {
 
-                throw;
+                throw new Exception(e.Message);
             }
         }
 
