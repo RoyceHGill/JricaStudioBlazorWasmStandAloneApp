@@ -1,4 +1,5 @@
 ﻿using JricaStudioApp.Services.Contracts;
+using JricaStudioApp.Shared.Url;
 using JricaStudioSharedLibrary.Dtos;
 using JricaStudioSharedLibrary.Dtos.Admin;
 using JricaStudioSharedLibrary.Dtos.BusinessHours;
@@ -153,6 +154,8 @@ namespace JricaStudioApp.Pages.Services.Individual
             }
 
             await AddAppointment( addDto );
+
+            NavigationManager.NavigateTo( $"/{UriConstants.EditAppointment}/{AppointmentId}" );
         }
 
         protected async Task AddAppointment( AppointmentServiceToAddDto addDto )
