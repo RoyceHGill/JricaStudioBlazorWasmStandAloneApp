@@ -226,6 +226,19 @@ a, .btn-link {
     width: 5vw;
 }
 
+.horizontal-scrolling {
+    gap: 4rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-snap-type: inline mandatory
+}
+
+.scrolling-snapping {
+    scroll-snap-align: start;
+}
+
 @media (min-width: 992px) {
     .social-icon {
         width: 3vw;
@@ -243,18 +256,7 @@ a, .btn-link {
         visibility: hidden !important;
     }
 
-    .horizontal-scrolling {
-        gap: 4rem;
-        overflow-x: auto;
-        overscroll-behavior-x: contain;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-        scroll-snap-type: inline mandatory
-    }
 
-    .scrolling-snapping {
-        scroll-snap-align: start;
-    }
 
     .service-page-image {
         inline-size: 100%;
