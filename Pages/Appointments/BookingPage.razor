@@ -116,31 +116,9 @@ else
                 }
             }
             <hr class="text-white" />
-            @if (StartTime != null)
+            @if ( Appointment.StartTime.HasValue && Appointment.EndTime.HasValue && BusinessHours.Any() )
             {
-                
-                <h6 class="fw-bold">
-                    Appointment Date
-                </h6>
-                <h6>
-                    @StartTime.Value.ToString("dd/MM/yyyy")
-                </h6>
-                <hr class="text-white" />
-                <h6 class="fw-bold">
-                    Appointment Times
-                </h6>
-                <h6>
-                    Start Time: @StartTime.Value.ToShortTimeString()
-                </h6>
-                <h6>
-                    End Time: @EndTime.Value.ToShortTimeString()
-                </h6>
-                if (TimeOnly.FromDateTime((DateTime)StartTime).Add(Duration) > BusinessHours.SingleOrDefault(b => b.Day == StartTime.Value.DayOfWeek).CloseTime)
-                {
-                    <div class="text-danger fw-bolder">
-                        After hours appointment: Additional charges will apply
-                    </div>
-                }
+                <DisplayAppointmentTime StartTime="(DateTime)Appointment.StartTime!" EndTime="(DateTime)Appointment.EndTime!" Duration="Duration" BusinessHours="BusinessHours" />
             }
             <div class="m-4 d-flex flex-row-reverse">
                 @if (StartTime != null)

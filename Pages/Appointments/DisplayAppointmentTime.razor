@@ -1,0 +1,42 @@
+@using JricaStudioApp.Pages.Products.Individual
+@using Blazorise;
+@using JricaStudioSharedLibrary.Dtos.BusinessHours
+
+@if (StartTime != default)
+{
+    <h4 class="fw-bold">
+        Appointment Date
+    </h4>
+    <h5>
+        @StartTime.ToString("dd/MM/yyyy")
+    </h5>
+    <hr class="text-white" />
+    <h4 class="fw-bold">
+        Appointment Times
+    </h4>
+    <h5>
+        Start Time: @StartTime.ToShortTimeString()
+    </h5>
+    <h5>
+        End Time: @EndTime.ToShortTimeString()
+    </h5>
+    if (TimeOnly.FromDateTime(StartTime).Add(Duration) > BusinessHours.First(b => b.Day == StartTime.DayOfWeek).CloseTime)
+    {
+        <div class="text-danger fw-bolder">
+            After hours appointment: Additional charges will apply
+        </div>
+    }
+}
+
+@code{
+    [Parameter]
+    public DateTime StartTime { get; set; }
+    [Parameter]
+    public DateTime EndTime { get; set; }
+    [Parameter]
+    public TimeSpan Duration { get; set; }
+    [Parameter]
+    public IEnumerable<BusinessHoursDto> BusinessHours { get; set; }
+
+    
+}

@@ -156,6 +156,10 @@ namespace JricaStudioApp.Pages.Admin.Appointments
         {
             await JS.InvokeVoidAsync( "SetHidden", id );
         }
+        protected async Task OnProductSelected()
+        {
+            AddProductErrorMessage = string.Empty;
+        }
 
         protected async Task AddProduct_Click()
         {
@@ -219,10 +223,6 @@ namespace JricaStudioApp.Pages.Admin.Appointments
             }
         }
 
-        protected async Task OnProductSelected()
-        {
-            AddProductErrorMessage = string.Empty;
-        }
 
         protected async Task ToggleIsAddingNewProduct_Click()
         {
@@ -250,10 +250,6 @@ namespace JricaStudioApp.Pages.Admin.Appointments
             StateHasChanged();
         }
 
-        protected async Task GoToUser()
-        {
-            NavigationManager.NavigateTo( $"admin/users/edit/{Appointment.User.Id}" );
-        }
 
         protected async Task SaveAppointment_Click()
         {
@@ -279,6 +275,10 @@ namespace JricaStudioApp.Pages.Admin.Appointments
             }
         }
 
+        protected async Task GoToUser()
+        {
+            NavigationManager.NavigateTo( $"admin/users/edit/{Appointment.User.Id}" );
+        }
         protected async Task BackToAppoitnments()
         {
             NavigationManager.NavigateTo( $"admin/appointments/{Appointment.Status}" );
