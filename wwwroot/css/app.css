@@ -226,6 +226,44 @@ a, .btn-link {
     width: 5vw;
 }
 
+.arrow {
+}
+
+.horizontal-scrolling {
+    gap: 3rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-snap-type: inline mandatory;
+}
+
+.scrolling-snapping {
+    scroll-snap-align: start;
+}
+
+
+
+.fade-right {
+    mask-image: linear-gradient( to right, #000 10% 90%, #000, rgba(0,0,0,0));
+    -webkit-mask-image: linear-gradient( to right, #000 10% 90%, rgba(0,0,0,0));
+}
+
+.fade-left {
+    mask-image: linear-gradient( to left, #000 10% 90%, #000, rgba(0,0,0,0));
+    -webkit-mask-image: linear-gradient( to left, #000 10% 90%, rgba(0,0,0,0));
+}
+
+.fade-left-banner {
+    mask-image: linear-gradient( to left, #000, #000, rgba(0,0,0,0));
+    -webkit-mask-image: linear-gradient( to left, #000, rgba(0,0,0,0));
+}
+
+.fade-left-and-right {
+    mask-image: linear-gradient( to right,rgba(0,0,0,0), #000 5% 95%, #000, rgba(0,0,0,0));
+    -webkit-mask-image: linear-gradient( to left,rgba(0,0,0,0), #000 5% 95%, rgba(0,0,0,0));
+}
+
 @media (min-width: 992px) {
     .social-icon {
         width: 3vw;
@@ -243,18 +281,6 @@ a, .btn-link {
         visibility: hidden !important;
     }
 
-    .horizontal-scrolling {
-        gap: 4rem;
-        overflow-x: auto;
-        overscroll-behavior-x: contain;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-        scroll-snap-type: inline mandatory
-    }
-
-    .scrolling-snapping {
-        scroll-snap-align: start;
-    }
 
     .service-page-image {
         inline-size: 100%;

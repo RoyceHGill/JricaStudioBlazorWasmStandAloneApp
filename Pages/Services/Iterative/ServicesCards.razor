@@ -1,11 +1,17 @@
 ﻿@using JricaStudioApp.Pages.Services.Individual
 
 @inherits ServicesCardsBase;
+<div class=" d-flex flex-row overflow-hidden">
+    <img class="" src="/Resources/application-icons/arrow_back_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" />
+    
+    <div class="mt-3 flex flex-row d-flex horizontal-scrolling fade-left-and-right" style="max-width:80vw">
 
-<div class="mt-3 flex flex-lg-row flex-column d-flex horizontal-scrolling" style="max-width:90vw">
-
-@foreach (var item in Services)
-{
-    <ServiceCard Service="@item"></ServiceCard>
-}
+    @foreach (var item in Services)
+    {
+        <ServiceCard Service="@item"></ServiceCard>
+    }
+        
+    </div>
+    <img class="" src="/Resources/application-icons/arrow_forward_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" />
 </div>
+
