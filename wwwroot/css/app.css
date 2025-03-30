@@ -39,7 +39,11 @@ a, .btn-link {
     position: relative;
 }
 
-
+.sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 20%;
+}
 
 .jays-checkbox {
     width: 20px;
